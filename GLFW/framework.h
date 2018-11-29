@@ -16,9 +16,9 @@ namespace Graphics
 {
 	GLFWwindow *InitializeWindow(int window_width, int window_height, const char *window_title);
 
-	GLuint InitializeBuffer(GLenum target, std::vector<float> data, GLenum usage);
+	GLuint InitializeBuffer(GLenum target, std::vector<float> *data, GLenum usage);
 
-	void BufferData(GLuint buffer, GLenum target, std::vector<float> data, GLenum usage);
+	void BufferData(GLuint buffer, GLenum target, std::vector<float> *data, GLenum usage);
 
 	GLuint InitializeVertexArray();
 

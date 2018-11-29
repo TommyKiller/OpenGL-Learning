@@ -8,7 +8,7 @@
 //}
 
 
-std::vector<float> vertecies =
+std::vector<float> *vertecies = new std::vector<float>
 {
 	 0.75f,  0.75f, 0.0f, 1.0f,
 	 0.75f, -0.75f, 0.0f, 1.0f,

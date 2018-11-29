@@ -37,7 +37,7 @@ GLFWwindow *Graphics::InitializeWindow(int window_width, int window_height, cons
 	return window;
 }
 
-GLuint Graphics::InitializeBuffer(GLenum target, std::vector<float> data, GLenum usage)
+GLuint Graphics::InitializeBuffer(GLenum target, std::vector<float> *data, GLenum usage)
 {
 	GLuint buffer;
 	glGenBuffers(1, &buffer);
@@ -47,16 +47,10 @@ GLuint Graphics::InitializeBuffer(GLenum target, std::vector<float> data, GLenum
 	return buffer;
 }
 
-void Graphics::BufferData(GLuint buffer, GLenum target, std::vector<float> data, GLenum usage)
+void Graphics::BufferData(GLuint buffer, GLenum target, std::vector<float> *data, GLenum usage)
 {
-	float *data_array = new float[data.size()];
-	for (int i = 0; i < data.size(); ++i)
-	{
-		data_array[i] = data[i];
-	}
-
 	glBindBuffer(target, buffer);
-	glBufferData(target, sizeof(float) * data.size(), data_array, usage);
+	glBufferData(target, sizeof(float) * data->size(), data->data(), usage);
 	glBindBuffer(target, 0);
 }
 
