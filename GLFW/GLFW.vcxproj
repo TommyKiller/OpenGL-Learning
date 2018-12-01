@@ -70,8 +70,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)/../Libraries/GLFW/Include;$(SolutionDir)/../Libraries/GLEW/Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)/../Libraries/GLFW/Libraries/;$(SolutionDir)/../Libraries/GLEW/Libraries/Release/Win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)/Libraries/GLFW/Include;$(SolutionDir)/Libraries/GLEW/Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)/Libraries/GLFW/Libraries/;$(SolutionDir)/Libraries/GLEW/Libraries/Release/Win32;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)/Libraries/GLFW/Include;$(SolutionDir)/Libraries/GLEW/Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)/Libraries/GLEW/Libraries/Release/Win32;$(SolutionDir)/Libraries/GLFW/Libraries;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -81,10 +85,10 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
-      <AdditionalIncludeDirectories>$(SolutionDir)/../Libraries/GLFW/Include;$(SolutionDir)/../Libraries/GLEW/Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Libraries/GLFW/Include;$(SolutionDir)/Libraries/GLEW/Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)/../Libraries/GLEW/Libraries/Release/Win32;$(SolutionDir)/../Libraries/GLFW/Libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)/Libraries/GLEW/Libraries/Release/Win32;$(SolutionDir)/Libraries/GLFW/Libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -94,7 +98,14 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Libraries/GLFW/Include;$(SolutionDir)/Libraries/GLEW/Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <EnableModules>true</EnableModules>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)/Libraries/GLFW/Libraries;$(SolutionDir)/Libraries/GLEW/Libraries/Release/Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
