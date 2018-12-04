@@ -3,10 +3,15 @@
 layout (location = 0) in vec4 position;
 layout (location = 1) in vec4 color;
 
+uniform float time;
 smooth out vec4 vertex_color;
 
 void main()
 {
+    gl_Position = vec4(
+        position.x * cos(time) - position.y * sin(time),
+        position.x * sin(time) + position.y * cos(time),
+        position.z, position.w);
+
     vertex_color = color;
-    gl_Position = position;
 }

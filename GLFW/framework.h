@@ -18,7 +18,9 @@ namespace Graphics
 
 	GLuint InitializeBuffer(GLenum target, std::vector<float> *data, GLenum usage);
 
-	void BufferData(GLuint buffer, GLenum target, std::vector<float> *data, GLenum usage);
+	void BufferNewData(GLuint buffer, GLenum target, std::vector<float> *data, GLenum usage);
+
+	void BufferAdjustData(GLuint buffer, GLenum target, GLintptr offset, std::vector<float> *data);
 
 	GLuint InitializeVertexArray();
 
@@ -30,6 +32,8 @@ namespace Graphics
 	GLuint InitializeProgram(std::unordered_map<std::string, GLenum> shaderSourcesList);
 
 	GLuint CreateProgram(std::vector<GLuint> shaderList);
+
+	void SetUniforms(GLuint program, float time_uniform, int window_width, int window_height);
 
 	void Reshape(GLint xpos, GLint ypos, GLsizei width, GLsizei height);
 }

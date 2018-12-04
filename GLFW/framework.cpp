@@ -42,15 +42,22 @@ GLuint Graphics::InitializeBuffer(GLenum target, std::vector<float> *data, GLenu
 	GLuint buffer;
 	glGenBuffers(1, &buffer);
 
-	BufferData(buffer, target, data, usage);
+	BufferNewData(buffer, target, data, usage);
 
 	return buffer;
 }
 
-void Graphics::BufferData(GLuint buffer, GLenum target, std::vector<float> *data, GLenum usage)
+void Graphics::BufferNewData(GLuint buffer, GLenum target, std::vector<float> *data, GLenum usage)
 {
 	glBindBuffer(target, buffer);
 	glBufferData(target, sizeof(float) * data->size(), data->data(), usage);
+	glBindBuffer(target, 0);
+}
+
+void Graphics::BufferAdjustData(GLuint buffer, GLenum target, GLintptr offset, std::vector<float> *data)
+{
+	glBindBuffer(target, buffer);
+	glBufferSubData(target, offset, sizeof(float) * data->size(), data->data());
 	glBindBuffer(target, 0);
 }
 
@@ -147,6 +154,14 @@ GLuint Graphics::CreateProgram(std::vector<GLuint> shaderList)
 	}
 
 	return program;
+}
+
+void Graphics::SetUniforms(GLuint program, float time_uniform, int window_width, int window_height)
+{
+	GLuint time_uniform_location = glGetUniformLocation(program, "time");
+	glUniform1f(time_uniform_location, time_uniform);
+	GLuint resolution_uniform_location = glGetUniformLocation(program, "resolution");
+	glUniform2i(resolution_uniform_location, window_width, window_height);
 }
 
 void Graphics::Reshape(GLint xpos, GLint ypos, GLsizei width, GLsizei height)
