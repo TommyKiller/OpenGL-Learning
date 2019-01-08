@@ -45,7 +45,7 @@
     <Compile Include="Executants\FirmExecutant.cs" />
     <Compile Include="Tasks\AddFeature.cs" />
     <Compile Include="Tasks\EditFeature.cs" />
-    <Compile Include="Tasks\FixBug.cs" />
+    <Compile Include="Tasks\Fix.cs" />
     <Compile Include="Tasks\TaskManager.cs" />
     <Compile Include="Executants\PersonExecutant.cs" />
     <Compile Include="Project.cs" />

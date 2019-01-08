@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace MyClassLibrary.Tasks
 {
-    public class FixBug : ProjectTask
+    public class Fix : ProjectTask
     {
-        public FixBug(string description, DateTime deadLine)
+        public string AdditionalInfo { get; }
+
+        public Fix(string description, DateTime deadLine, string additionalInfo = "")
             : base(description, deadLine)
         {
-
+            AdditionalInfo = additionalInfo;
         }
     }
 }
