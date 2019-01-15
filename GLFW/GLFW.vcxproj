@@ -74,7 +74,7 @@
     <LibraryPath>$(SolutionDir)/Libraries/GLFW/Libraries/;$(SolutionDir)/Libraries/GLEW/Libraries/Release/Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)/Libraries/GLFW/Include;$(SolutionDir)/Libraries/GLEW/Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)/Libraries/GLI;$(SolutionDir)/Libraries/GLM;$(SolutionDir)/Libraries/GLFW/Include;$(SolutionDir)/Libraries/GLEW/Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)/Libraries/GLEW/Libraries/Release/Win32;$(SolutionDir)/Libraries/GLFW/Libraries;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -98,7 +98,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)/Libraries/GLFW/Include;$(SolutionDir)/Libraries/GLEW/Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/Libraries/GLI;$(SolutionDir)/Libraries/GLM;$(SolutionDir)/Libraries/GLFW/Include;$(SolutionDir)/Libraries/GLEW/Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
     </ClCompile>
