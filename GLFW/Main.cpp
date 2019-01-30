@@ -4,11 +4,11 @@
 
 //int Tapper(int x, long double y) // 0 <= x <= 106
 //{
-//	return 0.5 < floorl(fmodl(floorl(y / 17.0f) * powl(2, (-17 * floorl(x) - fmodl(floorl(y), 17.0))), 2)) ? 1 : 0;
+//	return 0.5 < floorl(fmodl(floorl(y / 17.0f) * powl(2, (-17*  floorl(x) - fmodl(floorl(y), 17.0))), 2)) ? 1 : 0;
 //}
 
 
-std::vector<float> *vertecies = new std::vector<float>
+std::vector<float>* vertecies = new std::vector<float>
 {
 	// Coordinates //
 	// First trianlge //
@@ -41,14 +41,20 @@ std::unordered_map<std::string, GLenum> shaderFiles =
 
 int main()
 {
-	GLFWwindow *window = Graphics::InitializeWindow(1360, 768, "Test");
-	GLuint vertex_buffer = Graphics::InitializeBuffer(GL_ARRAY_BUFFER, vertecies, GL_STREAM_DRAW);
-	GLuint program = Graphics::InitializeProgram(shaderFiles);
+	System::InitialiseGLFW();
+	GLFWwindow* window = Graphics::InitialiseWindow(0, 0, 1360, 768, "Test");
+	System::InitialiseGLEW(window);
+	// Set callbacks //
+	glfwSetFramebufferSizeCallback(window, Callbacks::FramebufferSizeCallback);
+	glfwSetKeyCallback(window, Callbacks::KeyCallback);
+
+	GLuint vertex_buffer = Graphics::InitialiseBuffer(GL_ARRAY_BUFFER, vertecies, GL_STREAM_DRAW);
+	GLuint program = Graphics::InitialiseProgram(shaderFiles);
 	GLuint vertex_array = Graphics::InitializeVertexArray();
 	GLint position_location = glGetAttribLocation(program, "position");
 	GLint color_location = glGetAttribLocation(program, "color");
 	Graphics::WriteToVAO(vertex_array, vertex_buffer, GL_ARRAY_BUFFER, position_location, 4, GL_FLOAT, GL_FALSE, 0, 0);
-	Graphics::WriteToVAO(vertex_array, vertex_buffer, GL_ARRAY_BUFFER, color_location, 4, GL_FLOAT, GL_FALSE, 0, (const void *)96);
+	Graphics::WriteToVAO(vertex_array, vertex_buffer, GL_ARRAY_BUFFER, color_location, 4, GL_FLOAT, GL_FALSE, 0, (const void* )96);
 
 	glfwSetTime(0);
 

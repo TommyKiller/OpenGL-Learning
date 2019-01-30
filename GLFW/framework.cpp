@@ -1,63 +1,85 @@
 #include "framework.h"
 
 
-using namespace Graphics;
-GLFWwindow *Graphics::InitializeWindow(int window_width, int window_height, const char *window_title)
+// System //
+void System::InitialiseGLFW()
 {
 	if (!glfwInit())
 	{
 		throw std::exception("Can not initialize GLFW!");
+		glfwTerminate();
 	}
+}
 
+void System::InitialiseGLEW(GLFWwindow* window)
+{
+	glewExperimental = GL_TRUE;
+	if (glewInit() != GLEW_OK)
+	{
+		throw std::exception("Can not initialize GLEW!");
+		glfwDestroyWindow(window);
+		glfwTerminate();
+	}
+}
+
+
+// Callbacks //
+void Callbacks::FramebufferSizeCallback(GLFWwindow* window, int width, int height)
+{
+	Graphics::ReshapeViewport(0, 0, width, height);
+}
+
+void Callbacks::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+	{
+		glfwSetWindowShouldClose(window, 1);
+	}
+}
+
+
+// Graphics //
+GLFWwindow* Graphics::InitialiseWindow(int xpos, int ypos, int window_width, int window_height, const char* window_title)
+{
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 
-	GLFWwindow *window = glfwCreateWindow(window_width, window_height, window_title, nullptr, nullptr);
-	glfwSetWindowPos(window, 0, 0);
+	GLFWwindow* window = glfwCreateWindow(window_width, window_height, window_title, glfwGetPrimaryMonitor(), nullptr);
+	glfwSetWindowPos(window, xpos, ypos);
 	glfwMakeContextCurrent(window);
 
 	if (window == nullptr)
 	{
-		glfwTerminate();
 		throw std::exception("Can not create GLFW window!");
-	}
-
-	int fb_width, fb_height;
-	glfwGetFramebufferSize(window, &fb_width, &fb_height);
-	Reshape(0, 0, fb_width, fb_height);
-
-	glewExperimental = GL_TRUE;
-	if (glewInit() != GLEW_OK)
-	{
-		throw std::exception("Can not initialize GLEW!");
+		glfwTerminate();
 	}
 
 	return window;
 }
 
-GLuint Graphics::InitializeBuffer(GLenum target, std::vector<float> *data, GLenum usage)
+GLuint Graphics::InitialiseBuffer(GLenum target, std::vector<float>* data, GLenum usage)
 {
 	GLuint buffer;
 	glGenBuffers(1, &buffer);
 
-	BufferNewData(buffer, target, data, usage);
+	Graphics::BufferNewData(buffer, target, data, usage);
 
 	return buffer;
 }
 
-void Graphics::BufferNewData(GLuint buffer, GLenum target, std::vector<float> *data, GLenum usage)
+void Graphics::BufferNewData(GLuint buffer, GLenum target, std::vector<float>* data, GLenum usage)
 {
 	glBindBuffer(target, buffer);
-	glBufferData(target, sizeof(float) * data->size(), data->data(), usage);
+	glBufferData(target, sizeof(float)*  data->size(), data->data(), usage);
 	glBindBuffer(target, 0);
 }
 
-void Graphics::BufferAdjustData(GLuint buffer, GLenum target, GLintptr offset, std::vector<float> *data)
+void Graphics::BufferSubData(GLuint buffer, GLenum target, GLintptr offset, std::vector<float>* data)
 {
 	glBindBuffer(target, buffer);
-	glBufferSubData(target, offset, sizeof(float) * data->size(), data->data());
+	glBufferSubData(target, offset, sizeof(float)*  data->size(), data->data());
 	glBindBuffer(target, 0);
 }
 
@@ -69,7 +91,7 @@ GLuint Graphics::InitializeVertexArray()
 }
 
 void Graphics::WriteToVAO(GLuint vao, GLuint buffer, GLenum target,
-	int va_index, int size, GLenum type, GLboolean normalized, GLsizei stride, const void *shift)
+	int va_index, int size, GLenum type, GLboolean normalized, GLsizei stride, const void* shift)
 {
 	glBindVertexArray(vao);
 	glBindBuffer(target, buffer);
@@ -94,7 +116,7 @@ GLuint Graphics::CreateShader(GLenum shaderType, std::string fileName)
 		file.getline(line , 255);
 		shaderSource = shaderSource + line + "\n";
 	}
-	const char *shaderSourceStr = shaderSource.c_str();
+	const char* shaderSourceStr = shaderSource.c_str();
 
 	GLuint shader = glCreateShader(shaderType);
 	glShaderSource(shader, 1, &shaderSourceStr, nullptr);
@@ -106,7 +128,7 @@ GLuint Graphics::CreateShader(GLenum shaderType, std::string fileName)
 	{
 		GLint infoLogLen;
 		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLen);
-		GLchar *infoLog = new GLchar[infoLogLen + 1];
+		GLchar* infoLog = new GLchar[infoLogLen + 1];
 		throw std::exception(infoLog);
 
 		delete[] infoLog;
@@ -115,7 +137,7 @@ GLuint Graphics::CreateShader(GLenum shaderType, std::string fileName)
 	return shader;
 }
 
-GLuint Graphics::InitializeProgram(std::unordered_map<std::string, GLenum> shaderSourcesList)
+GLuint Graphics::InitialiseProgram(std::unordered_map<std::string, GLenum> shaderSourcesList)
 {
 	std::vector<GLuint> shaderList;
 	for (const auto &[key, value] : shaderSourcesList)
@@ -147,7 +169,7 @@ GLuint Graphics::CreateProgram(std::vector<GLuint> shaderList)
 	{
 		GLint infoLogLen;
 		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLen);
-		GLchar *infoLog = new GLchar[infoLogLen + 1];
+		GLchar* infoLog = new GLchar[infoLogLen + 1];
 		throw std::exception(infoLog);
 
 		delete[] infoLog;
@@ -164,7 +186,7 @@ void Graphics::SetUniforms(GLuint program, float time_uniform, int window_width,
 	glUniform2i(resolution_uniform_location, window_width, window_height);
 }
 
-void Graphics::Reshape(GLint xpos, GLint ypos, GLsizei width, GLsizei height)
+void Graphics::ReshapeViewport(GLint xpos, GLint ypos, GLsizei width, GLsizei height)
 {
 	glViewport(xpos, ypos, width, height);
 }
