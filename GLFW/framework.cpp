@@ -109,7 +109,7 @@ GLuint Graphics::CreateShader(GLenum shaderType, std::string fileName)
 		GLchar *infoLog = new GLchar[infoLogLen + 1];
 		throw std::exception(infoLog);
 
-		delete infoLog;
+		delete[] infoLog;
 	}
 
 	return shader;
@@ -150,7 +150,7 @@ GLuint Graphics::CreateProgram(std::vector<GLuint> shaderList)
 		GLchar *infoLog = new GLchar[infoLogLen + 1];
 		throw std::exception(infoLog);
 
-		delete infoLog;
+		delete[] infoLog;
 	}
 
 	return program;
