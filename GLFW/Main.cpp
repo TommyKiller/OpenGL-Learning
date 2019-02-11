@@ -1,7 +1,6 @@
 #include <cmath>
 #include "framework.h"
 
-
 //int Tapper(int x, long double y) // 0 <= x <= 106
 //{
 //	return 0.5 < floorl(fmodl(floorl(y / 17.0f) * powl(2, (-17*  floorl(x) - fmodl(floorl(y), 17.0))), 2)) ? 1 : 0;
@@ -42,7 +41,7 @@ std::unordered_map<std::string, GLenum> shaderFiles =
 int main()
 {
 	System::InitialiseGLFW();
-	GLFWwindow* window = Graphics::InitialiseWindow(0, 0, 1360, 768, "Test");
+	GLFWwindow* window = Graphics::InitialiseWindow(0, 0, 1360, 768, true, "Test");
 	System::InitialiseGLEW(window);
 	// Set callbacks //
 	glfwSetFramebufferSizeCallback(window, Callbacks::FramebufferSizeCallback);
@@ -66,9 +65,9 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glUseProgram(program);
-		int window_width, window_height;
-		glfwGetWindowSize(window, &window_width, &window_height);
-		Graphics::SetUniforms(program, glfwGetTime(), window_width, window_height);
+		int resolution[2];
+		glfwGetWindowSize(window, &resolution[0], &resolution[1]);
+		Graphics::SetUniforms(program, (GLfloat)glfwGetTime(), resolution);
 		glBindVertexArray(vertex_array);
 		glEnableVertexAttribArray(position_location);
 		glEnableVertexAttribArray(color_location);

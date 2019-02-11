@@ -39,14 +39,17 @@ void Callbacks::KeyCallback(GLFWwindow* window, int key, int scancode, int actio
 
 
 // Graphics //
-GLFWwindow* Graphics::InitialiseWindow(int xpos, int ypos, int window_width, int window_height, const char* window_title)
+GLFWwindow* Graphics::InitialiseWindow(int xpos, int ypos, int window_width, int window_height, bool fullscreen_mode, const char* window_title)
 {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 
-	GLFWwindow* window = glfwCreateWindow(window_width, window_height, window_title, glfwGetPrimaryMonitor(), nullptr);
+	GLFWwindow* window = fullscreen_mode ?
+		glfwCreateWindow(window_width, window_height, window_title, glfwGetPrimaryMonitor(), nullptr) :
+		glfwCreateWindow(window_width, window_height, window_title, nullptr, nullptr);
+
 	glfwSetWindowPos(window, xpos, ypos);
 	glfwMakeContextCurrent(window);
 
@@ -175,15 +178,28 @@ GLuint Graphics::CreateProgram(std::vector<GLuint> shaderList)
 		delete[] infoLog;
 	}
 
+	glValidateProgram(program);
+
+	glGetProgramiv(program, GL_VALIDATE_STATUS, &status);
+	if (!status)
+	{
+		GLint infoLogLen;
+		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLen);
+		GLchar* infoLog = new GLchar[infoLogLen + 1];
+		throw std::exception(infoLog);
+
+		delete[] infoLog;
+	}
+
 	return program;
 }
 
-void Graphics::SetUniforms(GLuint program, float time_uniform, int window_width, int window_height)
+void Graphics::SetUniforms(GLuint program, GLfloat time_uniform, int* resolution)
 {
 	GLuint time_uniform_location = glGetUniformLocation(program, "time");
 	glUniform1f(time_uniform_location, time_uniform);
 	GLuint resolution_uniform_location = glGetUniformLocation(program, "resolution");
-	glUniform2i(resolution_uniform_location, window_width, window_height);
+	glUniform2iv(resolution_uniform_location, 1, resolution);
 }
 
 void Graphics::ReshapeViewport(GLint xpos, GLint ypos, GLsizei width, GLsizei height)

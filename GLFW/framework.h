@@ -27,7 +27,7 @@ namespace Callbacks
 
 namespace Graphics
 {
-	GLFWwindow* InitialiseWindow(int xpos, int ypos, int window_width, int window_height, const char* window_title);
+	GLFWwindow* InitialiseWindow(int xpos, int ypos, int window_width, int window_height, bool fullscreen_mode, const char* window_title);
 
 	GLuint InitialiseBuffer(GLenum target, std::vector<float>* data, GLenum usage);
 
@@ -46,7 +46,7 @@ namespace Graphics
 
 	GLuint CreateProgram(std::vector<GLuint> shaderList);
 
-	void SetUniforms(GLuint program, float time_uniform, int window_width, int window_height);
+	void SetUniforms(GLuint program, GLfloat time_uniform, int* resolution);
 
 	void ReshapeViewport(GLint xpos, GLint ypos, GLsizei width, GLsizei height);
 }
