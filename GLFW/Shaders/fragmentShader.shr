@@ -4,11 +4,11 @@ smooth in vec4 vertex_color;
 out vec4 outputColor;
 
 uniform float time;
-uniform ivec2 resolution;
+uniform ivec2 framebuffer_size;
 
 void main()
 {
-    vec2 uv = vec2(gl_FragCoord.x / resolution.x, gl_FragCoord.y / resolution.y);
+    vec2 uv = vec2(gl_FragCoord.x / framebuffer_size.x, gl_FragCoord.y / framebuffer_size.y);
 
     vec3 color = abs(cos(time + vec3(uv, uv.x) + vec3(0, 2, 4)));
 

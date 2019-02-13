@@ -4,6 +4,9 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <GLM/glm.hpp>
+#include <GLM/gtc/matrix_transform.hpp>
+#include <GLM/gtc/type_ptr.hpp>
 #include <string>
 #include <fstream>
 #include <exception>
@@ -40,15 +43,37 @@ namespace Graphics
 	void WriteToVAO(GLuint vao, GLuint buffer, GLenum target,
 		int va_index, int size, GLenum type, GLboolean normalized, GLsizei stride, const void* shift);
 
-	GLuint CreateShader(GLenum shaderType, std::string fileName);
-
-	GLuint InitialiseProgram(std::unordered_map<std::string, GLenum> shaderSourcesList);
-
-	GLuint CreateProgram(std::vector<GLuint> shaderList);
-
-	void SetUniforms(GLuint program, GLfloat time_uniform, int* resolution);
-
 	void ReshapeViewport(GLint xpos, GLint ypos, GLsizei width, GLsizei height);
+
+	class Shader
+	{
+	public:
+		Shader() = delete;
+
+		Shader(Shader& shader);
+
+		Shader(std::unordered_map<std::string, GLenum> shaderSourcesList);
+
+		void bind();
+
+		GLuint GetAttribLocation(std::string attribute_name);
+
+		void SetUniform(std::string uniform_name, float uniform_value);
+
+		void SetUniform(std::string uniform_name, int uniform_value1, int uniform_value2);
+
+		void SetUniform(std::string uniform_name, int count, GLboolean transpose, glm::mat4 uniform_value);
+
+		void unbind();
+	private:
+		GLuint ID;
+
+		GLuint CreateShader(GLenum shaderType, std::string fileName);
+
+		GLuint InitialiseProgram(std::unordered_map<std::string, GLenum> shaderSourcesList);
+
+		GLuint CreateProgram(std::vector<GLuint> shaderList);
+	};
 }
 
 

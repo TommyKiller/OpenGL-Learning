@@ -103,7 +103,55 @@ void Graphics::WriteToVAO(GLuint vao, GLuint buffer, GLenum target,
 	glBindVertexArray(0);
 }
 
-GLuint Graphics::CreateShader(GLenum shaderType, std::string fileName)
+void Graphics::ReshapeViewport(GLint xpos, GLint ypos, GLsizei width, GLsizei height)
+{
+	glViewport(xpos, ypos, width, height);
+}
+
+Graphics::Shader::Shader(Shader& shader)
+{
+	ID = shader.ID;
+}
+
+Graphics::Shader::Shader(std::unordered_map<std::string, GLenum> shaderSourcesList)
+{
+	ID = InitialiseProgram(shaderSourcesList);
+}
+
+void Graphics::Shader::bind()
+{
+	glUseProgram(ID);
+}
+
+GLuint Graphics::Shader::GetAttribLocation(std::string attribute_name)
+{
+	return glGetAttribLocation(ID, attribute_name.c_str());
+}
+
+void Graphics::Shader::SetUniform(std::string uniform_name, float uniform_value)
+{
+	GLuint uniform_location = glGetUniformLocation(ID, uniform_name.c_str());
+	glUniform1f(uniform_location, uniform_value);
+}
+
+void Graphics::Shader::SetUniform(std::string uniform_name, int uniform_value1, int uniform_value2)
+{
+	GLuint uniform_location = glGetUniformLocation(ID, uniform_name.c_str());
+	glUniform2i(uniform_location, uniform_value1, uniform_value2);
+}
+
+void Graphics::Shader::SetUniform(std::string uniform_name, int count, GLboolean transpose, glm::mat4 uniform_value)
+{
+	GLuint uniform_location = glGetUniformLocation(ID, uniform_name.c_str());
+	glUniformMatrix4fv(uniform_location, count, transpose, glm::value_ptr(uniform_value));
+}
+
+void Graphics::Shader::unbind()
+{
+	glUseProgram(0);
+}
+
+GLuint Graphics::Shader::CreateShader(GLenum shaderType, std::string fileName)
 {
 	std::ifstream file(fileName);
 
@@ -116,7 +164,7 @@ GLuint Graphics::CreateShader(GLenum shaderType, std::string fileName)
 	while (!file.eof())
 	{
 		char line[256];
-		file.getline(line , 255);
+		file.getline(line, 255);
 		shaderSource = shaderSource + line + "\n";
 	}
 	const char* shaderSourceStr = shaderSource.c_str();
@@ -140,10 +188,10 @@ GLuint Graphics::CreateShader(GLenum shaderType, std::string fileName)
 	return shader;
 }
 
-GLuint Graphics::InitialiseProgram(std::unordered_map<std::string, GLenum> shaderSourcesList)
+GLuint Graphics::Shader::InitialiseProgram(std::unordered_map<std::string, GLenum> shaderSourcesList)
 {
 	std::vector<GLuint> shaderList;
-	for (const auto &[key, value] : shaderSourcesList)
+	for (const auto& [key, value] : shaderSourcesList)
 	{
 		shaderList.push_back(CreateShader(value, key));
 	}
@@ -155,11 +203,11 @@ GLuint Graphics::InitialiseProgram(std::unordered_map<std::string, GLenum> shade
 	return program;
 }
 
-GLuint Graphics::CreateProgram(std::vector<GLuint> shaderList)
+GLuint Graphics::Shader::CreateProgram(std::vector<GLuint> shaderList)
 {
 	GLuint program = glCreateProgram();
 
-	for (const auto &shader : shaderList)
+	for (const auto& shader : shaderList)
 	{
 		glAttachShader(program, shader);
 	}
@@ -192,17 +240,4 @@ GLuint Graphics::CreateProgram(std::vector<GLuint> shaderList)
 	}
 
 	return program;
-}
-
-void Graphics::SetUniforms(GLuint program, GLfloat time_uniform, int* resolution)
-{
-	GLuint time_uniform_location = glGetUniformLocation(program, "time");
-	glUniform1f(time_uniform_location, time_uniform);
-	GLuint resolution_uniform_location = glGetUniformLocation(program, "resolution");
-	glUniform2iv(resolution_uniform_location, 1, resolution);
-}
-
-void Graphics::ReshapeViewport(GLint xpos, GLint ypos, GLsizei width, GLsizei height)
-{
-	glViewport(xpos, ypos, width, height);
 }
