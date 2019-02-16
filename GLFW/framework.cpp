@@ -1,6 +1,9 @@
 #include "framework.h"
 
 
+glm::vec3 triangle_location(0.0f, 0.0f, -2.0f);
+
+
 // System //
 void System::InitialiseGLFW()
 {
@@ -35,13 +38,29 @@ void Callbacks::KeyCallback(GLFWwindow* window, int key, int scancode, int actio
 	{
 		glfwSetWindowShouldClose(window, 1);
 	}
-	if (key == GLFW_KEY_W && action == GLFW_PRESS)
+	if (key == GLFW_KEY_W && ((action == GLFW_REPEAT) || (action == GLFW_PRESS)))
 	{
-
+		triangle_location.z += 0.03f;
 	}
-	if (key == GLFW_KEY_S && action == GLFW_PRESS)
+	if (key == GLFW_KEY_S && ((action == GLFW_REPEAT) || (action == GLFW_PRESS)))
 	{
-
+		triangle_location.z -= 0.03f;
+	}
+	if (key == GLFW_KEY_A && ((action == GLFW_REPEAT) || (action == GLFW_PRESS)))
+	{
+		triangle_location.x += 0.03f;
+	}
+	if (key == GLFW_KEY_D && ((action == GLFW_REPEAT) || (action == GLFW_PRESS)))
+	{
+		triangle_location.x -= 0.03f;
+	}
+	if (key == GLFW_KEY_LEFT_CONTROL && ((action == GLFW_REPEAT) || (action == GLFW_PRESS)))
+	{
+		triangle_location.y += 0.03f;
+	}
+	if (key == GLFW_KEY_SPACE && ((action == GLFW_REPEAT) || (action == GLFW_PRESS)))
+	{
+		triangle_location.y -= 0.03f;
 	}
 }
 

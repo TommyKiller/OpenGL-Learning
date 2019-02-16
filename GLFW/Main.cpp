@@ -75,7 +75,7 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		////
 		glm::mat4 model(1);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -2.0f));
+		model = glm::translate(model, triangle_location);
 		model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 		////

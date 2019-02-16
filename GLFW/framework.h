@@ -15,6 +15,9 @@
 #include <algorithm>
 
 
+extern glm::vec3 triangle_location;
+
+
 namespace System
 {
 	void InitialiseGLFW();
