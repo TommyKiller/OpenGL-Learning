@@ -35,6 +35,14 @@ void Callbacks::KeyCallback(GLFWwindow* window, int key, int scancode, int actio
 	{
 		glfwSetWindowShouldClose(window, 1);
 	}
+	if (key == GLFW_KEY_W && action == GLFW_PRESS)
+	{
+
+	}
+	if (key == GLFW_KEY_S && action == GLFW_PRESS)
+	{
+
+	}
 }
 
 
@@ -60,30 +68,6 @@ GLFWwindow* Graphics::InitialiseWindow(int xpos, int ypos, int window_width, int
 	}
 
 	return window;
-}
-
-GLuint Graphics::InitialiseBuffer(GLenum target, std::vector<float>* data, GLenum usage)
-{
-	GLuint buffer;
-	glGenBuffers(1, &buffer);
-
-	Graphics::BufferNewData(buffer, target, data, usage);
-
-	return buffer;
-}
-
-void Graphics::BufferNewData(GLuint buffer, GLenum target, std::vector<float>* data, GLenum usage)
-{
-	glBindBuffer(target, buffer);
-	glBufferData(target, sizeof(float)*  data->size(), data->data(), usage);
-	glBindBuffer(target, 0);
-}
-
-void Graphics::BufferSubData(GLuint buffer, GLenum target, GLintptr offset, std::vector<float>* data)
-{
-	glBindBuffer(target, buffer);
-	glBufferSubData(target, offset, sizeof(float)*  data->size(), data->data());
-	glBindBuffer(target, 0);
 }
 
 GLuint Graphics::InitializeVertexArray()

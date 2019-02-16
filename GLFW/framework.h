@@ -14,6 +14,7 @@
 #include <vector>
 #include <algorithm>
 
+
 namespace System
 {
 	void InitialiseGLFW();
@@ -32,11 +33,32 @@ namespace Graphics
 {
 	GLFWwindow* InitialiseWindow(int xpos, int ypos, int window_width, int window_height, bool fullscreen_mode, const char* window_title);
 
-	GLuint InitialiseBuffer(GLenum target, std::vector<float>* data, GLenum usage);
+	template<class T>
+	GLuint InitialiseBuffer(GLenum target, std::vector<T>* data, GLenum usage)
+	{
+		GLuint buffer;
+		glGenBuffers(1, &buffer);
 
-	void BufferNewData(GLuint buffer, GLenum target, std::vector<float>* data, GLenum usage);
+		Graphics::BufferNewData(buffer, target, data, usage);
 
-	void BufferSubData(GLuint buffer, GLenum target, GLintptr offset, std::vector<float>* data);
+		return buffer;
+	}
+
+	template<class T>
+	void BufferNewData(GLuint buffer, GLenum target, std::vector<T>* data, GLenum usage)
+	{
+		glBindBuffer(target, buffer);
+		glBufferData(target, sizeof(float) * data->size(), data->data(), usage);
+		glBindBuffer(target, 0);
+	}
+
+	template<class T>
+	void BufferSubData(GLuint buffer, GLenum target, GLintptr offset, std::vector<T>* data)
+	{
+		glBindBuffer(target, buffer);
+		glBufferSubData(target, offset, sizeof(float) * data->size(), data->data());
+		glBindBuffer(target, 0);
+	}
 
 	GLuint InitializeVertexArray();
 
