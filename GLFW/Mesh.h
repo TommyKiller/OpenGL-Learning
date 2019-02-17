@@ -29,6 +29,8 @@ namespace Graphics
 			return BO;
 		}
 
+		GLuint CreateVAO(GLuint* VBO, unsigned int VBO_count, GLuint EBO);
+
 		void Dispose();
 
 		~Mesh();
@@ -37,7 +39,7 @@ namespace Graphics
 
 		GLuint* VBOs;
 
-		GLsizei elements_count, VBOs_count;
+		unsigned int elements_count, VBOs_count;
 	};
 }
 
