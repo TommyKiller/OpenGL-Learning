@@ -51,7 +51,7 @@ namespace Graphics
 	void BufferNewData(GLuint buffer, GLenum target, std::vector<T>* data, GLenum usage)
 	{
 		glBindBuffer(target, buffer);
-		glBufferData(target, sizeof(float) * data->size(), data->data(), usage);
+		glBufferData(target, sizeof(T) * data->size(), data->data(), usage);
 		glBindBuffer(target, 0);
 	}
 
@@ -59,7 +59,7 @@ namespace Graphics
 	void BufferSubData(GLuint buffer, GLenum target, GLintptr offset, std::vector<T>* data)
 	{
 		glBindBuffer(target, buffer);
-		glBufferSubData(target, offset, sizeof(float) * data->size(), data->data());
+		glBufferSubData(target, offset, sizeof(T) * data->size(), data->data());
 		glBindBuffer(target, 0);
 	}
 

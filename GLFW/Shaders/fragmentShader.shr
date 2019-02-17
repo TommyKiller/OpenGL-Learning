@@ -3,9 +3,6 @@
 smooth in vec4 vertex_color;
 out vec4 outputColor;
 
-uniform float time;
-uniform ivec2 framebuffer_size;
-
 void main()
 {
     outputColor = vertex_color;
