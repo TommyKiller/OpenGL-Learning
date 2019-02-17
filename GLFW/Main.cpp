@@ -7,15 +7,18 @@
 //}
 
 
-std::vector<GLfloat>* vertecies = new std::vector<float>
+std::vector<GLfloat>* v1 = new std::vector<GLfloat>
 {
-	// Coordinates //
 	 1.0f, -1.0f, -1.0f, 1.0f,
 	-1.0f, -1.0f, -1.0f, 1.0f,
 	-1.0f, -1.0f,  1.0f, 1.0f,
 	 1.0f, -1.0f,  1.0f, 1.0f,
 	 0.0f,  1.0f,  0.0f, 1.0f,
-	// Colors //
+};
+
+
+std::vector<GLfloat>* vc1 = new std::vector<GLfloat>
+{
 	1.0f, 0.0f, 0.0f, 1.0f,
 	0.0f, 1.0f, 0.0f, 1.0f,
 	0.0f, 0.0f, 1.0f, 1.0f,
@@ -24,7 +27,38 @@ std::vector<GLfloat>* vertecies = new std::vector<float>
 };
 
 
-std::vector<GLuint>* elements = new std::vector<unsigned int>
+std::vector<GLuint>* el1 = new std::vector<GLuint>
+{
+	0, 4, 1,
+	1, 4, 2,
+	2, 4, 3,
+	3, 4, 0,
+	0, 1, 2,
+	0, 2, 3
+};
+
+unsigned int vertex_coords_count = 20;
+GLfloat* vertex_coords = new GLfloat[vertex_coords_count]
+{
+	 1.0f, -1.0f, -1.0f, 1.0f,
+	-1.0f, -1.0f, -1.0f, 1.0f,
+	-1.0f, -1.0f,  1.0f, 1.0f,
+	 1.0f, -1.0f,  1.0f, 1.0f,
+	 0.0f,  1.0f,  0.0f, 1.0f,
+};
+
+unsigned int vertex_colours_count = 20;
+GLfloat* vertex_colours = new GLfloat[vertex_colours_count]
+{
+	1.0f, 0.0f, 0.0f, 1.0f,
+	0.0f, 1.0f, 0.0f, 1.0f,
+	0.0f, 0.0f, 1.0f, 1.0f,
+	1.0f, 1.0f, 0.0f, 1.0f,
+	0.0f, 1.0f, 1.0f, 1.0f
+};
+
+unsigned int elements_count = 18;
+GLuint* elements = new GLuint[elements_count]
 {
 	0, 4, 1,
 	1, 4, 2,
@@ -42,30 +76,6 @@ std::unordered_map<std::string, GLenum> shaderFiles =
 };
 
 
-GLuint VAO, VBO, EBO;
-
-void CreateMesh()
-{
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-
-	glGenBuffers(GL_ARRAY_BUFFER, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * vertecies->size(), vertecies->data(), GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, (const void*)80);
-	glEnableVertexAttribArray(1);
-
-	glGenBuffers(GL_ELEMENT_ARRAY_BUFFER, &EBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * elements->size(), elements->data(), GL_STATIC_DRAW);
-
-	glBindVertexArray(0);
-}
-
-
 int main()
 {
 	System::InitialiseGLFW();
@@ -75,21 +85,9 @@ int main()
 	glfwSetFramebufferSizeCallback(window, Callbacks::FramebufferSizeCallback);
 	glfwSetKeyCallback(window, Callbacks::KeyCallback);
 
-	GLuint vertex_buffer = Graphics::InitialiseBuffer(GL_ARRAY_BUFFER, vertecies, GL_STATIC_DRAW);
-	GLuint elements_buffer = Graphics::InitialiseBuffer(GL_ELEMENT_ARRAY_BUFFER, elements, GL_STATIC_DRAW);
-	Graphics::Shader shader(shaderFiles);
-	GLuint vertex_array = Graphics::InitializeVertexArray();
-	GLint position_location = shader.GetAttribLocation("position");
-	GLint color_location = shader.GetAttribLocation("color");
-	Graphics::WriteToVAO(vertex_array, vertex_buffer, GL_ARRAY_BUFFER, position_location, 4, GL_FLOAT, GL_FALSE, 0, 0);
-	Graphics::WriteToVAO(vertex_array, vertex_buffer, GL_ARRAY_BUFFER, color_location, 4, GL_FLOAT, GL_FALSE, 0, (const void*)80);
-	glBindVertexArray(vertex_array);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elements_buffer);
-	glEnableVertexAttribArray(position_location);
-	glEnableVertexAttribArray(color_location);
-	glBindVertexArray(0);
 
-	//CreateMesh();
+	Graphics::Shader shader(shaderFiles);
+	Graphics::Mesh* pyramid_mesh = new Graphics::Mesh(vertex_coords, vertex_coords_count, vertex_colours, vertex_colours_count, elements, elements_count, GL_STATIC_DRAW);
 
 	glEnable(GL_DEPTH_TEST);
 	glfwSetTime(0);
@@ -115,9 +113,7 @@ int main()
 		shader.SetUniform("model", 1, GL_FALSE, model);
 		shader.SetUniform("projection", 1, GL_FALSE, projection);
 
-		glBindVertexArray(vertex_array);
-		glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_INT, 0);
-		glBindVertexArray(0);
+		pyramid_mesh->Render();
 
 		shader.unbind();
 

@@ -13,6 +13,7 @@
 #include <unordered_map>
 #include <vector>
 #include <algorithm>
+#include "Mesh.h"
 
 
 extern glm::vec3 triangle_location;
