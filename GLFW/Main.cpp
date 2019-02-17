@@ -1,4 +1,5 @@
 #include <cmath>
+#include <vector>
 #include "framework.h"
 
 //int Tapper(int x, long double y) // 0 <= x <= 106
@@ -7,7 +8,7 @@
 //}
 
 
-std::vector<GLfloat>* v1 = new std::vector<GLfloat>
+std::vector<GLfloat>* vertex_coords = new std::vector<GLfloat>
 {
 	 1.0f, -1.0f, -1.0f, 1.0f,
 	-1.0f, -1.0f, -1.0f, 1.0f,
@@ -17,7 +18,7 @@ std::vector<GLfloat>* v1 = new std::vector<GLfloat>
 };
 
 
-std::vector<GLfloat>* vc1 = new std::vector<GLfloat>
+std::vector<GLfloat>* vertex_colours = new std::vector<GLfloat>
 {
 	1.0f, 0.0f, 0.0f, 1.0f,
 	0.0f, 1.0f, 0.0f, 1.0f,
@@ -27,38 +28,7 @@ std::vector<GLfloat>* vc1 = new std::vector<GLfloat>
 };
 
 
-std::vector<GLuint>* el1 = new std::vector<GLuint>
-{
-	0, 4, 1,
-	1, 4, 2,
-	2, 4, 3,
-	3, 4, 0,
-	0, 1, 2,
-	0, 2, 3
-};
-
-unsigned int vertex_coords_count = 20;
-GLfloat* vertex_coords = new GLfloat[vertex_coords_count]
-{
-	 1.0f, -1.0f, -1.0f, 1.0f,
-	-1.0f, -1.0f, -1.0f, 1.0f,
-	-1.0f, -1.0f,  1.0f, 1.0f,
-	 1.0f, -1.0f,  1.0f, 1.0f,
-	 0.0f,  1.0f,  0.0f, 1.0f,
-};
-
-unsigned int vertex_colours_count = 20;
-GLfloat* vertex_colours = new GLfloat[vertex_colours_count]
-{
-	1.0f, 0.0f, 0.0f, 1.0f,
-	0.0f, 1.0f, 0.0f, 1.0f,
-	0.0f, 0.0f, 1.0f, 1.0f,
-	1.0f, 1.0f, 0.0f, 1.0f,
-	0.0f, 1.0f, 1.0f, 1.0f
-};
-
-unsigned int elements_count = 18;
-GLuint* elements = new GLuint[elements_count]
+std::vector<GLuint>* elements = new std::vector<GLuint>
 {
 	0, 4, 1,
 	1, 4, 2,
@@ -79,19 +49,20 @@ std::unordered_map<std::string, GLenum> shaderFiles =
 int main()
 {
 	System::InitialiseGLFW();
-	GLFWwindow* window = Graphics::InitialiseWindow(0, 0, 1360, 768, false, "Test");
+	GLFWwindow* window = System::InitialiseWindow(0, 0, 1360, 768, false, "Test");
 	System::InitialiseGLEW(window);
+	System::SetUpGLSettings(glm::vec4(0.4f, 0.4f, 0.4f, 0.0f));
+
 	// Set callbacks //
 	glfwSetFramebufferSizeCallback(window, Callbacks::FramebufferSizeCallback);
 	glfwSetKeyCallback(window, Callbacks::KeyCallback);
 
+	// Create objects //
+	Graphics::ShaderProgram shader(shaderFiles);
+	Graphics::Mesh* pyramid_mesh = new Graphics::Mesh(vertex_coords->data(), vertex_coords->size(), vertex_colours->data(),
+		vertex_colours->size(), elements->data(), elements->size(), GL_STATIC_DRAW);
 
-	Graphics::Shader shader(shaderFiles);
-	Graphics::Mesh* pyramid_mesh = new Graphics::Mesh(vertex_coords, vertex_coords_count, vertex_colours, vertex_colours_count, elements, elements_count, GL_STATIC_DRAW);
-
-	glEnable(GL_DEPTH_TEST);
-	glfwSetTime(0);
-
+	// Uniforms calculations //
 	int framebuffer_width, framebuffer_height;
 	glfwGetFramebufferSize(window, &framebuffer_width, &framebuffer_height);
 	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)framebuffer_width / (GLfloat)framebuffer_height, 0.1f, 100.0f);
@@ -99,17 +70,16 @@ int main()
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
-
-		glClearColor(0.2f, 0.3f, 0.3f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		////
+
+		// Model matrix calculations //
 		glm::mat4 model(1);
 		model = glm::translate(model, triangle_location);
 		model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
-		////
-		shader.bind();
 
+		// Rendering //
+		shader.bind();
 		shader.SetUniform("model", 1, GL_FALSE, model);
 		shader.SetUniform("projection", 1, GL_FALSE, projection);
 

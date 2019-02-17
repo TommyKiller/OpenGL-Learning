@@ -13,24 +13,36 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Файлы заголовков\framework">
+      <UniqueIdentifier>{40ae3d9a-08b9-41aa-a4f9-bf17cdb3be24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\framework">
+      <UniqueIdentifier>{3cd1d425-3d48-448b-8aa5-2b0562d7d6d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="framework.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\framework</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\framework</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderProgram.cpp">
+      <Filter>Исходные файлы\framework</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\framework</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\framework</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderProgram.h">
+      <Filter>Файлы заголовков\framework</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

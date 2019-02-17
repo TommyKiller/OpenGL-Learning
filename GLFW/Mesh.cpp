@@ -15,12 +15,12 @@ Graphics::Mesh::Mesh(GLfloat* vertecies_coords, unsigned int vcoords_count, GLfl
 {
 	VBOs = new GLuint[VBOs_count]
 	{
-		CreateBuffer(GL_VERTEX_ARRAY, vertecies_coords, vcoords_count, usage),
-		CreateBuffer(GL_VERTEX_ARRAY, vertecies_colours, vcolours_count, usage)
+		CreateBuffer(GL_ARRAY_BUFFER, vertecies_coords, vcoords_count, usage),
+		CreateBuffer(GL_ARRAY_BUFFER, vertecies_colours, vcolours_count, usage)
 	};
 	EBO = CreateBuffer(GL_ELEMENT_ARRAY_BUFFER, elements, elements_count, usage);
-	glGenVertexArrays(1, &VAO);
 
+	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBOs[0]);
