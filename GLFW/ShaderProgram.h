@@ -4,7 +4,8 @@
 #include <GL/glew.h>
 #include <GLM/gtc/type_ptr.hpp>
 #include <string>
-#include <unordered_map>
+#include <map>
+#include <vector>
 #include <fstream>
 #include <algorithm>
 
@@ -15,9 +16,11 @@ namespace Graphics
 	public:
 		ShaderProgram() = delete;
 
-		ShaderProgram(ShaderProgram& shaderProgram);
+		ShaderProgram(ShaderProgram& shader_program);
 
-		ShaderProgram(std::unordered_map<std::string, GLenum> shaderSourcesList);
+		ShaderProgram(std::map<GLenum, std::string> shader_sources_list);
+
+		void AddShader(GLenum shader_type, std::string file_name);
 
 		void bind();
 
@@ -30,14 +33,19 @@ namespace Graphics
 		void SetUniform(std::string uniform_name, int count, GLboolean transpose, glm::mat4 uniform_value);
 
 		void unbind();
+
+		void Dispose();
+
+		~ShaderProgram();
+
 	private:
 		GLuint ID;
 
-		GLuint CreateShader(GLenum shaderType, std::string fileName);
+		std::map<GLenum, std::string> shaders_sources;
 
-		GLuint InitialiseProgram(std::unordered_map<std::string, GLenum> shaderSourcesList);
+		GLuint CreateShader(GLenum shader_type, std::string file_name);
 
-		GLuint CreateProgram(std::vector<GLuint> shaderList);
+		GLuint CreateProgram(std::vector<GLuint> shader_list);
 	};
 }
 

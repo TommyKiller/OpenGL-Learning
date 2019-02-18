@@ -44,10 +44,10 @@ std::vector<GLuint>* elements = new std::vector<GLuint>
 };
 
 
-std::unordered_map<std::string, GLenum> shaderFiles = 
+std::map<GLenum, std::string> shaderFiles =
 {
-	{ "Shaders/vertexShader.shr", GL_VERTEX_SHADER },
-	{ "Shaders/fragmentShader.shr", GL_FRAGMENT_SHADER }
+	{ GL_VERTEX_SHADER, "Shaders/vertexShader.shr" },
+	{ GL_FRAGMENT_SHADER, "Shaders/fragmentShader.shr" }
 };
 
 
