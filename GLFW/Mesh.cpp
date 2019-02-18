@@ -9,15 +9,15 @@ Graphics::Mesh::Mesh(Mesh& mesh)
 	elements_count = mesh.elements_count;
 }
 
-Graphics::Mesh::Mesh(GLfloat* vertecies_coords, unsigned int vcoords_count, GLfloat* vertecies_colours, unsigned int vcolours_count,
+Graphics::Mesh::Mesh(std::pair<GLfloat*, unsigned int>* vertex_buffers, unsigned int vertex_buffers_count,
 	GLuint* elements, unsigned int elements_count, GLenum usage)
-	: elements_count(elements_count), VBOs_count(2)
+	: VBOs_count(vertex_buffers_count), elements_count(elements_count)
 {
-	VBOs = new GLuint[VBOs_count]
+	VBOs = new GLuint[VBOs_count];
+	for (int i = 0; i < vertex_buffers_count; ++i)
 	{
-		CreateBuffer(GL_ARRAY_BUFFER, vertecies_coords, vcoords_count, usage),
-		CreateBuffer(GL_ARRAY_BUFFER, vertecies_colours, vcolours_count, usage)
-	};
+		VBOs[i] = CreateBuffer(GL_ARRAY_BUFFER, vertex_buffers[i].first, vertex_buffers[i].second, usage);
+	}
 	EBO = CreateBuffer(GL_ELEMENT_ARRAY_BUFFER, elements, elements_count, usage);
 	VAO = CreateVAO(VBOs, VBOs_count, EBO);
 }

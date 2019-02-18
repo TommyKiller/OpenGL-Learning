@@ -27,6 +27,11 @@ std::vector<GLfloat>* vertex_colours = new std::vector<GLfloat>
 	0.0f, 1.0f, 1.0f, 1.0f
 };
 
+std::vector<std::pair<GLfloat*, unsigned int>>* pyramid_vertex_data = new std::vector<std::pair<GLfloat*, unsigned int>>
+{
+	std::pair<GLfloat*, unsigned int>(vertex_coords->data(), vertex_coords->size()),
+	std::pair<GLfloat*, unsigned int>(vertex_colours->data(), vertex_colours->size())
+};
 
 std::vector<GLuint>* elements = new std::vector<GLuint>
 {
@@ -59,8 +64,7 @@ int main()
 
 	// Create objects //
 	Graphics::ShaderProgram shader(shaderFiles);
-	Graphics::Mesh* pyramid_mesh = new Graphics::Mesh(vertex_coords->data(), vertex_coords->size(), vertex_colours->data(),
-		vertex_colours->size(), elements->data(), elements->size(), GL_STATIC_DRAW);
+	Graphics::Mesh* pyramid_mesh = new Graphics::Mesh(pyramid_vertex_data->data(), pyramid_vertex_data->size(), elements->data(), elements->size(), GL_STATIC_DRAW);
 
 	// Uniforms calculations //
 	int framebuffer_width, framebuffer_height;

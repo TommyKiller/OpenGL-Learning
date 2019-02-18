@@ -1,6 +1,7 @@
 #ifndef MESH_H
 #define MESH_H
 #include <GL/glew.h>
+#include <utility>
 
 namespace Graphics
 {
@@ -11,7 +12,7 @@ namespace Graphics
 
 		Mesh(Mesh& mesh);
 
-		Mesh(GLfloat* vertecies_coords, unsigned int vcoords_count, GLfloat* vertecies_colours, unsigned int vcolours_count,
+		Mesh(std::pair<GLfloat*, unsigned int>* vertex_buffers, unsigned int vertex_buffers_count,
 			GLuint* elements, unsigned int elements_count, GLenum usage);
 
 		void Render() const;
