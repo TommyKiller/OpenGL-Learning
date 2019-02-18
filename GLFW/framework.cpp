@@ -14,36 +14,13 @@ void System::InitialiseGLFW()
 	}
 }
 
-GLFWwindow* System::InitialiseWindow(int xpos, int ypos, int window_width, int window_height, bool fullscreen_mode, const char* window_title)
-{
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
-
-	GLFWwindow* window = fullscreen_mode ?
-		glfwCreateWindow(window_width, window_height, window_title, glfwGetPrimaryMonitor(), nullptr) :
-		glfwCreateWindow(window_width, window_height, window_title, nullptr, nullptr);
-
-	glfwSetWindowPos(window, xpos, ypos);
-	glfwMakeContextCurrent(window);
-
-	if (window == nullptr)
-	{
-		throw std::exception("Can not create GLFW window!");
-		glfwTerminate();
-	}
-
-	return window;
-}
-
-void System::InitialiseGLEW(GLFWwindow* window)
+void System::InitialiseGLEW(Graphics::Window* window)
 {
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK)
 	{
 		throw std::exception("Can not initialize GLEW!");
-		glfwDestroyWindow(window);
+		delete window;
 		glfwTerminate();
 	}
 }

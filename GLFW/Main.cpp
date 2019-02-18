@@ -54,29 +54,27 @@ std::map<GLenum, std::string> shaderFiles =
 int main()
 {
 	System::InitialiseGLFW();
-	GLFWwindow* window = System::InitialiseWindow(0, 0, 1360, 768, false, "Test");
+	Graphics::Window* window = new Graphics::Window(0, 0, 1360, 768, "Test", true);
+	window->MakeCurrent();
+	window->SetCallbacks(Callbacks::FramebufferSizeCallback, Callbacks::KeyCallback);
 	System::InitialiseGLEW(window);
 	System::SetUpGLSettings(glm::vec4(0.4f, 0.4f, 0.4f, 0.0f));
-
-	// Set callbacks //
-	glfwSetFramebufferSizeCallback(window, Callbacks::FramebufferSizeCallback);
-	glfwSetKeyCallback(window, Callbacks::KeyCallback);
 
 	// Create objects //
 	Graphics::ShaderProgram shader(shaderFiles);
 	Graphics::Mesh* pyramid_mesh = new Graphics::Mesh(pyramid_vertex_data->data(), pyramid_vertex_data->size(), elements->data(), elements->size(), GL_STATIC_DRAW);
 
-	// Uniforms calculations //
+	// Projection matrix //
 	int framebuffer_width, framebuffer_height;
-	glfwGetFramebufferSize(window, &framebuffer_width, &framebuffer_height);
+	window->GetFramebufferSize(&framebuffer_width, &framebuffer_height);
 	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)framebuffer_width / (GLfloat)framebuffer_height, 0.1f, 100.0f);
 
-	while (!glfwWindowShouldClose(window))
+	while (!window->ShouldClose())
 	{
 		glfwPollEvents();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// Model matrix calculations //
+		// Model matrix //
 		glm::mat4 model(1);
 		model = glm::translate(model, triangle_location);
 		model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -91,7 +89,7 @@ int main()
 
 		shader.unbind();
 
-		glfwSwapBuffers(window);
+		window->SwapBuffers();
 	}
 
 	glfwTerminate();

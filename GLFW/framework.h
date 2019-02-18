@@ -11,6 +11,7 @@
 #include <algorithm>
 #include "Mesh.h"
 #include "ShaderProgram.h"
+#include "Window.h"
 
 
 extern glm::vec3 triangle_location;
@@ -20,10 +21,7 @@ namespace System
 {
 	void InitialiseGLFW();
 
-	GLFWwindow* InitialiseWindow(int xpos, int ypos, int window_width, int window_height, bool fullscreen_mode,
-		const char* window_title);
-
-	void InitialiseGLEW(GLFWwindow* window);
+	void InitialiseGLEW(Graphics::Window* window);
 
 	void SetUpGLSettings(glm::vec4 clearColor);
 }
