@@ -18,55 +18,78 @@ void Input::InputController::KeyCallback(GLFWwindow* window, int key, int scanco
 		{
 		case GLFW_PRESS:
 		{
-			Input::InputController::GetInstance().SetKeyPressedState(key, true);
-			if (Input::InputController::GetInstance().IsHandled(key) == -1)
+			if (!Input::InputController::GetInstance().HasKey(key))
 			{
-				Input::InputController::GetInstance().SetKeyHandledState(key, false);
+				Input::InputController::GetInstance().AddKey(key, scancode);
+			}
+			if (!Input::InputController::GetInstance().KeyPressed(key))
+			{
+				Input::InputController::GetInstance().SetKeyPressed(key, true);
+				Input::InputController::GetInstance().SetKeyHandled(key, false);
 			}
 			break;
 		}
 		case GLFW_RELEASE:
 		{
-			Input::InputController::GetInstance().SetKeyPressedState(key, false);
-			Input::InputController::GetInstance().SetKeyHandledState(key, false);
+			Input::InputController::GetInstance().SetKeyDefalut(key);
 			break;
 		}
 		}
 	}
 }
 
-void Input::InputController::SetKeyPressedState(int key, bool state)
+void Input::InputController::AddKey(int key, int scancode)
 {
-	keys_pressed[key] = state;
+	keys[key].scancode = scancode;
+	SetKeyDefalut(key);
 }
 
-void Input::InputController::SetKeyHandledState(int key, bool state)
+void Input::InputController::SetKeyDefalut(int key)
 {
-	keys_handled[key] = state;
+	keys[key].pressed = false;
+	keys[key].handled = true;
+	keys[key].modded = false;
 }
 
-bool Input::InputController::IsPressed(int key)
+void Input::InputController::SetKeyPressed(int key, bool pressed)
 {
-	if (!keys_pressed.count(key))
-	{
-		return false;
-	}
-	else
-	{
-		return keys_pressed[key];
-	}
+	keys[key].pressed = pressed;
 }
 
-int Input::InputController::IsHandled(int key)
+void Input::InputController::SetKeyHandled(int key, bool handled)
 {
-	if (!keys_handled.count(key))
-	{
-		return -1;
-	}
-	else
-	{
-		return (int)keys_handled[key];
-	}
+	keys[key].handled = handled;
+}
+
+void Input::InputController::SetKeyMods(int key, int mods)
+{
+	keys[key].mods = mods;
+	keys[key].modded = true;
+}
+
+int Input::InputController::GetKeyMods(int key)
+{
+	return keys[key].mods;
+}
+
+bool Input::InputController::HasKey(int key)
+{
+	return keys.count(key);
+}
+
+bool Input::InputController::KeyPressed(int key)
+{
+	return keys[key].pressed;
+}
+
+bool Input::InputController::KeyHandled(int key)
+{
+	return keys[key].handled;
+}
+
+bool Input::InputController::KeyModded(int key)
+{
+	return keys[key].mods;
 }
 
 Input::InputController::~InputController()

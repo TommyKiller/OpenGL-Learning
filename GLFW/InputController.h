@@ -13,18 +13,37 @@ namespace Input
 
 		static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
-		void SetKeyPressedState(int key, bool state);
+		void SetKeyHandled(int key, bool handled);
 
-		void SetKeyHandledState(int key, bool state);
+		int GetKeyMods(int key);
 
-		bool IsPressed(int key);
+		bool KeyModded(int key);
 
-		int IsHandled(int key);
+		bool KeyPressed(int key);
+
+		bool KeyHandled(int key);
 
 	private:
-		std::unordered_map<int, bool> keys_pressed;
+		struct Key
+		{
+			int scancode;
+			int mods;
+			bool modded;
+			bool pressed;
+			bool handled;
+		};
 
-		std::unordered_map<int, bool> keys_handled;
+		std::unordered_map<int, Key> keys;
+
+		void AddKey(int key, int scancode);
+
+		void SetKeyDefalut(int key);
+
+		void SetKeyPressed(int key, bool pressed);
+
+		void SetKeyMods(int key, int mods);
+
+		bool HasKey(int key);
 
 		InputController();
 
