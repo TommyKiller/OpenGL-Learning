@@ -8,6 +8,9 @@
 //}
 
 
+const float MOVING_SPEED = 0.02f;
+
+
 Graphics::Window* window;
 Graphics::Mesh* pyramid_mesh;
 Graphics::ShaderProgram* shader;
@@ -52,7 +55,7 @@ std::vector<GLuint>* elements = new std::vector<GLuint>
 };
 
 
-std::map<GLenum, std::string> shaderFiles =
+std::unordered_map<GLenum, const char*> shaderFiles =
 {
 	{ GL_VERTEX_SHADER, "Shaders/vertexShader.shr" },
 	{ GL_FRAGMENT_SHADER, "Shaders/fragmentShader.shr" }
@@ -78,27 +81,27 @@ void HandleInput()
 	}
 	if (ic->KeyPressed(GLFW_KEY_W))
 	{
-		triangle_translation.z += 0.03f;
+		triangle_translation.z += MOVING_SPEED;
 	}
 	if (ic->KeyPressed(GLFW_KEY_S))
 	{
-		triangle_translation.z -= 0.03f;
+		triangle_translation.z -= MOVING_SPEED;
 	}
 	if (ic->KeyPressed(GLFW_KEY_A))
 	{
-		triangle_translation.x += 0.03f;
+		triangle_translation.x += MOVING_SPEED;
 	}
 	if (ic->KeyPressed(GLFW_KEY_D))
 	{
-		triangle_translation.x -= 0.03f;
+		triangle_translation.x -= MOVING_SPEED;
 	}
 	if (ic->KeyPressed(GLFW_KEY_LEFT_CONTROL))
 	{
-		triangle_translation.y += 0.03f;
+		triangle_translation.y += MOVING_SPEED;
 	}
 	if (ic->KeyPressed(GLFW_KEY_SPACE))
 	{
-		triangle_translation.y -= 0.03f;
+		triangle_translation.y -= MOVING_SPEED;
 	}
 }
 

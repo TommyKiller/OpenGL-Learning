@@ -6,7 +6,7 @@ Graphics::ShaderProgram::ShaderProgram(ShaderProgram& shader_program)
 	shaders_sources = shader_program.shaders_sources;
 }
 
-Graphics::ShaderProgram::ShaderProgram(std::map<GLenum, std::string> shader_sources_list)
+Graphics::ShaderProgram::ShaderProgram(std::unordered_map<GLenum, const char*> shader_sources_list)
 	: shaders_sources(shader_sources_list)
 {
 	std::vector<GLuint> shader_list;
@@ -20,7 +20,7 @@ Graphics::ShaderProgram::ShaderProgram(std::map<GLenum, std::string> shader_sour
 	std::for_each(shader_list.begin(), shader_list.end(), glDeleteShader);
 }
 
-void Graphics::ShaderProgram::AddShader(GLenum shader_type, std::string file_name)
+void Graphics::ShaderProgram::AddShader(GLenum shader_type, const char* file_name)
 {
 	Dispose();
 
@@ -84,21 +84,21 @@ Graphics::ShaderProgram::~ShaderProgram()
 	Dispose();
 }
 
-GLuint Graphics::ShaderProgram::CreateShader(GLenum shader_type, std::string file_name)
+GLuint Graphics::ShaderProgram::CreateShader(GLenum shader_type, const char* file_name)
 {
-	std::ifstream file(file_name);
+	std::string line;
+	std::ifstream fileStream(file_name, std::ios::in);
 
-	if (!file.is_open())
+	if (!fileStream.is_open())
 	{
 		throw std::exception("Can not open file!");
 	}
 
 	std::string shader_source;
-	while (!file.eof())
+	while (!fileStream.eof())
 	{
-		char line[256];
-		file.getline(line, 255);
-		shader_source = shader_source + line + "\n";
+		std::getline(fileStream, line);
+		shader_source.append(line + "\n");
 	}
 	const char* shader_source_str = shader_source.c_str();
 
