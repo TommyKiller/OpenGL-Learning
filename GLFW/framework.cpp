@@ -1,9 +1,6 @@
 #include "framework.h"
 
 
-glm::vec3 triangle_location(0.0f, 0.0f, -2.0f);
-
-
 // System //
 void System::InitialiseGLFW()
 {
@@ -12,6 +9,12 @@ void System::InitialiseGLFW()
 		throw std::exception("Can not initialize GLFW!");
 		glfwTerminate();
 	}
+
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 }
 
 void System::InitialiseGLEW(Graphics::Window* window)
@@ -37,38 +40,6 @@ void System::SetUpGLSettings(glm::vec4 clearColor)
 void Callbacks::FramebufferSizeCallback(GLFWwindow* window, int width, int height)
 {
 	Graphics::ReshapeViewport(0, 0, width, height);
-}
-
-void Callbacks::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-	{
-		glfwSetWindowShouldClose(window, 1);
-	}
-	if (key == GLFW_KEY_W && ((action == GLFW_REPEAT) || (action == GLFW_PRESS)))
-	{
-		triangle_location.z += 0.03f;
-	}
-	if (key == GLFW_KEY_S && ((action == GLFW_REPEAT) || (action == GLFW_PRESS)))
-	{
-		triangle_location.z -= 0.03f;
-	}
-	if (key == GLFW_KEY_A && ((action == GLFW_REPEAT) || (action == GLFW_PRESS)))
-	{
-		triangle_location.x += 0.03f;
-	}
-	if (key == GLFW_KEY_D && ((action == GLFW_REPEAT) || (action == GLFW_PRESS)))
-	{
-		triangle_location.x -= 0.03f;
-	}
-	if (key == GLFW_KEY_LEFT_CONTROL && ((action == GLFW_REPEAT) || (action == GLFW_PRESS)))
-	{
-		triangle_location.y += 0.03f;
-	}
-	if (key == GLFW_KEY_SPACE && ((action == GLFW_REPEAT) || (action == GLFW_PRESS)))
-	{
-		triangle_location.y -= 0.03f;
-	}
 }
 
 

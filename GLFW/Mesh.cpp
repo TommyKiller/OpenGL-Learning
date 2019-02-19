@@ -14,7 +14,7 @@ Graphics::Mesh::Mesh(std::pair<GLfloat*, unsigned int>* vertex_buffers, unsigned
 	: VBOs_count(vertex_buffers_count), elements_count(elements_count)
 {
 	VBOs = new GLuint[VBOs_count];
-	for (int i = 0; i < vertex_buffers_count; ++i)
+	for (unsigned int i = 0; i < vertex_buffers_count; ++i)
 	{
 		VBOs[i] = CreateBuffer(GL_ARRAY_BUFFER, vertex_buffers[i].first, vertex_buffers[i].second, usage);
 	}
@@ -36,7 +36,7 @@ GLuint Graphics::Mesh::CreateVAO(GLuint* VBO, unsigned int VBO_count, GLuint EBO
 
 	glBindVertexArray(VAO);
 
-	for (int i = 0; i < VBO_count; ++i)
+	for (unsigned int i = 0; i < VBO_count; ++i)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, VBO[i]);
 		glVertexAttribPointer(i, 4, GL_FLOAT, GL_FALSE, 0, 0);

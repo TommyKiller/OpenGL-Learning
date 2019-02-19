@@ -2,12 +2,6 @@
 
 Graphics::Window::Window(int xpos, int ypos, int window_width, int window_height, const char* window_title, bool fullscreen_mode)
 {
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
-
 	window = fullscreen_mode ?
 		glfwCreateWindow(window_width, window_height, window_title, glfwGetPrimaryMonitor(), nullptr) :
 		glfwCreateWindow(window_width, window_height, window_title, nullptr, nullptr);
@@ -20,7 +14,7 @@ Graphics::Window::Window(int xpos, int ypos, int window_width, int window_height
 
 	glfwSetWindowPos(window, xpos, ypos);
 
-	SaveWindowedModeSettings();
+	SaveWindowedModeProperties();
 }
 
 void Graphics::Window::MakeCurrent()
@@ -49,7 +43,7 @@ bool Graphics::Window::ShouldClose()
 
 bool Graphics::Window::IsFullscreen()
 {
-	return (glfwGetPrimaryMonitor != nullptr);
+	return (glfwGetWindowMonitor(window) != nullptr);
 }
 
 void Graphics::Window::Fullscreen()
@@ -59,7 +53,7 @@ void Graphics::Window::Fullscreen()
 		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 
-		SaveWindowedModeSettings();
+		SaveWindowedModeProperties();
 		glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
 	}
 }
@@ -68,7 +62,7 @@ void Graphics::Window::Windowed()
 {
 	if (IsFullscreen() && (window != nullptr))
 	{
-		glfwSetWindowMonitor(window, nullptr, windowed_mode.xpos, windowed_mode.ypos, windowed_mode.width, windowed_mode.height, windowed_mode.refreshRate);
+		glfwSetWindowMonitor(window, nullptr, windowed_mode_properties.xpos, windowed_mode_properties.ypos, windowed_mode_properties.width, windowed_mode_properties.height, windowed_mode_properties.refreshRate);
 	}
 }
 
@@ -117,9 +111,9 @@ Graphics::Window::~Window()
 	Dispose();
 }
 
-void Graphics::Window::SaveWindowedModeSettings()
+void Graphics::Window::SaveWindowedModeProperties()
 {
-	glfwGetWindowSize(window, &windowed_mode.width, &windowed_mode.height);
-	glfwGetWindowPos(window, &windowed_mode.xpos, &windowed_mode.ypos);
-	windowed_mode.refreshRate = glfwGetVideoMode(glfwGetPrimaryMonitor())->refreshRate;
+	glfwGetWindowSize(window, &windowed_mode_properties.width, &windowed_mode_properties.height);
+	glfwGetWindowPos(window, &windowed_mode_properties.xpos, &windowed_mode_properties.ypos);
+	windowed_mode_properties.refreshRate = glfwGetVideoMode(glfwGetPrimaryMonitor())->refreshRate;
 }

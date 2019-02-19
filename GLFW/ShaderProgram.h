@@ -9,6 +9,7 @@
 #include <fstream>
 #include <algorithm>
 
+
 namespace Graphics
 {
 	class ShaderProgram

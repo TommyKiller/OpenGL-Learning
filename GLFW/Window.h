@@ -22,11 +22,7 @@ namespace Graphics
 
 		bool IsFullscreen();
 
-		void SwapBuffers();
-
 		void Fullscreen();
-
-		void WindowedFullscreen();
 
 		void Windowed();
 
@@ -43,7 +39,7 @@ namespace Graphics
 		~Window();
 
 	private:
-		struct WindowMode
+		struct WindowProperties
 		{
 			int xpos;
 			int ypos;
@@ -53,9 +49,9 @@ namespace Graphics
 		};
 
 		GLFWwindow* window;
-		WindowMode windowed_mode;
+		WindowProperties windowed_mode_properties;
 
-		void SaveWindowedModeSettings();
+		void SaveWindowedModeProperties();
 	};
 }
 
