@@ -1,16 +1,11 @@
 #include "InputController.h"
 
-Input::InputController* Input::InputController::instance = nullptr;
-
 Input::InputController::InputController()
 {}
 
-Input::InputController* Input::InputController::GetInstance()
+Input::InputController& Input::InputController::GetInstance()
 {
-	if (instance == nullptr)
-	{
-		instance = new Input::InputController();
-	}
+	static Input::InputController instance;
 
 	return instance;
 }
@@ -19,22 +14,21 @@ void Input::InputController::KeyCallback(GLFWwindow* window, int key, int scanco
 {
 	if (key != GLFW_KEY_UNKNOWN)
 	{
-		Input::InputController* ic = Input::InputController::GetInstance();
 		switch (action)
 		{
 		case GLFW_PRESS:
 		{
-			ic->SetKeyPressedState(key, true);
-			if (ic->IsHandled(key) == -1)
+			Input::InputController::GetInstance().SetKeyPressedState(key, true);
+			if (Input::InputController::GetInstance().IsHandled(key) == -1)
 			{
-				ic->SetKeyHandledState(key, false);
+				Input::InputController::GetInstance().SetKeyHandledState(key, false);
 			}
 			break;
 		}
 		case GLFW_RELEASE:
 		{
-			ic->SetKeyPressedState(key, false);
-			ic->SetKeyHandledState(key, false);
+			Input::InputController::GetInstance().SetKeyPressedState(key, false);
+			Input::InputController::GetInstance().SetKeyHandledState(key, false);
 			break;
 		}
 		}
@@ -76,6 +70,4 @@ int Input::InputController::IsHandled(int key)
 }
 
 Input::InputController::~InputController()
-{
-	delete instance;
-}
+{}

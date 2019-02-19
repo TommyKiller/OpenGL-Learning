@@ -63,14 +63,13 @@ std::unordered_map<GLenum, const char*> shaderFiles =
 
 void HandleInput()
 {
-	Input::InputController* ic = Input::InputController::GetInstance();
-	if (ic->IsPressed(GLFW_KEY_ESCAPE))
+	if (Input::InputController::GetInstance().IsPressed(GLFW_KEY_ESCAPE))
 	{
 		window->Close();
 	}
-	if (ic->IsPressed(GLFW_KEY_F11))
+	if (Input::InputController::GetInstance().IsPressed(GLFW_KEY_F11))
 	{
-		if (!ic->IsHandled(GLFW_KEY_F11))
+		if (!Input::InputController::GetInstance().IsHandled(GLFW_KEY_F11))
 		{
 			if (window->IsFullscreen())
 			{
@@ -80,30 +79,30 @@ void HandleInput()
 			{
 				window->Fullscreen();
 			}
-			ic->SetKeyHandledState(GLFW_KEY_F11, true);
+			Input::InputController::GetInstance().SetKeyHandledState(GLFW_KEY_F11, true);
 		}
 	}
-	if (ic->IsPressed(GLFW_KEY_W))
+	if (Input::InputController::GetInstance().IsPressed(GLFW_KEY_W))
 	{
 		triangle_translation.z += MOVING_SPEED;
 	}
-	if (ic->IsPressed(GLFW_KEY_S))
+	if (Input::InputController::GetInstance().IsPressed(GLFW_KEY_S))
 	{
 		triangle_translation.z -= MOVING_SPEED;
 	}
-	if (ic->IsPressed(GLFW_KEY_A))
+	if (Input::InputController::GetInstance().IsPressed(GLFW_KEY_A))
 	{
 		triangle_translation.x += MOVING_SPEED;
 	}
-	if (ic->IsPressed(GLFW_KEY_D))
+	if (Input::InputController::GetInstance().IsPressed(GLFW_KEY_D))
 	{
 		triangle_translation.x -= MOVING_SPEED;
 	}
-	if (ic->IsPressed(GLFW_KEY_LEFT_CONTROL))
+	if (Input::InputController::GetInstance().IsPressed(GLFW_KEY_LEFT_CONTROL))
 	{
 		triangle_translation.y += MOVING_SPEED;
 	}
-	if (ic->IsPressed(GLFW_KEY_SPACE))
+	if (Input::InputController::GetInstance().IsPressed(GLFW_KEY_SPACE))
 	{
 		triangle_translation.y -= MOVING_SPEED;
 	}

@@ -9,7 +9,7 @@ namespace Input
 	class InputController
 	{
 	public:
-		static InputController* GetInstance();
+		static InputController& GetInstance();
 
 		static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
@@ -21,11 +21,7 @@ namespace Input
 
 		int IsHandled(int key);
 
-		~InputController();
-
 	private:
-		static InputController* instance;
-
 		std::unordered_map<int, bool> keys_pressed;
 
 		std::unordered_map<int, bool> keys_handled;
@@ -33,6 +29,10 @@ namespace Input
 		InputController();
 
 		InputController(InputController&) = delete;
+
+		InputController& operator=(const InputController&) = delete;
+
+		~InputController();
 	};
 }
 
