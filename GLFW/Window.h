@@ -5,7 +5,7 @@
 #include <exception>
 
 
-namespace Graphics
+namespace System
 {
 	class Window
 	{

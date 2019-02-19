@@ -24,32 +24,54 @@ void Input::InputController::KeyCallback(GLFWwindow* window, int key, int scanco
 		{
 		case GLFW_PRESS:
 		{
-			ic->SetKeyState(key, true);
+			ic->SetKeyPressedState(key, true);
+			if (ic->IsHandled(key) == -1)
+			{
+				ic->SetKeyHandledState(key, false);
+			}
 			break;
 		}
 		case GLFW_RELEASE:
 		{
-			ic->SetKeyState(key, false);
+			ic->SetKeyPressedState(key, false);
+			ic->SetKeyHandledState(key, false);
 			break;
 		}
 		}
 	}
 }
 
-void Input::InputController::SetKeyState(int key, bool state)
+void Input::InputController::SetKeyPressedState(int key, bool state)
 {
-	keys[key] = state;
+	keys_pressed[key] = state;
 }
 
-bool Input::InputController::KeyPressed(int key)
+void Input::InputController::SetKeyHandledState(int key, bool state)
 {
-	if (!keys.count(key))
+	keys_handled[key] = state;
+}
+
+bool Input::InputController::IsPressed(int key)
+{
+	if (!keys_pressed.count(key))
 	{
 		return false;
 	}
 	else
 	{
-		return keys[key];
+		return keys_pressed[key];
+	}
+}
+
+int Input::InputController::IsHandled(int key)
+{
+	if (!keys_handled.count(key))
+	{
+		return -1;
+	}
+	else
+	{
+		return (int)keys_handled[key];
 	}
 }
 

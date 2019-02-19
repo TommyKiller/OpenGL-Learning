@@ -15,7 +15,7 @@ namespace System
 {
 	void InitialiseGLFW();
 
-	void InitialiseGLEW(Graphics::Window* window);
+	void InitialiseGLEW(System::Window* window);
 
 	void SetUpGLSettings(glm::vec4 clearColor);
 }

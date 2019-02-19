@@ -17,7 +17,7 @@ void System::InitialiseGLFW()
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 }
 
-void System::InitialiseGLEW(Graphics::Window* window)
+void System::InitialiseGLEW(System::Window* window)
 {
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK)

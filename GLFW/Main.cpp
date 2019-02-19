@@ -11,7 +11,7 @@
 const float MOVING_SPEED = 0.02f;
 
 
-Graphics::Window* window;
+System::Window* window;
 Graphics::Mesh* pyramid_mesh;
 Graphics::ShaderProgram* shader;
 glm::vec3 triangle_translation(0.0f, 0.0f, -2.0f);
@@ -64,42 +64,46 @@ std::unordered_map<GLenum, const char*> shaderFiles =
 void HandleInput()
 {
 	Input::InputController* ic = Input::InputController::GetInstance();
-	if (ic->KeyPressed(GLFW_KEY_ESCAPE))
+	if (ic->IsPressed(GLFW_KEY_ESCAPE))
 	{
 		window->Close();
 	}
-	if (ic->KeyPressed(GLFW_KEY_F11))
+	if (ic->IsPressed(GLFW_KEY_F11))
 	{
-		if (window->IsFullscreen())
+		if (!ic->IsHandled(GLFW_KEY_F11))
 		{
-			window->Windowed();
-		}
-		else
-		{
-			window->Fullscreen();
+			if (window->IsFullscreen())
+			{
+				window->Windowed();
+			}
+			else
+			{
+				window->Fullscreen();
+			}
+			ic->SetKeyHandledState(GLFW_KEY_F11, true);
 		}
 	}
-	if (ic->KeyPressed(GLFW_KEY_W))
+	if (ic->IsPressed(GLFW_KEY_W))
 	{
 		triangle_translation.z += MOVING_SPEED;
 	}
-	if (ic->KeyPressed(GLFW_KEY_S))
+	if (ic->IsPressed(GLFW_KEY_S))
 	{
 		triangle_translation.z -= MOVING_SPEED;
 	}
-	if (ic->KeyPressed(GLFW_KEY_A))
+	if (ic->IsPressed(GLFW_KEY_A))
 	{
 		triangle_translation.x += MOVING_SPEED;
 	}
-	if (ic->KeyPressed(GLFW_KEY_D))
+	if (ic->IsPressed(GLFW_KEY_D))
 	{
 		triangle_translation.x -= MOVING_SPEED;
 	}
-	if (ic->KeyPressed(GLFW_KEY_LEFT_CONTROL))
+	if (ic->IsPressed(GLFW_KEY_LEFT_CONTROL))
 	{
 		triangle_translation.y += MOVING_SPEED;
 	}
-	if (ic->KeyPressed(GLFW_KEY_SPACE))
+	if (ic->IsPressed(GLFW_KEY_SPACE))
 	{
 		triangle_translation.y -= MOVING_SPEED;
 	}
@@ -108,7 +112,7 @@ void HandleInput()
 int main()
 {
 	System::InitialiseGLFW();
-	window = new Graphics::Window(0, 0, 1360, 768, "Test", true);
+	window = new System::Window(0, 0, 1360, 768, "Test", true);
 	window->MakeCurrent();
 	window->SetCallbacks(Callbacks::FramebufferSizeCallback, Input::InputController::KeyCallback);
 	System::InitialiseGLEW(window);
