@@ -63,12 +63,12 @@ std::unordered_map<GLenum, const char*> shaderFiles =
 
 void HandleInput()
 {
-	if (Input::InputController::GetInstance().KeyPressed(GLFW_KEY_ESCAPE))
+	if (Engine::InputController::GetInstance().KeyPressed(GLFW_KEY_ESCAPE))
 	{
 		window->Close();
 	}
-	if (Input::InputController::GetInstance().KeyPressed(GLFW_KEY_F11) &&
-		!Input::InputController::GetInstance().KeyHandled(GLFW_KEY_F11))
+	if (Engine::InputController::GetInstance().KeyPressed(GLFW_KEY_F11) &&
+		!Engine::InputController::GetInstance().KeyHandled(GLFW_KEY_F11))
 	{
 		if (window->IsFullscreen())
 		{
@@ -78,29 +78,29 @@ void HandleInput()
 		{
 			window->Fullscreen();
 		}
-		Input::InputController::GetInstance().SetKeyHandled(GLFW_KEY_F11, true);
+		Engine::InputController::GetInstance().SetKeyHandled(GLFW_KEY_F11, true);
 	}
-	if (Input::InputController::GetInstance().KeyPressed(GLFW_KEY_W))
+	if (Engine::InputController::GetInstance().KeyPressed(GLFW_KEY_W))
 	{
 		triangle_translation.z += MOVING_SPEED;
 	}
-	if (Input::InputController::GetInstance().KeyPressed(GLFW_KEY_S))
+	if (Engine::InputController::GetInstance().KeyPressed(GLFW_KEY_S))
 	{
 		triangle_translation.z -= MOVING_SPEED;
 	}
-	if (Input::InputController::GetInstance().KeyPressed(GLFW_KEY_A))
+	if (Engine::InputController::GetInstance().KeyPressed(GLFW_KEY_A))
 	{
 		triangle_translation.x += MOVING_SPEED;
 	}
-	if (Input::InputController::GetInstance().KeyPressed(GLFW_KEY_D))
+	if (Engine::InputController::GetInstance().KeyPressed(GLFW_KEY_D))
 	{
 		triangle_translation.x -= MOVING_SPEED;
 	}
-	if (Input::InputController::GetInstance().KeyPressed(GLFW_KEY_LEFT_CONTROL))
+	if (Engine::InputController::GetInstance().KeyPressed(GLFW_KEY_LEFT_CONTROL))
 	{
 		triangle_translation.y += MOVING_SPEED;
 	}
-	if (Input::InputController::GetInstance().KeyPressed(GLFW_KEY_SPACE))
+	if (Engine::InputController::GetInstance().KeyPressed(GLFW_KEY_SPACE))
 	{
 		triangle_translation.y -= MOVING_SPEED;
 	}
@@ -111,7 +111,7 @@ int main()
 	System::InitialiseGLFW();
 	window = new System::Window(0, 0, 1360, 768, "Test", true);
 	window->MakeCurrent();
-	window->SetCallbacks(Callbacks::FramebufferSizeCallback, Input::InputController::KeyCallback);
+	window->SetCallbacks(Engine::Camera::FramebufferSizeCallback, Engine::InputController::KeyCallback);
 	System::InitialiseGLEW(window);
 	System::SetUpGLSettings(glm::vec4(0.4f, 0.4f, 0.4f, 0.0f));
 

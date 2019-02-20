@@ -9,6 +9,9 @@
 #include "ShaderProgram.h"
 #include "Window.h"
 #include "InputController.h"
+#include "Camera.h"
+#include "Scene.h"
+#include "Renderer.h"
 
 
 namespace System
@@ -18,16 +21,6 @@ namespace System
 	void InitialiseGLEW(System::Window* window);
 
 	void SetUpGLSettings(glm::vec4 clearColor);
-}
-
-namespace Callbacks
-{
-	void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
-}
-
-namespace Graphics
-{
-	void ReshapeViewport(GLint xpos, GLint ypos, GLsizei width, GLsizei height);
 }
 
 

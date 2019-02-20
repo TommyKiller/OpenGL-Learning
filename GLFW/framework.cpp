@@ -34,17 +34,3 @@ void System::SetUpGLSettings(glm::vec4 clearColor)
 	glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 	glfwSetTime(0);
 }
-
-
-// Callbacks //
-void Callbacks::FramebufferSizeCallback(GLFWwindow* window, int width, int height)
-{
-	Graphics::ReshapeViewport(0, 0, width, height);
-}
-
-
-// Graphics //
-void Graphics::ReshapeViewport(GLint xpos, GLint ypos, GLsizei width, GLsizei height)
-{
-	glViewport(xpos, ypos, width, height);
-}

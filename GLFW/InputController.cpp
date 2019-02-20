@@ -1,16 +1,16 @@
 #include "InputController.h"
 
-Input::InputController::InputController()
+Engine::InputController::InputController()
 {}
 
-Input::InputController& Input::InputController::GetInstance()
+Engine::InputController& Engine::InputController::GetInstance()
 {
-	static Input::InputController instance;
+	static Engine::InputController instance;
 
 	return instance;
 }
 
-void Input::InputController::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+void Engine::InputController::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	if (key != GLFW_KEY_UNKNOWN)
 	{
@@ -18,79 +18,79 @@ void Input::InputController::KeyCallback(GLFWwindow* window, int key, int scanco
 		{
 		case GLFW_PRESS:
 		{
-			if (!Input::InputController::GetInstance().HasKey(key))
+			if (!Engine::InputController::GetInstance().HasKey(key))
 			{
-				Input::InputController::GetInstance().AddKey(key, scancode);
+				Engine::InputController::GetInstance().AddKey(key, scancode);
 			}
-			if (!Input::InputController::GetInstance().KeyPressed(key))
+			if (!Engine::InputController::GetInstance().KeyPressed(key))
 			{
-				Input::InputController::GetInstance().SetKeyPressed(key, true);
-				Input::InputController::GetInstance().SetKeyHandled(key, false);
+				Engine::InputController::GetInstance().SetKeyPressed(key, true);
+				Engine::InputController::GetInstance().SetKeyHandled(key, false);
 			}
 			break;
 		}
 		case GLFW_RELEASE:
 		{
-			Input::InputController::GetInstance().SetKeyDefalut(key);
+			Engine::InputController::GetInstance().SetKeyDefalut(key);
 			break;
 		}
 		}
 	}
 }
 
-void Input::InputController::AddKey(int key, int scancode)
+void Engine::InputController::AddKey(int key, int scancode)
 {
 	keys[key].scancode = scancode;
 	SetKeyDefalut(key);
 }
 
-void Input::InputController::SetKeyDefalut(int key)
+void Engine::InputController::SetKeyDefalut(int key)
 {
 	keys[key].pressed = false;
 	keys[key].handled = true;
 	keys[key].modded = false;
 }
 
-void Input::InputController::SetKeyPressed(int key, bool pressed)
+void Engine::InputController::SetKeyPressed(int key, bool pressed)
 {
 	keys[key].pressed = pressed;
 }
 
-void Input::InputController::SetKeyHandled(int key, bool handled)
+void Engine::InputController::SetKeyHandled(int key, bool handled)
 {
 	keys[key].handled = handled;
 }
 
-void Input::InputController::SetKeyMods(int key, int mods)
+void Engine::InputController::SetKeyMods(int key, int mods)
 {
 	keys[key].mods = mods;
 	keys[key].modded = true;
 }
 
-int Input::InputController::GetKeyMods(int key)
+int Engine::InputController::GetKeyMods(int key)
 {
 	return keys[key].mods;
 }
 
-bool Input::InputController::HasKey(int key)
+bool Engine::InputController::HasKey(int key)
 {
 	return keys.count(key);
 }
 
-bool Input::InputController::KeyPressed(int key)
+bool Engine::InputController::KeyPressed(int key)
 {
 	return keys[key].pressed;
 }
 
-bool Input::InputController::KeyHandled(int key)
+bool Engine::InputController::KeyHandled(int key)
 {
 	return keys[key].handled;
 }
 
-bool Input::InputController::KeyModded(int key)
+bool Engine::InputController::KeyModded(int key)
 {
 	return keys[key].mods;
 }
 
-Input::InputController::~InputController()
+Engine::InputController::~InputController()
 {}

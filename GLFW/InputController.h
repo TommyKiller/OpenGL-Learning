@@ -4,7 +4,7 @@
 #include <unordered_map>
 
 
-namespace Input
+namespace Engine
 {
 	class InputController
 	{

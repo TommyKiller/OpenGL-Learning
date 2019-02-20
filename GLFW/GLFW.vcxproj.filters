@@ -39,6 +39,15 @@
     <ClCompile Include="InputController.cpp">
       <Filter>Исходные файлы\framework</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Исходные файлы\framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Исходные файлы\framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Исходные файлы\framework</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -54,6 +63,15 @@
       <Filter>Файлы заголовков\framework</Filter>
     </ClInclude>
     <ClInclude Include="InputController.h">
+      <Filter>Файлы заголовков\framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Файлы заголовков\framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Файлы заголовков\framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
       <Filter>Файлы заголовков\framework</Filter>
     </ClInclude>
   </ItemGroup>
