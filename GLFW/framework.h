@@ -16,7 +16,7 @@
 
 namespace System
 {
-	void InitialiseGLFW();
+	void InitialiseGLFW(unsigned int maj_version, unsigned int min_version);
 
 	void InitialiseGLEW(System::Window* window);
 }

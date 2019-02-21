@@ -107,7 +107,7 @@ void HandleInput()
 int main()
 {
 	// Setting system up //
-	System::InitialiseGLFW();
+	System::InitialiseGLFW(3, 3);
 	window = new System::Window(0, 0, 1360, 768, "Test", true);
 	window->MakeCurrent();
 	window->SetCallbacks(Graphics::Render::GetInstance().FramebufferSizeCallback, Engine::InputController::KeyCallback);

@@ -2,7 +2,7 @@
 
 
 // System //
-void System::InitialiseGLFW()
+void System::InitialiseGLFW(unsigned int maj_version, unsigned int min_version)
 {
 	if (!glfwInit())
 	{
@@ -10,8 +10,8 @@ void System::InitialiseGLFW()
 		glfwTerminate();
 	}
 
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, maj_version);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, min_version);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
