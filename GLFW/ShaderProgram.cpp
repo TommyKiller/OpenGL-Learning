@@ -10,9 +10,9 @@ Graphics::ShaderProgram::ShaderProgram(std::unordered_map<GLenum, const char*> s
 	: shaders_sources(shader_sources_list)
 {
 	std::vector<GLuint> shader_list;
-	for (const auto& [key, value] : shaders_sources)
+	for (const std::pair<GLenum, const char*>& shader : shaders_sources)
 	{
-		shader_list.push_back(CreateShader(key, value));
+		shader_list.push_back(CreateShader(shader.first, shader.second));
 	}
 
 	ID = CreateProgram(shader_list);
@@ -81,15 +81,15 @@ Graphics::ShaderProgram::~ShaderProgram()
 
 GLuint Graphics::ShaderProgram::CreateShader(GLenum shader_type, const char* file_name)
 {
-	std::string line;
-	std::ifstream fileStream(file_name, std::ios::in);
+	std::string shader_source;
 
+	std::ifstream fileStream(file_name, std::ios::in);
 	if (!fileStream.is_open())
 	{
 		throw std::exception("Can not open file!");
 	}
 
-	std::string shader_source;
+	std::string line;
 	while (!fileStream.eof())
 	{
 		std::getline(fileStream, line);
@@ -120,7 +120,7 @@ GLuint Graphics::ShaderProgram::CreateProgram(std::vector<GLuint> shader_list)
 {
 	GLuint program = glCreateProgram();
 
-	for (const auto& shader : shader_list)
+	for (const GLuint&shader : shader_list)
 	{
 		glAttachShader(program, shader);
 	}
