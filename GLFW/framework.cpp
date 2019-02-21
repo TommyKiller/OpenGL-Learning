@@ -6,7 +6,7 @@ void System::InitialiseGLFW(unsigned int maj_version, unsigned int min_version)
 {
 	if (!glfwInit())
 	{
-		throw std::exception("Can not initialize GLFW!");
+		throw std::exception("Can not initialise GLFW!");
 		glfwTerminate();
 	}
 
