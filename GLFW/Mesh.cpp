@@ -22,9 +22,9 @@ Graphics::Mesh::Mesh(std::pair<GLfloat*, unsigned int>* vertex_buffers, unsigned
 	VAO = CreateVAO(VBOs, VBOs_count, EBO);
 }
 
-GLuint Graphics::Mesh::GetVAO()
+void Graphics::Mesh::Use()
 {
-	return VAO;
+	glBindVertexArray(VAO);
 }
 
 unsigned int Graphics::Mesh::GetElementsCount() const

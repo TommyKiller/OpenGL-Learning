@@ -20,9 +20,10 @@ void Graphics::Render::FramebufferSizeCallback(GLFWwindow* window, int width, in
 	Graphics::Render::GetInstance().ReshapeViewport(xpos, ypos, width, height);
 }
 
-void Graphics::Render::ClearMesh()
+void Graphics::Render::Unbind()
 {
 	glBindVertexArray(0);
+	glUseProgram(0);
 }
 
 void Graphics::Render::ReshapeViewport(int xpos, int ypos, int width, int height)
@@ -42,25 +43,23 @@ void Graphics::Render::Enable(GLenum cap)
 
 void Graphics::Render::operator()(ShaderProgram* shader_program, Graphics::Object* object, glm::mat4 projection)
 {
-	shader_program->Bind();
+	shader_program->Use();
 	shader_program->SetUniform("projection", 1, GL_FALSE, projection);
-	glBindVertexArray(object->GetMesh()->GetVAO());
+	object->GetMesh()->Use();
 	shader_program->SetUniform("model", 1, GL_FALSE, object->CreateModelMat());
 	glDrawElements(GL_TRIANGLES, object->GetMesh()->GetElementsCount(), GL_UNSIGNED_INT, 0);
-	glBindVertexArray(0);
-	shader_program->Unbind();
+	Unbind();
 }
 
 void Graphics::Render::operator()(ShaderProgram* shader_program, Engine::Scene* scene)
 {
-	shader_program->Bind();
+	shader_program->Use();
 	shader_program->SetUniform("projection", 1, GL_FALSE, scene->GetProjection());
 	std::for_each(scene->GetActors().begin(), scene->GetActors().end(), [&shader_program](std::shared_ptr<Graphics::Object> actor)
 		{
-			glBindVertexArray(actor->GetMesh()->GetVAO());
+			actor->GetMesh()->Use();
 			shader_program->SetUniform("model", 1, GL_FALSE, actor->CreateModelMat());
 			glDrawElements(GL_TRIANGLES, actor->GetMesh()->GetElementsCount(), GL_UNSIGNED_INT, 0);
 		});
-	glBindVertexArray(0);
-	shader_program->Unbind();
+	Unbind();
 }

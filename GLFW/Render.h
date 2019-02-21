@@ -19,7 +19,7 @@ namespace Graphics
 
 		static void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
 
-		void ClearMesh();
+		void Unbind();
 
 		void ReshapeViewport(int xpos, int ypos, int width, int height);
 

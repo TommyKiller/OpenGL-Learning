@@ -23,9 +23,7 @@ namespace Graphics
 
 		void AddShader(GLenum shader_type, const char* file_name);
 
-		void Bind();
-
-		void Unbind();
+		void Use();
 
 		GLuint GetAttribLocation(std::string attribute_name);
 

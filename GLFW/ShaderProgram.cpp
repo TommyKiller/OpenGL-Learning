@@ -37,14 +37,9 @@ void Graphics::ShaderProgram::AddShader(GLenum shader_type, const char* file_nam
 	std::for_each(shader_list.begin(), shader_list.end(), glDeleteShader);
 }
 
-void Graphics::ShaderProgram::Bind()
+void Graphics::ShaderProgram::Use()
 {
 	glUseProgram(ID);
-}
-
-void Graphics::ShaderProgram::Unbind()
-{
-	glUseProgram(0);
 }
 
 GLuint Graphics::ShaderProgram::GetAttribLocation(std::string attribute_name)

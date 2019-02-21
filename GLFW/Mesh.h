@@ -16,7 +16,7 @@ namespace Graphics
 		Mesh(std::pair<GLfloat*, unsigned int>* vertex_buffers, unsigned int vertex_buffers_count,
 			GLuint* elements, unsigned int elements_count, GLenum usage);
 
-		GLuint GetVAO();
+		void Use();
 
 		unsigned int GetElementsCount() const;
 
