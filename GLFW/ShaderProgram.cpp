@@ -37,9 +37,14 @@ void Graphics::ShaderProgram::AddShader(GLenum shader_type, const char* file_nam
 	std::for_each(shader_list.begin(), shader_list.end(), glDeleteShader);
 }
 
-void Graphics::ShaderProgram::bind()
+void Graphics::ShaderProgram::Bind()
 {
 	glUseProgram(ID);
+}
+
+void Graphics::ShaderProgram::Unbind()
+{
+	glUseProgram(0);
 }
 
 GLuint Graphics::ShaderProgram::GetAttribLocation(std::string attribute_name)
@@ -63,11 +68,6 @@ void Graphics::ShaderProgram::SetUniform(std::string uniform_name, int count, GL
 {
 	GLuint uniform_location = glGetUniformLocation(ID, uniform_name.c_str());
 	glUniformMatrix4fv(uniform_location, count, transpose, glm::value_ptr(uniform_value));
-}
-
-void Graphics::ShaderProgram::unbind()
-{
-	glUseProgram(0);
 }
 
 void Graphics::ShaderProgram::Dispose()

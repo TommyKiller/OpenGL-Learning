@@ -12,11 +12,9 @@ const float MOVING_SPEED = 0.02f;
 
 
 System::Window* window;
-Graphics::Mesh* pyramid_mesh;
+Engine::Scene* scene;
+Graphics::Object* pyramid;
 Graphics::ShaderProgram* shader;
-glm::vec3 triangle_translation(0.0f, 0.0f, -2.0f);
-glm::mat4 projection;
-glm::mat4 model;
 
 
 std::vector<GLfloat>* vertex_coords = new std::vector<GLfloat>
@@ -82,47 +80,49 @@ void HandleInput()
 	}
 	if (Engine::InputController::GetInstance().KeyPressed(GLFW_KEY_W))
 	{
-		triangle_translation.z += MOVING_SPEED;
+		pyramid->Move(0.0f, 0.0f, MOVING_SPEED);
 	}
 	if (Engine::InputController::GetInstance().KeyPressed(GLFW_KEY_S))
 	{
-		triangle_translation.z -= MOVING_SPEED;
+		pyramid->Move(0.0f, 0.0f, -MOVING_SPEED);
 	}
 	if (Engine::InputController::GetInstance().KeyPressed(GLFW_KEY_A))
 	{
-		triangle_translation.x += MOVING_SPEED;
+		pyramid->Move(MOVING_SPEED, 0.0f, 0.0f);
 	}
 	if (Engine::InputController::GetInstance().KeyPressed(GLFW_KEY_D))
 	{
-		triangle_translation.x -= MOVING_SPEED;
+		pyramid->Move(-MOVING_SPEED, 0.0f, 0.0f);
 	}
 	if (Engine::InputController::GetInstance().KeyPressed(GLFW_KEY_LEFT_CONTROL))
 	{
-		triangle_translation.y += MOVING_SPEED;
+		pyramid->Move(0.0f, MOVING_SPEED, 0.0f);
 	}
 	if (Engine::InputController::GetInstance().KeyPressed(GLFW_KEY_SPACE))
 	{
-		triangle_translation.y -= MOVING_SPEED;
+		pyramid->Move(0.0f, -MOVING_SPEED, 0.0f);
 	}
 }
 
 int main()
 {
+	// Setting system up //
 	System::InitialiseGLFW();
 	window = new System::Window(0, 0, 1360, 768, "Test", true);
 	window->MakeCurrent();
-	window->SetCallbacks(Engine::Camera::FramebufferSizeCallback, Engine::InputController::KeyCallback);
+	window->SetCallbacks(Graphics::Render::GetInstance().FramebufferSizeCallback, Engine::InputController::KeyCallback);
 	System::InitialiseGLEW(window);
-	System::SetUpGLSettings(glm::vec4(0.4f, 0.4f, 0.4f, 0.0f));
+	Graphics::Render::GetInstance().ClearColor(glm::vec4(0.4f, 0.3f, 0.5f, 1.0f));
+	Graphics::Render::GetInstance().Enable(GL_DEPTH_TEST);
 
 	// Create objects //
-	shader = new Graphics::ShaderProgram(shaderFiles);
-	pyramid_mesh = new Graphics::Mesh(pyramid_vertex_data->data(), pyramid_vertex_data->size(), elements->data(), elements->size(), GL_STATIC_DRAW);
-
-	// Projection matrix //
 	int framebuffer_width, framebuffer_height;
 	window->GetFramebufferSize(&framebuffer_width, &framebuffer_height);
-	projection = glm::perspective(45.0f, (GLfloat)framebuffer_width / (GLfloat)framebuffer_height, 0.1f, 100.0f);
+	scene = new Engine::Scene(glm::perspective(45.0f, (GLfloat)framebuffer_width / (GLfloat)framebuffer_height, 0.1f, 100.0f));
+	pyramid = new Graphics::Object(std::make_shared<Graphics::Mesh>(pyramid_vertex_data->data(), pyramid_vertex_data->size(), elements->data(), elements->size(), GL_STATIC_DRAW),
+		glm::vec3(0.0f, 0.0f, -2.0f), glm::vec3(0.5f, 0.5f, 0.5f));
+	scene->AddObject(pyramid);
+	shader = new Graphics::ShaderProgram(shaderFiles);
 
 	while (!window->ShouldClose())
 	{
@@ -131,19 +131,11 @@ int main()
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// Model matrix //
-		model = glm::translate(glm::mat4(1), triangle_translation);
-		model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		// ... //
+		pyramid->Rotate((float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));
 
 		// Rendering //
-		shader->bind();
-		shader->SetUniform("model", 1, GL_FALSE, model);
-		shader->SetUniform("projection", 1, GL_FALSE, projection);
-
-		pyramid_mesh->Render();
-
-		shader->unbind();
+		Graphics::Render::GetInstance()(shader, scene);
 
 		window->SwapBuffers();
 	}

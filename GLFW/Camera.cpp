@@ -20,13 +20,6 @@ void Engine::Camera::Dispose()
 	delete instance;
 }
 
-void Engine::Camera::FramebufferSizeCallback(GLFWwindow* window, int width, int height)
-{
-	int xpos, ypos;
-	glfwGetWindowPos(window, &xpos, &ypos);
-	glViewport(xpos, ypos, width, height);
-}
-
 Engine::Camera::Camera()
 {}
 

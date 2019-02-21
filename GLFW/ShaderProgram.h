@@ -23,7 +23,9 @@ namespace Graphics
 
 		void AddShader(GLenum shader_type, const char* file_name);
 
-		void bind();
+		void Bind();
+
+		void Unbind();
 
 		GLuint GetAttribLocation(std::string attribute_name);
 
@@ -32,8 +34,6 @@ namespace Graphics
 		void SetUniform(std::string uniform_name, int uniform_value1, int uniform_value2);
 
 		void SetUniform(std::string uniform_name, int count, GLboolean transpose, glm::mat4 uniform_value);
-
-		void unbind();
 
 		void Dispose();
 

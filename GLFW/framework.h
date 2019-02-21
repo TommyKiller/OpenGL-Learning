@@ -11,7 +11,7 @@
 #include "InputController.h"
 #include "Camera.h"
 #include "Scene.h"
-#include "Renderer.h"
+#include "Render.h"
 
 
 namespace System
@@ -19,8 +19,6 @@ namespace System
 	void InitialiseGLFW();
 
 	void InitialiseGLEW(System::Window* window);
-
-	void SetUpGLSettings(glm::vec4 clearColor);
 }
 
 

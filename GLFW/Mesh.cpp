@@ -22,11 +22,14 @@ Graphics::Mesh::Mesh(std::pair<GLfloat*, unsigned int>* vertex_buffers, unsigned
 	VAO = CreateVAO(VBOs, VBOs_count, EBO);
 }
 
-void Graphics::Mesh::Render() const
+GLuint Graphics::Mesh::GetVAO()
 {
-	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, elements_count, GL_UNSIGNED_INT, 0);
-	glBindVertexArray(0);
+	return VAO;
+}
+
+unsigned int Graphics::Mesh::GetElementsCount() const
+{
+	return elements_count;
 }
 
 GLuint Graphics::Mesh::CreateVAO(GLuint* VBO, unsigned int VBO_count, GLuint EBO)

@@ -15,6 +15,7 @@ void System::InitialiseGLFW()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
+	glfwSetTime(0);
 }
 
 void System::InitialiseGLEW(System::Window* window)
@@ -26,11 +27,4 @@ void System::InitialiseGLEW(System::Window* window)
 		delete window;
 		glfwTerminate();
 	}
-}
-
-void System::SetUpGLSettings(glm::vec4 clearColor)
-{
-	glEnable(GL_DEPTH_TEST);
-	glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
-	glfwSetTime(0);
 }

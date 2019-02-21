@@ -16,7 +16,9 @@ namespace Graphics
 		Mesh(std::pair<GLfloat*, unsigned int>* vertex_buffers, unsigned int vertex_buffers_count,
 			GLuint* elements, unsigned int elements_count, GLenum usage);
 
-		void Render() const;
+		GLuint GetVAO();
+
+		unsigned int GetElementsCount() const;
 
 		template<class data_t>
 		GLuint CreateBuffer(GLenum target, data_t* data, unsigned int data_count, GLenum usage)

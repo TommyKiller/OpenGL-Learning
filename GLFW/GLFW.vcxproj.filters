@@ -45,7 +45,10 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Исходные файлы\framework</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer.cpp">
+    <ClCompile Include="Render.cpp">
+      <Filter>Исходные файлы\framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
       <Filter>Исходные файлы\framework</Filter>
     </ClCompile>
   </ItemGroup>
@@ -71,7 +74,10 @@
     <ClInclude Include="Scene.h">
       <Filter>Файлы заголовков\framework</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h">
+    <ClInclude Include="Render.h">
+      <Filter>Файлы заголовков\framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
       <Filter>Файлы заголовков\framework</Filter>
     </ClInclude>
   </ItemGroup>
