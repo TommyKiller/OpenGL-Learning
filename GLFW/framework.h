@@ -5,13 +5,13 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <exception>
-#include "Mesh.h"
-#include "ShaderProgram.h"
 #include "Window.h"
 #include "InputController.h"
-#include "Camera.h"
-#include "Scene.h"
 #include "Render.h"
+#include "Object.h"
+#include "Scene.h"
+#include "Camera.h"
+#include "ShaderProgram.h"
 
 
 namespace System
