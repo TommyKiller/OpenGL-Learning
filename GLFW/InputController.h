@@ -5,22 +5,20 @@
 #include <algorithm>
 #include <memory>
 #include "Event.h"
-
+/* Actions */
+#define ACTION_MOVE_FORWARD 0
+#define ACTION_MOVE_BACKWARD 1
+#define ACTION_MOVE_LEFT 2
+#define ACTION_MOVE_RIGHT 3
+#define ACTION_EXIT 4
+#define ACTION_SWITCH_SCREEN_MODE 5
+/* Events */
+#define EVENT_MOVE 0
+#define EVENT_EXIT 1
+#define EVENT_SWITCH_SCREEN_MODE 2
 
 namespace Input
 {
-	// Actions //
-	constexpr auto ACTION_MOVE_FORWARD = 0;
-	constexpr auto ACTION_MOVE_BACKWARD = 1;
-	constexpr auto ACTION_MOVE_LEFT = 2;
-	constexpr auto ACTION_MOVE_RIGHT = 3;
-	constexpr auto ACTION_EXIT = 4;
-	constexpr auto ACTION_SWITCH_SCREEN_MODE = 5;
-	// Events //
-	constexpr auto EVENT_MOVE = 0;
-	constexpr auto EVENT_EXIT = 1;
-	constexpr auto EVENT_SWITCH_SCREEN_MODE = 2;
-
 	class InputController
 	{
 	public:
@@ -56,11 +54,11 @@ namespace Input
 
 		std::unordered_map<int, Key> keys;
 
-		std::vector<Events::Event*> events
+		std::unordered_map<int, Events::Event*> events
 		{
-			new Events::Event(),
-			new Events::Event(),
-			new Events::Event()
+			{EVENT_MOVE, new Events::Event()},
+			{EVENT_EXIT, new Events::Event()},
+			{EVENT_SWITCH_SCREEN_MODE, new Events::Event()}
 		};
 
 		std::unordered_map<int, int> actions

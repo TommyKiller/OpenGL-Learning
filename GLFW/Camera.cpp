@@ -16,17 +16,17 @@ void Graphics::Camera::Initialise(glm::vec3 position, glm::vec3 worldUp, GLfloat
 	this->moveSpeed = moveSpeed;
 	this->turnSpeed = turnSpeed;
 	UpdatePosition();
-	Input::InputController::GetInstance().SubscribeTo(Input::EVENT_MOVE, new Events::Delegate(this, &Graphics::Camera::Move));
+	Input::InputController::GetInstance().SubscribeTo(EVENT_MOVE, new Events::Delegate(this, &Graphics::Camera::Move));
 }
 
 void Graphics::Camera::Bind()
 {
-	Input::InputController::GetInstance().UnsubscribeTo(Input::EVENT_MOVE, new Events::Delegate(this, &Graphics::Camera::Move));
+	Input::InputController::GetInstance().UnsubscribeTo(EVENT_MOVE, new Events::Delegate(this, &Graphics::Camera::Move));
 }
 
 void Graphics::Camera::Unbind()
 {
-	Input::InputController::GetInstance().SubscribeTo(Input::EVENT_MOVE, new Events::Delegate(this, &Graphics::Camera::Move));
+	Input::InputController::GetInstance().SubscribeTo(EVENT_MOVE, new Events::Delegate(this, &Graphics::Camera::Move));
 }
 
 void Graphics::Camera::UpdatePosition()
