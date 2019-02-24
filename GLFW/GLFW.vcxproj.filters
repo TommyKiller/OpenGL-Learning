@@ -55,7 +55,7 @@
       <Filter>Исходные файлы\framework</Filter>
     </ClCompile>
     <ClCompile Include="System.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\framework</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -93,7 +93,7 @@
       <Filter>Файлы заголовков\framework</Filter>
     </ClInclude>
     <ClInclude Include="System.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\framework</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
