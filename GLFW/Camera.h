@@ -2,23 +2,43 @@
 #define CAMERA_H
 #include <GL/glew.h>
 #include <GLM/glm.hpp>
+#include <GLM/gtc/matrix_transform.hpp>
+#include "System.h"
+#include "InputController.h"
 
 
-namespace Engine
+namespace Graphics
 {
 	class Camera
 	{
 	public:
-		static Camera* GetInstance();
+		static Camera& GetInstance();
 
-		static void Initialise();
+		void Initialise(glm::vec3 position, glm::vec3 worldUp, GLfloat yaw, GLfloat pitch, GLfloat moveSpeed, GLfloat turnSpeed);
 
-		static void Dispose();
+		void Bind();
+
+		void Unbind();
+
+		void MoveToPos(glm::vec3 position, GLfloat yaw, GLfloat pitch);
+
+		void Move();
+
+		void Rotate();
+
+		glm::mat4 CalcViewMat();
 
 	private:
-		static Camera* instance;
+		glm::vec3 position;
+		glm::vec3 up;
+		glm::vec3 front;
+		glm::vec3 right;
+		glm::vec3 worldUp;
+		GLfloat yaw, pitch;
+		GLfloat moveSpeed;
+		GLfloat turnSpeed;
 
-		glm::mat4 view;
+		void UpdatePosition();
 
 		Camera();
 

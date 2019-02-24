@@ -18,7 +18,7 @@ namespace Graphics
 
 		Mesh* GetMesh();
 
-		glm::mat4 CreateModelMat();
+		glm::mat4 GetModelMat();
 
 		void Scale(glm::vec3 scale);
 
@@ -38,6 +38,7 @@ namespace Graphics
 
 	private:
 		std::shared_ptr<Graphics::Mesh> mesh;
+
 		glm::vec3 position;
 		glm::vec3 scale;
 		glm::vec3 rotation_axis;

@@ -1,40 +1,40 @@
 #include "Scene.h"
 
-Engine::Scene::Scene(glm::mat4 projection)
+Graphics::Scene::Scene(glm::mat4 projection)
 	: projection(projection)
 {}
 
-void Engine::Scene::AddObject(Graphics::Object* actor)
+void Graphics::Scene::AddObject(Graphics::Object* actor)
 {
 	actors.push_back(std::shared_ptr<Graphics::Object>(actor));
 }
 
-void Engine::Scene::SetProjection(float fovy, float aspect, float near, float far)
+void Graphics::Scene::SetProjection(float fovy, float aspect, float near, float far)
 {
 	projection = glm::perspective(fovy, aspect, near, far);
 }
 
-void Engine::Scene::SetProjection(glm::mat4 projection)
+void Graphics::Scene::SetProjection(glm::mat4 projection)
 {
 	this->projection = projection;
 }
 
-std::vector<std::shared_ptr<Graphics::Object>>& Engine::Scene::GetActors()
+std::vector<std::shared_ptr<Graphics::Object>>& Graphics::Scene::GetActors()
 {
 	return actors;
 }
 
-glm::mat4 Engine::Scene::GetProjection()
+glm::mat4 Graphics::Scene::GetProjection()
 {
 	return projection;
 }
 
-void Engine::Scene::Dispose()
+void Graphics::Scene::Dispose()
 {
 	actors.clear();
 }
 
-Engine::Scene::~Scene()
+Graphics::Scene::~Scene()
 {
 	Dispose();
 }

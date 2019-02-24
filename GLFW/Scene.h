@@ -6,7 +6,7 @@
 #include "Object.h"
 
 
-namespace Engine
+namespace Graphics
 {
 	class Scene
 	{

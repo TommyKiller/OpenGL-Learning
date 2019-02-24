@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <exception>
+#include "InputController.h"
 
 
 namespace System
@@ -16,11 +17,19 @@ namespace System
 
 		void SetCallbacks(GLFWframebuffersizefun fb_cb_fun, GLFWkeyfun k_cb_fun);
 
+		void DisableCursor();
+
+		void HideCursor();
+
+		void EnableCursor();
+
 		void SwapBuffers();
 
 		bool ShouldClose();
 
 		bool IsFullscreen();
+
+		void SwitchScreenMode();
 
 		void Fullscreen();
 

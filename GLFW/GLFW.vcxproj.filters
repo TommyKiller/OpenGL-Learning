@@ -24,9 +24,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="framework.cpp">
-      <Filter>Исходные файлы\framework</Filter>
-    </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>Исходные файлы\framework</Filter>
     </ClCompile>
@@ -50,6 +47,15 @@
     </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>Исходные файлы\framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Delegate.cpp">
+      <Filter>Исходные файлы\framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Исходные файлы\framework</Filter>
+    </ClCompile>
+    <ClCompile Include="System.cpp">
+      <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +85,15 @@
     </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>Файлы заголовков\framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Delegate.h">
+      <Filter>Файлы заголовков\framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Файлы заголовков\framework</Filter>
+    </ClInclude>
+    <ClInclude Include="System.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

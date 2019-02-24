@@ -27,9 +27,9 @@ namespace Graphics
 
 		void Enable(GLenum cap);
 
-		void operator()(ShaderProgram* shader_program, Graphics::Object* object, glm::mat4 projection = glm::mat4(1));
+		void operator()(ShaderProgram* shader_program, Object* object, glm::mat4 projection = glm::mat4(1));
 
-		void operator()(ShaderProgram* shader_program, Engine::Scene* scene);
+		void operator()(ShaderProgram* shader_program, Scene* scene);
 
 	private:
 		Render();

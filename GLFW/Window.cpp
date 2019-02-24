@@ -13,8 +13,10 @@ System::Window::Window(int xpos, int ypos, int window_width, int window_height, 
 	}
 
 	glfwSetWindowPos(window, xpos, ypos);
-
 	SaveWindowedModeProperties();
+
+	Input::InputController::GetInstance().SubscribeTo(Input::EVENT_SWITCH_SCREEN_MODE, new Events::Delegate(this, &System::Window::SwitchScreenMode));
+	Input::InputController::GetInstance().SubscribeTo(Input::EVENT_EXIT, new Events::Delegate(this, &System::Window::Close));
 }
 
 void System::Window::MakeCurrent()
@@ -31,6 +33,21 @@ void System::Window::SetCallbacks(GLFWframebuffersizefun fb_cb_fun, GLFWkeyfun k
 	glfwSetKeyCallback(window, k_cb_fun);
 }
 
+void System::Window::DisableCursor()
+{
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+}
+
+void System::Window::HideCursor()
+{
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+}
+
+void System::Window::EnableCursor()
+{
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+}
+
 void System::Window::SwapBuffers()
 {
 	glfwSwapBuffers(window);
@@ -44,6 +61,18 @@ bool System::Window::ShouldClose()
 bool System::Window::IsFullscreen()
 {
 	return (glfwGetWindowMonitor(window) != nullptr);
+}
+
+void System::Window::SwitchScreenMode()
+{
+	if (IsFullscreen())
+	{
+		Windowed();
+	}
+	else
+	{
+		Fullscreen();
+	}
 }
 
 void System::Window::Fullscreen()
@@ -95,6 +124,8 @@ void System::Window::Close()
 	if (window != nullptr)
 	{
 		glfwSetWindowShouldClose(window, 1);
+		Input::InputController::GetInstance().UnsubscribeTo(Input::EVENT_SWITCH_SCREEN_MODE, new Events::Delegate(this, &System::Window::SwitchScreenMode));
+		Input::InputController::GetInstance().UnsubscribeTo(Input::EVENT_EXIT, new Events::Delegate(this, &System::Window::Close));
 	}
 }
 
@@ -103,6 +134,8 @@ void System::Window::Dispose()
 	if (window != nullptr)
 	{
 		glfwDestroyWindow(window);
+		Input::InputController::GetInstance().UnsubscribeTo(Input::EVENT_SWITCH_SCREEN_MODE, new Events::Delegate(this, &System::Window::SwitchScreenMode));
+		Input::InputController::GetInstance().UnsubscribeTo(Input::EVENT_EXIT, new Events::Delegate(this, &System::Window::Close));
 	}
 }
 

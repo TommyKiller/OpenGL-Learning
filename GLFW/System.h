@@ -1,15 +1,22 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
-
-
-#include "Callbacks.h"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <exception>
+#include "Window.h"
 
 
 namespace System
 {
-	void InitialiseGLFW();
+	void InitialiseGLFW(unsigned int maj_version, unsigned int min_version);
 
-	void InitialiseGLEW(GLFWwindow* window);
+	void InitialiseGLEW(System::Window* window);
+
+	void CalcDeltaTime();
+
+	GLfloat GetDeltaTime();
+
+	extern GLfloat deltaTime;
 }
 
 

@@ -57,7 +57,7 @@ Graphics::Mesh* Graphics::Object::GetMesh()
 	return mesh.get();
 }
 
-glm::mat4 Graphics::Object::CreateModelMat()
+glm::mat4 Graphics::Object::GetModelMat()
 {
 	glm::mat4 model = glm::translate(glm::mat4(1), position);
 	model = glm::rotate(model, rotation_angle, rotation_axis);
