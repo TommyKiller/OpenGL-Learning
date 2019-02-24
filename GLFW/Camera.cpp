@@ -16,17 +16,17 @@ void Graphics::Camera::Initialise(glm::vec3 position, glm::vec3 worldUp, GLfloat
 	this->moveSpeed = moveSpeed;
 	this->turnSpeed = turnSpeed;
 	UpdatePosition();
-	Input::InputController::GetInstance().SubscribeTo(EVENT_MOVE, new Events::Delegate(this, &Graphics::Camera::Move));
+	Input::InputController::GetInstance().SubscribeTo(Input::Event::EVENT_MOVE, new Events::Delegate(this, &Graphics::Camera::Move));
 }
 
 void Graphics::Camera::Bind()
 {
-	Input::InputController::GetInstance().UnsubscribeTo(EVENT_MOVE, new Events::Delegate(this, &Graphics::Camera::Move));
+	Input::InputController::GetInstance().UnsubscribeTo(Input::Event::EVENT_MOVE, new Events::Delegate(this, &Graphics::Camera::Move));
 }
 
 void Graphics::Camera::Unbind()
 {
-	Input::InputController::GetInstance().SubscribeTo(EVENT_MOVE, new Events::Delegate(this, &Graphics::Camera::Move));
+	Input::InputController::GetInstance().SubscribeTo(Input::Event::EVENT_MOVE, new Events::Delegate(this, &Graphics::Camera::Move));
 }
 
 void Graphics::Camera::UpdatePosition()
@@ -51,19 +51,19 @@ void Graphics::Camera::Move()
 {
 	using namespace Input;
 	GLfloat velocity = System::GetDeltaTime() * moveSpeed;
-	if (InputController::GetInstance().KeyPressed(InputController::GetInstance().GetKey(ACTION_MOVE_FORWARD)))
+	if (InputController::GetInstance().KeyPressed(InputController::GetInstance().GetKey(Action::ACTION_MOVE_FORWARD)))
 	{
 		position += front * velocity;
 	}
-	if (InputController::GetInstance().KeyPressed(InputController::GetInstance().GetKey(ACTION_MOVE_BACKWARD)))
+	if (InputController::GetInstance().KeyPressed(InputController::GetInstance().GetKey(Action::ACTION_MOVE_BACKWARD)))
 	{
 		position -= front * velocity;
 	}
-	if (InputController::GetInstance().KeyPressed(InputController::GetInstance().GetKey(ACTION_MOVE_LEFT)))
+	if (InputController::GetInstance().KeyPressed(InputController::GetInstance().GetKey(Action::ACTION_MOVE_LEFT)))
 	{
 		position -= right * velocity;
 	}
-	if (InputController::GetInstance().KeyPressed(InputController::GetInstance().GetKey(ACTION_MOVE_RIGHT)))
+	if (InputController::GetInstance().KeyPressed(InputController::GetInstance().GetKey(Action::ACTION_MOVE_RIGHT)))
 	{
 		position += right * velocity;
 	}

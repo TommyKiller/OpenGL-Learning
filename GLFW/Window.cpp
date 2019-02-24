@@ -15,8 +15,8 @@ System::Window::Window(int xpos, int ypos, int window_width, int window_height, 
 	glfwSetWindowPos(window, xpos, ypos);
 	SaveWindowedModeProperties();
 
-	Input::InputController::GetInstance().SubscribeTo(EVENT_SWITCH_SCREEN_MODE, new Events::Delegate(this, &System::Window::SwitchScreenMode));
-	Input::InputController::GetInstance().SubscribeTo(EVENT_EXIT, new Events::Delegate(this, &System::Window::Close));
+	Input::InputController::GetInstance().SubscribeTo(Input::Event::EVENT_SWITCH_SCREEN_MODE, new Events::Delegate(this, &System::Window::SwitchScreenMode));
+	Input::InputController::GetInstance().SubscribeTo(Input::Event::EVENT_EXIT, new Events::Delegate(this, &System::Window::Close));
 }
 
 void System::Window::MakeCurrent()
@@ -124,8 +124,8 @@ void System::Window::Close()
 	if (window != nullptr)
 	{
 		glfwSetWindowShouldClose(window, 1);
-		Input::InputController::GetInstance().UnsubscribeTo(EVENT_SWITCH_SCREEN_MODE, new Events::Delegate(this, &System::Window::SwitchScreenMode));
-		Input::InputController::GetInstance().UnsubscribeTo(EVENT_EXIT, new Events::Delegate(this, &System::Window::Close));
+		Input::InputController::GetInstance().UnsubscribeTo(Input::Event::EVENT_SWITCH_SCREEN_MODE, new Events::Delegate(this, &System::Window::SwitchScreenMode));
+		Input::InputController::GetInstance().UnsubscribeTo(Input::Event::EVENT_EXIT, new Events::Delegate(this, &System::Window::Close));
 	}
 }
 
@@ -134,8 +134,8 @@ void System::Window::Dispose()
 	if (window != nullptr)
 	{
 		glfwDestroyWindow(window);
-		Input::InputController::GetInstance().UnsubscribeTo(EVENT_SWITCH_SCREEN_MODE, new Events::Delegate(this, &System::Window::SwitchScreenMode));
-		Input::InputController::GetInstance().UnsubscribeTo(EVENT_EXIT, new Events::Delegate(this, &System::Window::Close));
+		Input::InputController::GetInstance().UnsubscribeTo(Input::Event::EVENT_SWITCH_SCREEN_MODE, new Events::Delegate(this, &System::Window::SwitchScreenMode));
+		Input::InputController::GetInstance().UnsubscribeTo(Input::Event::EVENT_EXIT, new Events::Delegate(this, &System::Window::Close));
 	}
 }
 

@@ -57,22 +57,22 @@ void Input::InputController::PollEvents()
 	}
 }
 
-void Input::InputController::SubscribeTo(int event, Events::Delegate* delegate)
+void Input::InputController::SubscribeTo(Input::Event event, Events::Delegate* delegate)
 {
 	*events[event] += *delegate;
 }
 
-void Input::InputController::UnsubscribeTo(int event, Events::Delegate* delegate)
+void Input::InputController::UnsubscribeTo(Input::Event event, Events::Delegate* delegate)
 {
 	*events[event] -= *delegate;
 }
 
-int Input::InputController::GetKey(int action)
+int Input::InputController::GetKey(Input::Action action)
 {
 	return actions[action];
 }
 
-void Input::InputController::PollEvent(int event)
+void Input::InputController::PollEvent(Input::Event event)
 {
 	(*events[event])();
 }

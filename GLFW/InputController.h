@@ -5,20 +5,27 @@
 #include <algorithm>
 #include <memory>
 #include "Event.h"
-/* Actions */
-#define ACTION_MOVE_FORWARD 0
-#define ACTION_MOVE_BACKWARD 1
-#define ACTION_MOVE_LEFT 2
-#define ACTION_MOVE_RIGHT 3
-#define ACTION_EXIT 4
-#define ACTION_SWITCH_SCREEN_MODE 5
-/* Events */
-#define EVENT_MOVE 0
-#define EVENT_EXIT 1
-#define EVENT_SWITCH_SCREEN_MODE 2
 
 namespace Input
 {
+	enum Action
+	{
+		ACTION_MOVE_FORWARD,
+		ACTION_MOVE_BACKWARD,
+		ACTION_MOVE_LEFT,
+		ACTION_MOVE_RIGHT,
+		ACTION_SWITCH_SCREEN_MODE,
+		ACTION_EXIT
+	};
+
+	enum Event
+	{
+		EVENT_MOVE,
+		EVENT_EXIT,
+		EVENT_SWITCH_SCREEN_MODE
+	};
+
+
 	class InputController
 	{
 	public:
@@ -28,11 +35,11 @@ namespace Input
 
 		void PollEvents();
 
-		void SubscribeTo(int event, Events::Delegate* delegate);
+		void SubscribeTo(Event event, Events::Delegate* delegate);
 
-		void UnsubscribeTo(int event, Events::Delegate* delegate);
+		void UnsubscribeTo(Event event, Events::Delegate* delegate);
 
-		int GetKey(int action);
+		int GetKey(Action action);
 
 		int GetKeyMods(int key);
 
@@ -54,24 +61,24 @@ namespace Input
 
 		std::unordered_map<int, Key> keys;
 
-		std::unordered_map<int, Events::Event*> events
+		std::unordered_map<Event, Events::Event*> events
 		{
-			{EVENT_MOVE, new Events::Event()},
-			{EVENT_EXIT, new Events::Event()},
-			{EVENT_SWITCH_SCREEN_MODE, new Events::Event()}
+			{Event::EVENT_MOVE, new Events::Event()},
+			{Event::EVENT_EXIT, new Events::Event()},
+			{Event::EVENT_SWITCH_SCREEN_MODE, new Events::Event()}
 		};
 
-		std::unordered_map<int, int> actions
+		std::unordered_map<Action, int> actions
 		{
-			{ACTION_MOVE_FORWARD, GLFW_KEY_W},
-			{ACTION_MOVE_BACKWARD, GLFW_KEY_S},
-			{ACTION_MOVE_LEFT, GLFW_KEY_A},
-			{ACTION_MOVE_RIGHT, GLFW_KEY_D},
-			{ACTION_EXIT, GLFW_KEY_ESCAPE},
-			{ACTION_SWITCH_SCREEN_MODE, GLFW_KEY_F11}
+			{Action::ACTION_MOVE_FORWARD, GLFW_KEY_W},
+			{Action::ACTION_MOVE_BACKWARD, GLFW_KEY_S},
+			{Action::ACTION_MOVE_LEFT, GLFW_KEY_A},
+			{Action::ACTION_MOVE_RIGHT, GLFW_KEY_D},
+			{Action::ACTION_EXIT, GLFW_KEY_ESCAPE},
+			{Action::ACTION_SWITCH_SCREEN_MODE, GLFW_KEY_F11}
 		};
 
-		void PollEvent(int event);
+		void PollEvent(Event event);
 
 		void AddKey(int key, int scancode);
 
