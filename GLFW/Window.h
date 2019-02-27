@@ -15,7 +15,7 @@ namespace System
 
 		void MakeCurrent();
 
-		void SetCallbacks(GLFWframebuffersizefun fb_cb_fun, GLFWkeyfun k_cb_fun);
+		void SetCallbacks(GLFWframebuffersizefun fb_cb_fun, GLFWkeyfun k_cb_fun, GLFWcursorposfun cp_cb_fun);
 
 		void DisableCursor();
 

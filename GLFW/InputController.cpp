@@ -38,10 +38,28 @@ void Input::InputController::KeyCallback(GLFWwindow* window, int key, int scanco
 	}
 }
 
+void Input::InputController::MouseCallback(GLFWwindow* window, double xpos, double ypos)
+{
+	using namespace Input;
+	if (InputController::GetInstance().GetMouse().firstMove)
+	{
+		InputController::GetInstance().GetMouse().lastXPos = xpos;
+		InputController::GetInstance().GetMouse().lastYPos = ypos;
+		InputController::GetInstance().GetMouse().firstMove = false;
+	}
+
+	InputController::GetInstance().GetMouse().xChange = xpos - InputController::GetInstance().GetMouse().lastXPos;
+	InputController::GetInstance().GetMouse().yChange = InputController::GetInstance().GetMouse().lastYPos - ypos;
+	InputController::GetInstance().GetMouse().lastXPos = xpos;
+	InputController::GetInstance().GetMouse().lastYPos = ypos;
+	InputController::GetInstance().GetMouse().handled = false;
+}
+
 void Input::InputController::PollEvents()
 {
 	if (KeyPressed(GetKey(ACTION_MOVE_FORWARD)) || KeyPressed(GetKey(ACTION_MOVE_LEFT)) ||
-		KeyPressed(GetKey(ACTION_MOVE_BACKWARD)) || KeyPressed(GetKey(ACTION_MOVE_RIGHT)))
+		KeyPressed(GetKey(ACTION_MOVE_BACKWARD)) || KeyPressed(GetKey(ACTION_MOVE_RIGHT)) ||
+		KeyPressed(GetKey(ACTION_MOVE_JUMP)) || KeyPressed(GetKey(ACTION_MOVE_CROUCH)))
 	{
 		PollEvent(EVENT_MOVE);
 	}
@@ -55,24 +73,39 @@ void Input::InputController::PollEvents()
 		PollEvent(EVENT_SWITCH_SCREEN_MODE);
 		SetKeyHandled(GetKey(ACTION_SWITCH_SCREEN_MODE), true);
 	}
+	if (!GetMouse().handled)
+	{
+		PollEvent(EVENT_MOUSE_ROTATE);
+		GetMouse().handled = true;
+	}
 }
 
-void Input::InputController::SubscribeTo(Input::Event event, Events::Delegate* delegate)
+void Input::InputController::SubscribeTo(Input::InputEvents event, Events::Delegate* delegate)
 {
 	*events[event] += *delegate;
 }
 
-void Input::InputController::UnsubscribeTo(Input::Event event, Events::Delegate* delegate)
+void Input::InputController::UnsubscribeTo(Input::InputEvents event, Events::Delegate* delegate)
 {
 	*events[event] -= *delegate;
 }
 
-int Input::InputController::GetKey(Input::Action action)
+double Input::InputController::GetMouseXChange()
+{
+	return mouse.xChange;
+}
+
+double Input::InputController::GetMouseYChange()
+{
+	return mouse.yChange;
+}
+
+int Input::InputController::GetKey(Input::Actions action)
 {
 	return actions[action];
 }
 
-void Input::InputController::PollEvent(Input::Event event)
+void Input::InputController::PollEvent(Input::InputEvents event)
 {
 	(*events[event])();
 }
@@ -80,7 +113,6 @@ void Input::InputController::PollEvent(Input::Event event)
 void Input::InputController::AddKey(int key, int scancode)
 {
 	keys[key].scancode = scancode;
-	SetKeyDefalut(key);
 }
 
 void Input::InputController::SetKeyDefalut(int key)
@@ -114,6 +146,11 @@ int Input::InputController::GetKeyMods(int key)
 bool Input::InputController::HasKey(int key)
 {
 	return keys.count(key);
+}
+
+Input::InputController::Mouse& Input::InputController::GetMouse()
+{
+	return mouse;
 }
 
 bool Input::InputController::KeyPressed(int key)

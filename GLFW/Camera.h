@@ -22,9 +22,9 @@ namespace Graphics
 
 		void MoveToPos(glm::vec3 position, GLfloat yaw, GLfloat pitch);
 
-		void Move();
-
 		void Rotate();
+
+		void Move();
 
 		glm::mat4 CalcViewMat();
 
@@ -38,7 +38,7 @@ namespace Graphics
 		GLfloat moveSpeed;
 		GLfloat turnSpeed;
 
-		void UpdatePosition();
+		void UpdateAxes();
 
 		Camera();
 

@@ -14,9 +14,10 @@ System::Window::Window(int xpos, int ypos, int window_width, int window_height, 
 
 	glfwSetWindowPos(window, xpos, ypos);
 	SaveWindowedModeProperties();
+	glfwSetWindowUserPointer(window, this);
 
-	Input::InputController::GetInstance().SubscribeTo(Input::Event::EVENT_SWITCH_SCREEN_MODE, new Events::Delegate(this, &System::Window::SwitchScreenMode));
-	Input::InputController::GetInstance().SubscribeTo(Input::Event::EVENT_EXIT, new Events::Delegate(this, &System::Window::Close));
+	Input::InputController::GetInstance().SubscribeTo(Input::InputEvents::EVENT_SWITCH_SCREEN_MODE, new Events::Delegate(this, &System::Window::SwitchScreenMode));
+	Input::InputController::GetInstance().SubscribeTo(Input::InputEvents::EVENT_EXIT, new Events::Delegate(this, &System::Window::Close));
 }
 
 void System::Window::MakeCurrent()
@@ -27,10 +28,11 @@ void System::Window::MakeCurrent()
 	}
 }
 
-void System::Window::SetCallbacks(GLFWframebuffersizefun fb_cb_fun, GLFWkeyfun k_cb_fun)
+void System::Window::SetCallbacks(GLFWframebuffersizefun fb_cb_fun, GLFWkeyfun k_cb_fun, GLFWcursorposfun cp_cb_fun)
 {
 	glfwSetFramebufferSizeCallback(window, fb_cb_fun);
 	glfwSetKeyCallback(window, k_cb_fun);
+	glfwSetCursorPosCallback(window, cp_cb_fun);
 }
 
 void System::Window::DisableCursor()
@@ -124,8 +126,8 @@ void System::Window::Close()
 	if (window != nullptr)
 	{
 		glfwSetWindowShouldClose(window, 1);
-		Input::InputController::GetInstance().UnsubscribeTo(Input::Event::EVENT_SWITCH_SCREEN_MODE, new Events::Delegate(this, &System::Window::SwitchScreenMode));
-		Input::InputController::GetInstance().UnsubscribeTo(Input::Event::EVENT_EXIT, new Events::Delegate(this, &System::Window::Close));
+		Input::InputController::GetInstance().UnsubscribeTo(Input::InputEvents::EVENT_SWITCH_SCREEN_MODE, new Events::Delegate(this, &System::Window::SwitchScreenMode));
+		Input::InputController::GetInstance().UnsubscribeTo(Input::InputEvents::EVENT_EXIT, new Events::Delegate(this, &System::Window::Close));
 	}
 }
 
@@ -134,8 +136,8 @@ void System::Window::Dispose()
 	if (window != nullptr)
 	{
 		glfwDestroyWindow(window);
-		Input::InputController::GetInstance().UnsubscribeTo(Input::Event::EVENT_SWITCH_SCREEN_MODE, new Events::Delegate(this, &System::Window::SwitchScreenMode));
-		Input::InputController::GetInstance().UnsubscribeTo(Input::Event::EVENT_EXIT, new Events::Delegate(this, &System::Window::Close));
+		Input::InputController::GetInstance().UnsubscribeTo(Input::InputEvents::EVENT_SWITCH_SCREEN_MODE, new Events::Delegate(this, &System::Window::SwitchScreenMode));
+		Input::InputController::GetInstance().UnsubscribeTo(Input::InputEvents::EVENT_EXIT, new Events::Delegate(this, &System::Window::Close));
 	}
 }
 

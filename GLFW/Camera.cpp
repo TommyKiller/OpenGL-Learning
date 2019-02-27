@@ -15,27 +15,30 @@ void Graphics::Camera::Initialise(glm::vec3 position, glm::vec3 worldUp, GLfloat
 	this->pitch = pitch;
 	this->moveSpeed = moveSpeed;
 	this->turnSpeed = turnSpeed;
-	UpdatePosition();
-	Input::InputController::GetInstance().SubscribeTo(Input::Event::EVENT_MOVE, new Events::Delegate(this, &Graphics::Camera::Move));
+	UpdateAxes();
+	Input::InputController::GetInstance().SubscribeTo(Input::InputEvents::EVENT_MOVE, new Events::Delegate(this, &Graphics::Camera::Move));
+	Input::InputController::GetInstance().SubscribeTo(Input::InputEvents::EVENT_MOUSE_ROTATE, new Events::Delegate(this, &Graphics::Camera::Rotate));
 }
 
 void Graphics::Camera::Bind()
 {
-	Input::InputController::GetInstance().UnsubscribeTo(Input::Event::EVENT_MOVE, new Events::Delegate(this, &Graphics::Camera::Move));
+	Input::InputController::GetInstance().UnsubscribeTo(Input::InputEvents::EVENT_MOVE, new Events::Delegate(this, &Graphics::Camera::Move));
+	Input::InputController::GetInstance().UnsubscribeTo(Input::InputEvents::EVENT_MOUSE_ROTATE, new Events::Delegate(this, &Graphics::Camera::Rotate));
 }
 
 void Graphics::Camera::Unbind()
 {
-	Input::InputController::GetInstance().SubscribeTo(Input::Event::EVENT_MOVE, new Events::Delegate(this, &Graphics::Camera::Move));
+	Input::InputController::GetInstance().SubscribeTo(Input::InputEvents::EVENT_MOVE, new Events::Delegate(this, &Graphics::Camera::Move));
+	Input::InputController::GetInstance().SubscribeTo(Input::InputEvents::EVENT_MOUSE_ROTATE, new Events::Delegate(this, &Graphics::Camera::Rotate));
 }
 
-void Graphics::Camera::UpdatePosition()
+void Graphics::Camera::UpdateAxes()
 {
 	front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
 	front.y = sin(glm::radians(pitch));
 	front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-	front = glm::normalize(front);
 
+	front = glm::normalize(front);
 	right = glm::normalize(glm::cross(front, worldUp));
 	up = glm::normalize(glm::cross(right, front));
 }
@@ -47,25 +50,50 @@ void Graphics::Camera::MoveToPos(glm::vec3 position, GLfloat yaw, GLfloat pitch)
 	this->pitch = pitch;
 }
 
+void Graphics::Camera::Rotate()
+{
+	yaw += Input::InputController::GetInstance().GetMouseXChange() * turnSpeed;
+	pitch += Input::InputController::GetInstance().GetMouseYChange() * turnSpeed;
+
+	if (pitch > 89.0f)
+	{
+		pitch = 89.0f;
+	}
+	if (pitch < -89.0f)
+	{
+		pitch = -89.0f;
+	}
+
+	UpdateAxes();
+}
+
 void Graphics::Camera::Move()
 {
 	using namespace Input;
 	GLfloat velocity = System::GetDeltaTime() * moveSpeed;
-	if (InputController::GetInstance().KeyPressed(InputController::GetInstance().GetKey(Action::ACTION_MOVE_FORWARD)))
+	if (InputController::GetInstance().KeyPressed(InputController::GetInstance().GetKey(Actions::ACTION_MOVE_FORWARD)))
 	{
 		position += front * velocity;
 	}
-	if (InputController::GetInstance().KeyPressed(InputController::GetInstance().GetKey(Action::ACTION_MOVE_BACKWARD)))
+	if (InputController::GetInstance().KeyPressed(InputController::GetInstance().GetKey(Actions::ACTION_MOVE_BACKWARD)))
 	{
 		position -= front * velocity;
 	}
-	if (InputController::GetInstance().KeyPressed(InputController::GetInstance().GetKey(Action::ACTION_MOVE_LEFT)))
+	if (InputController::GetInstance().KeyPressed(InputController::GetInstance().GetKey(Actions::ACTION_MOVE_LEFT)))
 	{
 		position -= right * velocity;
 	}
-	if (InputController::GetInstance().KeyPressed(InputController::GetInstance().GetKey(Action::ACTION_MOVE_RIGHT)))
+	if (InputController::GetInstance().KeyPressed(InputController::GetInstance().GetKey(Actions::ACTION_MOVE_RIGHT)))
 	{
 		position += right * velocity;
+	}
+	if (InputController::GetInstance().KeyPressed(InputController::GetInstance().GetKey(Actions::ACTION_MOVE_JUMP)))
+	{
+		position.y += velocity;
+	}
+	if (InputController::GetInstance().KeyPressed(InputController::GetInstance().GetKey(Actions::ACTION_MOVE_CROUCH)))
+	{
+		position.y -= velocity;
 	}
 }
 

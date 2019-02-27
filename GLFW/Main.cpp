@@ -65,7 +65,7 @@ int main()
 	System::InitialiseGLFW(3, 3);
 	window = new System::Window(0, 0, 1360, 768, "Test", true);
 	window->MakeCurrent();
-	window->SetCallbacks(Graphics::Render::GetInstance().FramebufferSizeCallback, Input::InputController::KeyCallback);
+	window->SetCallbacks(Graphics::Render::GetInstance().FramebufferSizeCallback, Input::InputController::KeyCallback, Input::InputController::MouseCallback);
 	window->DisableCursor();
 	System::InitialiseGLEW(window);
 	Graphics::Render::GetInstance().ClearColor(glm::vec4(0.4f, 0.3f, 0.5f, 1.0f));
@@ -79,7 +79,7 @@ int main()
 		glm::vec3(0.0f, 0.0f, -2.0f), glm::vec3(0.5f, 0.5f, 0.5f));
 	scene->AddObject(pyramid);
 	shader = new Graphics::ShaderProgram(shaderFiles);
-	Graphics::Camera::GetInstance().Initialise(glm::vec3(0.0f, 0.0f, -3.0f), glm::vec3(0.0f, 1.0f, 0.0f), 90.0f, 0.0f, 3.0f, 3.0f);
+	Graphics::Camera::GetInstance().Initialise(glm::vec3(0.0f, 0.0f, -3.0f), glm::vec3(0.0f, 1.0f, 0.0f), 90.0f, 0.0f, 3.0f, 0.1f);
 
 	while (!window->ShouldClose())
 	{

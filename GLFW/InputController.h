@@ -8,19 +8,22 @@
 
 namespace Input
 {
-	enum Action
+	enum Actions
 	{
 		ACTION_MOVE_FORWARD,
 		ACTION_MOVE_BACKWARD,
 		ACTION_MOVE_LEFT,
 		ACTION_MOVE_RIGHT,
+		ACTION_MOVE_JUMP,
+		ACTION_MOVE_CROUCH,
 		ACTION_SWITCH_SCREEN_MODE,
 		ACTION_EXIT
 	};
 
-	enum Event
+	enum InputEvents
 	{
 		EVENT_MOVE,
+		EVENT_MOUSE_ROTATE,
 		EVENT_EXIT,
 		EVENT_SWITCH_SCREEN_MODE
 	};
@@ -33,13 +36,19 @@ namespace Input
 
 		static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
+		static void MouseCallback(GLFWwindow* window, double xpos, double ypos);
+
 		void PollEvents();
 
-		void SubscribeTo(Event event, Events::Delegate* delegate);
+		void SubscribeTo(InputEvents event, Events::Delegate* delegate);
 
-		void UnsubscribeTo(Event event, Events::Delegate* delegate);
+		void UnsubscribeTo(InputEvents event, Events::Delegate* delegate);
 
-		int GetKey(Action action);
+		double GetMouseXChange();
+
+		double GetMouseYChange();
+
+		int GetKey(Actions action);
 
 		int GetKeyMods(int key);
 
@@ -52,33 +61,50 @@ namespace Input
 	private:
 		struct Key
 		{
-			int scancode;
-			int mods;
-			bool modded;
-			bool pressed;
-			bool handled;
+			int scancode = 0;
+			int mods = 0;
+			bool modded = false;
+			bool pressed = false;
+			bool handled = true;
+		};
+
+		struct Action{}; // WILL BE USED IN THE FUTURE
+
+		struct Mouse
+		{
+			double lastXPos;
+			double lastYPos;
+			double xChange = 0;
+			double yChange = 0;
+			bool firstMove = true;
+			bool handled = true;
 		};
 
 		std::unordered_map<int, Key> keys;
 
-		std::unordered_map<Event, Events::Event*> events
+		std::unordered_map<InputEvents, Events::Event*> events
 		{
-			{Event::EVENT_MOVE, new Events::Event()},
-			{Event::EVENT_EXIT, new Events::Event()},
-			{Event::EVENT_SWITCH_SCREEN_MODE, new Events::Event()}
+			{InputEvents::EVENT_MOVE, new Events::Event()},
+			{InputEvents::EVENT_MOUSE_ROTATE, new Events::Event()},
+			{InputEvents::EVENT_EXIT, new Events::Event()},
+			{InputEvents::EVENT_SWITCH_SCREEN_MODE, new Events::Event()}
 		};
 
-		std::unordered_map<Action, int> actions
+		std::unordered_map<Actions, int> actions
 		{
-			{Action::ACTION_MOVE_FORWARD, GLFW_KEY_W},
-			{Action::ACTION_MOVE_BACKWARD, GLFW_KEY_S},
-			{Action::ACTION_MOVE_LEFT, GLFW_KEY_A},
-			{Action::ACTION_MOVE_RIGHT, GLFW_KEY_D},
-			{Action::ACTION_EXIT, GLFW_KEY_ESCAPE},
-			{Action::ACTION_SWITCH_SCREEN_MODE, GLFW_KEY_F11}
+			{Actions::ACTION_MOVE_FORWARD,		GLFW_KEY_W},
+			{Actions::ACTION_MOVE_BACKWARD,		GLFW_KEY_S},
+			{Actions::ACTION_MOVE_LEFT,			GLFW_KEY_A},
+			{Actions::ACTION_MOVE_RIGHT,			GLFW_KEY_D},
+			{Actions::ACTION_MOVE_JUMP,			GLFW_KEY_SPACE},
+			{Actions::ACTION_MOVE_CROUCH,		GLFW_KEY_LEFT_CONTROL},
+			{Actions::ACTION_EXIT,				GLFW_KEY_ESCAPE},
+			{Actions::ACTION_SWITCH_SCREEN_MODE, GLFW_KEY_F11}
 		};
 
-		void PollEvent(Event event);
+		Mouse mouse;
+
+		void PollEvent(InputEvents event);
 
 		void AddKey(int key, int scancode);
 
@@ -91,6 +117,8 @@ namespace Input
 		void SetKeyMods(int key, int mods);
 
 		bool HasKey(int key);
+
+		Mouse& GetMouse();
 
 		InputController();
 
