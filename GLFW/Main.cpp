@@ -12,8 +12,7 @@ const float MOVING_SPEED = 0.02f;
 
 
 System::Window* window;
-Graphics::Scene* scene;
-Graphics::Object* pyramid;
+std::shared_ptr<Game::World> world;
 Graphics::ShaderProgram* shader;
 
 
@@ -63,7 +62,7 @@ int main()
 {
 	// Setting system up //
 	System::InitialiseGLFW(3, 3);
-	window = new System::Window(0, 0, 1360, 768, "Test", true);
+	window = new System::Window(0, 0, 1360, 768, "Test", false);
 	window->MakeCurrent();
 	window->SetCallbacks(Graphics::Render::GetInstance().FramebufferSizeCallback, Input::InputController::KeyCallback, Input::InputController::MouseCallback);
 	window->DisableCursor();
@@ -74,12 +73,16 @@ int main()
 	// Create objects //
 	int framebuffer_width, framebuffer_height;
 	window->GetFramebufferSize(&framebuffer_width, &framebuffer_height);
-	scene = new Graphics::Scene(glm::perspective(45.0f, (GLfloat)framebuffer_width / (GLfloat)framebuffer_height, 0.1f, 100.0f));
-	pyramid = new Graphics::Object(std::make_shared<Graphics::Mesh>(pyramid_vertex_data->data(), pyramid_vertex_data->size(), elements->data(), elements->size(), GL_STATIC_DRAW),
-		glm::vec3(0.0f, 0.0f, -2.0f), glm::vec3(0.5f, 0.5f, 0.5f));
-	scene->AddObject(pyramid);
+	world = std::make_shared<Game::World>();
+	world->AddScene(new Game::Scene(0, glm::perspective(45.0f, (GLfloat)framebuffer_width / (GLfloat)framebuffer_height, 0.1f, 100.0f)));
+	world->SetActiveScene(0);
+	/*world->AddActor(std::make_shared<Game::Actor>(
+		new Graphics::Model(
+			new Graphics::Mesh(pyramid_vertex_data->data(), pyramid_vertex_data->size(), elements->data(), elements->size(), GL_STATIC_DRAW)),
+		3.0f, 0.1f), 0);*/
 	shader = new Graphics::ShaderProgram(shaderFiles);
 	Graphics::Camera::GetInstance().Initialise(glm::vec3(0.0f, 0.0f, -3.0f), glm::vec3(0.0f, 1.0f, 0.0f), 90.0f, 0.0f, 3.0f, 0.1f);
+	Engine::Editor::GetInstance().EditWorld(world);
 
 	while (!window->ShouldClose())
 	{
@@ -90,11 +93,8 @@ int main()
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// ... //
-		pyramid->Rotate((float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));
-
 		// Rendering //
-		Graphics::Render::GetInstance()(shader, scene);
+		Graphics::Render::GetInstance()(shader, world->GetActiveScene());
 
 		window->SwapBuffers();
 	}

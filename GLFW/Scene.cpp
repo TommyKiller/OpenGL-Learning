@@ -1,40 +1,51 @@
 #include "Scene.h"
 
-Graphics::Scene::Scene(glm::mat4 projection)
-	: projection(projection)
+Game::Scene::Scene(int id, glm::mat4 projection)
+	: id(id),
+	projection(projection)
 {}
 
-void Graphics::Scene::AddObject(Graphics::Object* actor)
+void Game::Scene::AddActor(std::shared_ptr<Game::Actor> actor)
 {
-	actors.push_back(std::shared_ptr<Graphics::Object>(actor));
+	actors[actor->GetID()] = actor;
 }
 
-void Graphics::Scene::SetProjection(float fovy, float aspect, float near, float far)
+void Game::Scene::DeleteActor(int actor_id)
+{
+	actors.erase(actor_id);
+}
+
+void Game::Scene::SetProjection(float fovy, float aspect, float near, float far)
 {
 	projection = glm::perspective(fovy, aspect, near, far);
 }
 
-void Graphics::Scene::SetProjection(glm::mat4 projection)
+void Game::Scene::SetProjection(glm::mat4 projection)
 {
 	this->projection = projection;
 }
 
-std::vector<std::shared_ptr<Graphics::Object>>& Graphics::Scene::GetActors()
+std::unordered_map<int, std::weak_ptr<Game::Actor>>& Game::Scene::GetActors()
 {
 	return actors;
 }
 
-glm::mat4 Graphics::Scene::GetProjection()
+int Game::Scene::GetID()
+{
+	return id;
+}
+
+glm::mat4 Game::Scene::GetProjection()
 {
 	return projection;
 }
 
-void Graphics::Scene::Dispose()
+void Game::Scene::Dispose()
 {
 	actors.clear();
 }
 
-Graphics::Scene::~Scene()
+Game::Scene::~Scene()
 {
 	Dispose();
 }

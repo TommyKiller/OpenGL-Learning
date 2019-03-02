@@ -63,6 +63,11 @@ void Input::InputController::PollEvents()
 	{
 		PollEvent(EVENT_MOVE);
 	}
+	if (KeyPressed(GetKey(ACTION_EDITOR_MOVE_FORWARD)) || KeyPressed(GetKey(ACTION_EDITOR_MOVE_LEFT)) ||
+		KeyPressed(GetKey(ACTION_EDITOR_MOVE_BACKWARD)) || KeyPressed(GetKey(ACTION_EDITOR_MOVE_RIGHT)))
+	{
+		PollEvent(EVENT_EDITOR_MOVE);
+	}
 	if (KeyPressed(GetKey(ACTION_EXIT)) && !KeyHandled(GetKey(ACTION_EXIT)))
 	{
 		PollEvent(EVENT_EXIT);
@@ -72,6 +77,26 @@ void Input::InputController::PollEvents()
 	{
 		PollEvent(EVENT_SWITCH_SCREEN_MODE);
 		SetKeyHandled(GetKey(ACTION_SWITCH_SCREEN_MODE), true);
+	}
+	if (KeyPressed(GetKey(ACTION_EDITOR)) && !KeyHandled(GetKey(ACTION_EDITOR)))
+	{
+		PollEvent(EVENT_EDITOR);
+		SetKeyHandled(GetKey(ACTION_EDITOR), true);
+	}
+	if (KeyPressed(GetKey(ACTION_EDITOR_ADD_PYRAMID)) && !KeyHandled(GetKey(ACTION_EDITOR_ADD_PYRAMID)))
+	{
+		PollEvent(EVENT_EDITOR_ADD_ACTOR);
+		SetKeyHandled(GetKey(ACTION_EDITOR_ADD_PYRAMID), true);
+	}
+	if (KeyPressed(GetKey(ACTION_EDITOR_PLACE_ACTOR)) && !KeyHandled(GetKey(ACTION_EDITOR_PLACE_ACTOR)))
+	{
+		PollEvent(EVENT_EDITOR_PLACE_ACTOR);
+		SetKeyHandled(GetKey(ACTION_EDITOR_PLACE_ACTOR), true);
+	}
+	if (KeyPressed(GetKey(ACTION_EDITOR_CANCEL)) && !KeyHandled(GetKey(ACTION_EDITOR_CANCEL)))
+	{
+		PollEvent(EVENT_EDITOR_CANCEL);
+		SetKeyHandled(GetKey(ACTION_EDITOR_CANCEL), true);
 	}
 	if (!GetMouse().handled)
 	{

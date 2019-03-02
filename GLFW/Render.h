@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <GLM/glm.hpp>
 #include <algorithm>
-#include "Object.h"
+#include "Actor.h"
 #include "Scene.h"
 #include "Camera.h"
 #include "ShaderProgram.h"
@@ -27,9 +27,9 @@ namespace Graphics
 
 		void Enable(GLenum cap);
 
-		void operator()(ShaderProgram* shader_program, Object* object, glm::mat4 projection = glm::mat4(1));
+		void operator()(ShaderProgram* shader_program, Game::Actor* actor, glm::mat4 projection = glm::mat4(1));
 
-		void operator()(ShaderProgram* shader_program, Scene* scene);
+		void operator()(ShaderProgram* shader_program, std::weak_ptr<Game::Scene> scene);
 
 	private:
 		Render();

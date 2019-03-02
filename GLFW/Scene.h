@@ -3,23 +3,27 @@
 #include <GLM/glm.hpp>
 #include <GLM/gtc/matrix_transform.hpp>
 #include <vector>
-#include "Object.h"
+#include "Actor.h"
 
 
-namespace Graphics
+namespace Game
 {
 	class Scene
 	{
 	public:
-		Scene(glm::mat4 projection = glm::mat4(1));
+		Scene(int id, glm::mat4 projection = glm::mat4(1));
 
-		void AddObject(Graphics::Object* actor);
+		void AddActor(std::shared_ptr<Actor> actor);
+
+		void DeleteActor(int actor_id);
 
 		void SetProjection(float fovy, float aspect, float near, float far);
 
 		void SetProjection(glm::mat4 projection);
 
-		std::vector<std::shared_ptr<Graphics::Object>>& GetActors();
+		std::unordered_map<int, std::weak_ptr<Actor>>& GetActors();
+
+		int GetID();
 
 		glm::mat4 GetProjection();
 
@@ -28,9 +32,11 @@ namespace Graphics
 		~Scene();
 
 	private:
-		std::vector<std::shared_ptr<Graphics::Object>> actors;
+		std::unordered_map<int, std::weak_ptr<Actor>> actors;
 
 		glm::mat4 projection;
+
+		int id;
 	};
 }
 

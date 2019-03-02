@@ -7,26 +7,6 @@ Events::Delegate::Delegate()
 	member(false)
 {}
 
-Events::Delegate::Delegate(void(*func)())
-	: _ptrobject(nullptr),
-	_ptrmethod(nullptr)
-{
-	_ptrfunc = func;
-	member = false;
-}
-
-void Events::Delegate::operator()()
-{
-	if (member && _ptrobject && _ptrmethod)
-	{
-		(_ptrobject->*_ptrmethod)();
-	}
-	else if (_ptrfunc)
-	{
-		_ptrfunc();
-	}
-}
-
 bool Events::Delegate::operator!()
 {
 	if (member)

@@ -16,6 +16,14 @@ namespace Input
 		ACTION_MOVE_RIGHT,
 		ACTION_MOVE_JUMP,
 		ACTION_MOVE_CROUCH,
+		ACTION_EDITOR,
+		ACTION_EDITOR_ADD_PYRAMID,
+		ACTION_EDITOR_PLACE_ACTOR,
+		ACTION_EDITOR_CANCEL,
+		ACTION_EDITOR_MOVE_FORWARD,
+		ACTION_EDITOR_MOVE_BACKWARD,
+		ACTION_EDITOR_MOVE_LEFT,
+		ACTION_EDITOR_MOVE_RIGHT,
 		ACTION_SWITCH_SCREEN_MODE,
 		ACTION_EXIT
 	};
@@ -23,6 +31,11 @@ namespace Input
 	enum InputEvents
 	{
 		EVENT_MOVE,
+		EVENT_EDITOR,
+		EVENT_EDITOR_ADD_ACTOR,
+		EVENT_EDITOR_PLACE_ACTOR,
+		EVENT_EDITOR_CANCEL,
+		EVENT_EDITOR_MOVE,
 		EVENT_MOUSE_ROTATE,
 		EVENT_EXIT,
 		EVENT_SWITCH_SCREEN_MODE
@@ -84,22 +97,35 @@ namespace Input
 
 		std::unordered_map<InputEvents, Events::Event*> events
 		{
-			{InputEvents::EVENT_MOVE, new Events::Event()},
-			{InputEvents::EVENT_MOUSE_ROTATE, new Events::Event()},
-			{InputEvents::EVENT_EXIT, new Events::Event()},
+			{InputEvents::EVENT_MOVE,				new Events::Event()},
+			{InputEvents::EVENT_EDITOR,				new Events::Event()},
+			{InputEvents::EVENT_EDITOR_ADD_ACTOR,	new Events::Event()},
+			{InputEvents::EVENT_EDITOR_PLACE_ACTOR,	new Events::Event()},
+			{InputEvents::EVENT_EDITOR_CANCEL,		new Events::Event()},
+			{InputEvents::EVENT_EDITOR_MOVE,		new Events::Event()},
+			{InputEvents::EVENT_MOUSE_ROTATE,		new Events::Event()},
+			{InputEvents::EVENT_EXIT,				new Events::Event()},
 			{InputEvents::EVENT_SWITCH_SCREEN_MODE, new Events::Event()}
 		};
 
 		std::unordered_map<Actions, int> actions
 		{
-			{Actions::ACTION_MOVE_FORWARD,		GLFW_KEY_W},
-			{Actions::ACTION_MOVE_BACKWARD,		GLFW_KEY_S},
-			{Actions::ACTION_MOVE_LEFT,			GLFW_KEY_A},
+			{Actions::ACTION_MOVE_FORWARD,			GLFW_KEY_W},
+			{Actions::ACTION_MOVE_BACKWARD,			GLFW_KEY_S},
+			{Actions::ACTION_MOVE_LEFT,				GLFW_KEY_A},
 			{Actions::ACTION_MOVE_RIGHT,			GLFW_KEY_D},
-			{Actions::ACTION_MOVE_JUMP,			GLFW_KEY_SPACE},
-			{Actions::ACTION_MOVE_CROUCH,		GLFW_KEY_LEFT_CONTROL},
-			{Actions::ACTION_EXIT,				GLFW_KEY_ESCAPE},
-			{Actions::ACTION_SWITCH_SCREEN_MODE, GLFW_KEY_F11}
+			{Actions::ACTION_MOVE_JUMP,				GLFW_KEY_SPACE},
+			{Actions::ACTION_MOVE_CROUCH,			GLFW_KEY_LEFT_CONTROL},
+			{Actions::ACTION_EDITOR,				GLFW_KEY_F10},
+			{Actions::ACTION_EDITOR_ADD_PYRAMID,	GLFW_KEY_F1},
+			{Actions::ACTION_EDITOR_PLACE_ACTOR,	GLFW_KEY_ENTER},
+			{Actions::ACTION_EDITOR_CANCEL,			GLFW_KEY_DELETE},
+			{Actions::ACTION_EDITOR_MOVE_FORWARD,	GLFW_KEY_UP},
+			{Actions::ACTION_EDITOR_MOVE_BACKWARD,	GLFW_KEY_DOWN},
+			{Actions::ACTION_EDITOR_MOVE_LEFT,		GLFW_KEY_LEFT},
+			{Actions::ACTION_EDITOR_MOVE_RIGHT,		GLFW_KEY_RIGHT},
+			{Actions::ACTION_EXIT,					GLFW_KEY_ESCAPE},
+			{Actions::ACTION_SWITCH_SCREEN_MODE,	GLFW_KEY_F11}
 		};
 
 		Mouse mouse;

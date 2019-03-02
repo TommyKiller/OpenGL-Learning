@@ -39,18 +39,6 @@ Events::Event& Events::Event::operator-=(const Delegate& delegate)
 	return*this;
 }
 
-void Events::Event::operator()()
-{
-	NodeIterator iterator(_first_node);
-	Delegate delegate;
-
-	while (iterator.HasNext())
-	{
-		delegate = iterator.GetNext();
-		delegate();
-	}
-}
-
 Events::Event::~Event()
 {
 	Node* current_node = _first_node;

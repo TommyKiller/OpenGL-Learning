@@ -8,41 +8,37 @@
 
 namespace Graphics
 {
-	class Object
+	class Model
 	{
 	public:
-		Object(std::shared_ptr<Graphics::Mesh> mesh, glm::vec3 position = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f),
+		Model(Graphics::Mesh* mesh, glm::vec3 position = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f),
 			glm::vec3 rotation_axis = glm::vec3(1.0f), float rotation_angle = 0);
-
-		Object(Object& object);
 
 		Mesh* GetMesh();
 
-		glm::mat4 GetModelMat();
+		glm::mat4 CalcModelMat();
 
 		void Scale(glm::vec3 scale);
 
 		void Rotate(float rotation_angle, glm::vec3 rotation_axis);
 
-		void Rotate(float rotation_angle);
+		void Move(glm::vec3 direction, float distance);
 
 		void MoveTo(glm::vec3 position);
 
-		void Move(float x, float y, float z);
-
-		void Reset();
-
 		void Dispose();
 
-		~Object();
+		~Model();
 
 	private:
-		std::shared_ptr<Graphics::Mesh> mesh;
+		std::unique_ptr<Graphics::Mesh> mesh;
 
 		glm::vec3 position;
 		glm::vec3 scale;
 		glm::vec3 rotation_axis;
 		float rotation_angle;
+
+		Model(Model& object) = delete;
 	};
 }
 

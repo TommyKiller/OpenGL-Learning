@@ -9,18 +9,35 @@ namespace Events
 	public:
 		Delegate();
 
-		template <class Owner>
-		Delegate(Owner *owner, void (Owner::*method)())
-			: _ptrfunc(nullptr)
+		template <class Owner, class ...Args>
+		Delegate(Owner* owner, void (Owner::* method)(Args...))
 		{
 			_ptrobject = reinterpret_cast<Object*>(owner);
 			_ptrmethod = reinterpret_cast<Method>(method);
 			member = true;
 		}
 
-		Delegate(void (*func)());
+		template <class ...Args>
+		Delegate(void (*func)(Args...))
+			: _ptrobject(nullptr),
+			_ptrmethod(nullptr)
+		{
+			_ptrfunc = reinterpret_cast<Func>(func);
+			member = false;
+		}
 
-		void operator()();
+		template<class ...Args>
+		void operator()(Args...)
+		{
+			if (member && _ptrobject && _ptrmethod)
+			{
+				(_ptrobject->*_ptrmethod)(Args...);
+			}
+			else if (_ptrfunc)
+			{
+				_ptrfunc(Args...);
+			}
+		}
 
 		bool operator!();
 

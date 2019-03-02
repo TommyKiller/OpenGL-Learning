@@ -14,7 +14,18 @@ namespace Events
 
 		Event& operator-= (const Delegate& delegate);
 
-		void operator()();
+		template <class ...Args>
+		void operator()(Args...)
+		{
+			NodeIterator iterator(_first_node);
+			Delegate delegate;
+
+			while (iterator.HasNext())
+			{
+				delegate = iterator.GetNext();
+				delegate(Args...);
+			}
+		}
 
 		~Event();
 

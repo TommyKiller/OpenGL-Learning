@@ -41,27 +41,27 @@ void Graphics::Render::Enable(GLenum cap)
 	glEnable(cap);
 }
 
-void Graphics::Render::operator()(ShaderProgram* shader_program, Object* object, glm::mat4 projection)
+void Graphics::Render::operator()(ShaderProgram* shader_program, Game::Actor* actor, glm::mat4 projection)
 {
 	shader_program->Use();
 	shader_program->SetUniform("projection", 1, GL_FALSE, projection);
 	shader_program->SetUniform("view", 1, GL_FALSE, Graphics::Camera::GetInstance().CalcViewMat());
-	object->GetMesh()->Use();
-	shader_program->SetUniform("model", 1, GL_FALSE, object->GetModelMat());
-	glDrawElements(GL_TRIANGLES, object->GetMesh()->GetElementsCount(), GL_UNSIGNED_INT, 0);
+	actor->GetModel()->GetMesh()->Use();
+	shader_program->SetUniform("model", 1, GL_FALSE, actor->GetModel()->CalcModelMat());
+	glDrawElements(GL_TRIANGLES, actor->GetModel()->GetMesh()->GetElementsCount(), GL_UNSIGNED_INT, 0);
 	Unbind();
 }
 
-void Graphics::Render::operator()(ShaderProgram* shader_program, Scene* scene)
+void Graphics::Render::operator()(ShaderProgram* shader_program, std::weak_ptr<Game::Scene> scene)
 {
 	shader_program->Use();
-	shader_program->SetUniform("projection", 1, GL_FALSE, scene->GetProjection());
+	shader_program->SetUniform("projection", 1, GL_FALSE, scene.lock()->GetProjection());
 	shader_program->SetUniform("view", 1, GL_FALSE, Graphics::Camera::GetInstance().CalcViewMat());
-	std::for_each(scene->GetActors().begin(), scene->GetActors().end(), [&shader_program](std::shared_ptr<Graphics::Object> actor)
+	std::for_each(scene.lock()->GetActors().begin(), scene.lock()->GetActors().end(), [&shader_program](std::pair<int, std::weak_ptr<Game::Actor>> actor)
 		{
-			actor->GetMesh()->Use();
-			shader_program->SetUniform("model", 1, GL_FALSE, actor->GetModelMat());
-			glDrawElements(GL_TRIANGLES, actor->GetMesh()->GetElementsCount(), GL_UNSIGNED_INT, 0);
+			actor.second.lock()->GetModel()->GetMesh()->Use();
+			shader_program->SetUniform("model", 1, GL_FALSE, actor.second.lock()->GetModel()->CalcModelMat());
+			glDrawElements(GL_TRIANGLES, actor.second.lock()->GetModel()->GetMesh()->GetElementsCount(), GL_UNSIGNED_INT, 0);
 		});
 	Unbind();
 }
