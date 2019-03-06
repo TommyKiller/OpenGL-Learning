@@ -6,35 +6,31 @@ Graphics::ShaderProgram::ShaderProgram(ShaderProgram& shader_program)
 	shaders_sources = shader_program.shaders_sources;
 }
 
-Graphics::ShaderProgram::ShaderProgram(std::unordered_map<GLenum, const char*> shader_sources_list)
-	: shaders_sources(shader_sources_list)
+Graphics::ShaderProgram::ShaderProgram(std::unordered_map<GLenum, const char*> shaders_files)
 {
-	std::vector<GLuint> shader_list;
-	for (const std::pair<GLenum, const char*>& shader : shaders_sources)
+	std::vector<GLuint> shaders_list;
+	for (const auto& [key, value] : shaders_files)
 	{
-		shader_list.push_back(CreateShader(shader.first, shader.second));
+		shaders_sources[key] = LoadShader(key, value);
+		shaders_list.push_back(CreateShader(key, shaders_sources[key].c_str()));
 	}
 
-	ID = CreateProgram(shader_list);
-
-	std::for_each(shader_list.begin(), shader_list.end(), glDeleteShader);
+	ID = CreateProgram(shaders_list);
 }
 
-void Graphics::ShaderProgram::AddShader(GLenum shader_type, const char* file_name)
+void Graphics::ShaderProgram::SetShader(GLenum shader_type, const char* file_name)
 {
 	Dispose();
 
-	shaders_sources[shader_type] = file_name;
+	shaders_sources[shader_type] = LoadShader(shader_type, file_name);
 
-	std::vector<GLuint> shader_list;
+	std::vector<GLuint> shaders_list;
 	for (const auto& [key, value] : shaders_sources)
 	{
-		shader_list.push_back(CreateShader(key, value));
+		shaders_list.push_back(CreateShader(key, value.c_str()));
 	}
 
-	ID = CreateProgram(shader_list);
-
-	std::for_each(shader_list.begin(), shader_list.end(), glDeleteShader);
+	ID = CreateProgram(shaders_list);
 }
 
 void Graphics::ShaderProgram::Use()
@@ -79,26 +75,29 @@ Graphics::ShaderProgram::~ShaderProgram()
 	Dispose();
 }
 
-GLuint Graphics::ShaderProgram::CreateShader(GLenum shader_type, const char* file_name)
+std::string Graphics::ShaderProgram::LoadShader(GLenum shader_type, const char* file_name)
 {
-	std::string shader_source;
-
 	std::ifstream fileStream(file_name, std::ios::in);
 	if (!fileStream.is_open())
 	{
 		throw std::exception("Can not open file!");
 	}
 
+	std::string shader_source;
 	std::string line;
 	while (!fileStream.eof())
 	{
 		std::getline(fileStream, line);
 		shader_source.append(line + "\n");
 	}
-	const char* shader_source_str = shader_source.c_str();
 
+	return shader_source;
+}
+
+GLuint Graphics::ShaderProgram::CreateShader(GLenum shader_type, const char* shader_source)
+{
 	GLuint shader = glCreateShader(shader_type);
-	glShaderSource(shader, 1, &shader_source_str, nullptr);
+	glShaderSource(shader, 1, &shader_source, nullptr);
 	glCompileShader(shader);
 
 	GLint status;
@@ -108,25 +107,27 @@ GLuint Graphics::ShaderProgram::CreateShader(GLenum shader_type, const char* fil
 		GLint info_log_len;
 		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &info_log_len);
 		GLchar* info_log = new GLchar[info_log_len + 1];
+		glGetShaderInfoLog(shader, info_log_len, &info_log_len, info_log);
+		std::cout << info_log << std::endl;
 		throw std::exception(info_log);
-
+	
 		delete[] info_log;
 	}
-
+	
 	return shader;
 }
 
-GLuint Graphics::ShaderProgram::CreateProgram(std::vector<GLuint> shader_list)
+GLuint Graphics::ShaderProgram::CreateProgram(std::vector<GLuint> shaders_list)
 {
 	GLuint program = glCreateProgram();
-
-	for (const GLuint&shader : shader_list)
+	
+	for (const GLuint& shader : shaders_list)
 	{
 		glAttachShader(program, shader);
 	}
-
+	
 	glLinkProgram(program);
-
+	
 	GLint status;
 	glGetProgramiv(program, GL_LINK_STATUS, &status);
 	if (!status)
@@ -134,23 +135,33 @@ GLuint Graphics::ShaderProgram::CreateProgram(std::vector<GLuint> shader_list)
 		GLint info_log_len;
 		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &info_log_len);
 		GLchar* info_log = new GLchar[info_log_len + 1];
+		glGetProgramInfoLog(program, info_log_len, &info_log_len, info_log);
+		std::cout << info_log << std::endl;
 		throw std::exception(info_log);
 
 		delete[] info_log;
 	}
-
+	
 	glValidateProgram(program);
-
+	
 	glGetProgramiv(program, GL_VALIDATE_STATUS, &status);
 	if (!status)
 	{
 		GLint info_log_len;
 		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &info_log_len);
 		GLchar* info_log = new GLchar[info_log_len + 1];
+		glGetProgramInfoLog(program, info_log_len, &info_log_len, info_log);
+		std::cout << info_log << std::endl;
 		throw std::exception(info_log);
-
+	
 		delete[] info_log;
 	}
+
+	std::for_each(shaders_list.begin(), shaders_list.end(), [&program](GLuint shader)
+		{
+			glDetachShader(program, shader);
+			glDeleteShader(shader);
+		});
 
 	return program;
 }

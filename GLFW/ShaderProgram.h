@@ -1,12 +1,12 @@
 #ifndef SHADERPROGRAM_H
 #define SHADERPROGRAM_H
-
 #include <GL/glew.h>
 #include <GLM/gtc/type_ptr.hpp>
 #include <string>
 #include <unordered_map>
 #include <vector>
 #include <fstream>
+#include <iostream>
 #include <algorithm>
 
 
@@ -19,9 +19,9 @@ namespace Graphics
 
 		ShaderProgram(ShaderProgram& shader_program);
 
-		ShaderProgram(std::unordered_map<GLenum, const char*> shader_sources_list);
+		ShaderProgram(std::unordered_map<GLenum, const char*> shaders_files);
 
-		void AddShader(GLenum shader_type, const char* file_name);
+		void SetShader(GLenum shader_type, const char* file_name);
 
 		void Use();
 
@@ -40,11 +40,13 @@ namespace Graphics
 	private:
 		GLuint ID;
 
-		std::unordered_map<GLenum, const char*> shaders_sources;
+		std::unordered_map<GLenum, std::string> shaders_sources;
 
-		GLuint CreateShader(GLenum shader_type, const char* file_name);
+		std::string LoadShader(GLenum shader_type, const char* file_name);
 
-		GLuint CreateProgram(std::vector<GLuint> shader_list);
+		GLuint CreateShader(GLenum shader_type, const char* shader_source);
+
+		GLuint CreateProgram(std::vector<GLuint> shaders_list);
 	};
 }
 
