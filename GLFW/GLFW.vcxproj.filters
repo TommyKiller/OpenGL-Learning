@@ -84,6 +84,12 @@
     <ClCompile Include="World.cpp">
       <Filter>Исходные файлы\framework\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Исходные файлы\framework\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Исходные файлы\framework\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -132,6 +138,12 @@
       <Filter>Файлы заголовков\framework\Game</Filter>
     </ClInclude>
     <ClInclude Include="stb_image.h">
+      <Filter>Файлы заголовков\framework\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Файлы заголовков\framework\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
       <Filter>Файлы заголовков\framework\Graphics</Filter>
     </ClInclude>
   </ItemGroup>

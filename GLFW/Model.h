@@ -1,9 +1,10 @@
-#ifndef OBJECT_H
-#define OBJECT_H
+#ifndef MODEL_H
+#define MODEL_H
 #include <GLM/glm.hpp>
 #include <GLM/gtc/matrix_transform.hpp>
 #include <memory>
 #include "Mesh.h"
+#include "Texture.h"
 
 
 namespace Graphics
@@ -11,10 +12,14 @@ namespace Graphics
 	class Model
 	{
 	public:
-		Model(Graphics::Mesh* mesh, glm::vec3 position = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f),
+		Model(Graphics::Mesh* mesh, Graphics::Texture* texture, glm::vec3 position = glm::vec3(0.0f), glm::vec3 scale = glm::vec3(1.0f),
 			glm::vec3 rotation_axis = glm::vec3(1.0f), float rotation_angle = 0);
 
-		Mesh* GetMesh();
+		void UseMesh();
+
+		void UseTexture();
+
+		unsigned int GetElementsCount();
 
 		glm::mat4 CalcModelMat();
 
@@ -32,13 +37,14 @@ namespace Graphics
 
 	private:
 		std::unique_ptr<Graphics::Mesh> mesh;
+		std::unique_ptr<Graphics::Texture> texture;
 
 		glm::vec3 position;
 		glm::vec3 scale;
 		glm::vec3 rotation_axis;
 		float rotation_angle;
 
-		Model(Model& object) = delete;
+		Model(Model& model) = delete;
 	};
 }
 

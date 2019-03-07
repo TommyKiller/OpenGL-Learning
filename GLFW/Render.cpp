@@ -22,6 +22,9 @@ void Graphics::Render::FramebufferSizeCallback(GLFWwindow* window, int width, in
 
 void Graphics::Render::Unbind()
 {
+	glBindTexture(GL_TEXTURE_1D, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(GL_TEXTURE_3D, 0);
 	glBindVertexArray(0);
 	glUseProgram(0);
 }
@@ -46,9 +49,10 @@ void Graphics::Render::operator()(ShaderProgram* shader_program, Game::Actor* ac
 	shader_program->Use();
 	shader_program->SetUniform("projection", 1, GL_FALSE, projection);
 	shader_program->SetUniform("view", 1, GL_FALSE, Graphics::Camera::GetInstance().CalcViewMat());
-	actor->GetModel()->GetMesh()->Use();
+	actor->GetModel()->UseTexture();
+	actor->GetModel()->UseMesh();
 	shader_program->SetUniform("model", 1, GL_FALSE, actor->GetModel()->CalcModelMat());
-	glDrawElements(GL_TRIANGLES, actor->GetModel()->GetMesh()->GetElementsCount(), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, actor->GetModel()->GetElementsCount(), GL_UNSIGNED_INT, 0);
 	Unbind();
 }
 
@@ -59,9 +63,10 @@ void Graphics::Render::operator()(ShaderProgram* shader_program, std::weak_ptr<G
 	shader_program->SetUniform("view", 1, GL_FALSE, Graphics::Camera::GetInstance().CalcViewMat());
 	std::for_each(scene.lock()->GetActors().begin(), scene.lock()->GetActors().end(), [&shader_program](std::pair<int, std::weak_ptr<Game::Actor>> actor)
 		{
-			actor.second.lock()->GetModel()->GetMesh()->Use();
+			actor.second.lock()->GetModel()->UseTexture();
+			actor.second.lock()->GetModel()->UseMesh();
 			shader_program->SetUniform("model", 1, GL_FALSE, actor.second.lock()->GetModel()->CalcModelMat());
-			glDrawElements(GL_TRIANGLES, actor.second.lock()->GetModel()->GetMesh()->GetElementsCount(), GL_UNSIGNED_INT, 0);
+			glDrawElements(GL_TRIANGLES, actor.second.lock()->GetModel()->GetElementsCount(), GL_UNSIGNED_INT, 0);
 		});
 	Unbind();
 }

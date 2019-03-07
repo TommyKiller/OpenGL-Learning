@@ -68,7 +68,8 @@ void Engine::Editor::CreateActor()
 
 	active_actor = std::make_shared<Game::Actor>(actor_id++,
 		new Graphics::Model(
-			new Graphics::Mesh(pyramid_vertex_data.data(), pyramid_vertex_data.size(), elements.data(), elements.size(), GL_STATIC_DRAW)),
+			new Graphics::Mesh(pyramid_vertex_data.data(), pyramid_vertex_data.size(), elements.data(), elements.size(), GL_STATIC_DRAW),
+			new Graphics::Texture()),
 		3.0f, 0.1f);
 	world.lock()->GetActiveScene().lock()->AddActor(active_actor);
 	Input::InputController::GetInstance().UnsubscribeTo(Input::InputEvents::EVENT_EDITOR_ADD_ACTOR, new Events::Delegate(this, &Engine::Editor::CreateActor));
