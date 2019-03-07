@@ -9,7 +9,6 @@ Graphics::Image::Image()
 {}
 
 Graphics::Image::Image(const char* file_name, bool flip)
-	: format(0)
 {
 	Load(file_name, flip);
 }
@@ -53,6 +52,14 @@ void Graphics::Image::Load(const char* file_name, bool flip)
 	{
 		std::cout << "Cannot load the image!" << std::endl;
 		throw new std::exception("Cannot load the image!");
+	}
+	if (std::strstr(file_name, ".png"))
+	{
+		format = GL_RGBA;
+	}
+	else
+	{
+		format = GL_RGB;
 	}
 }
 
