@@ -4,6 +4,7 @@
 #include <iostream>
 #include <algorithm>
 #include <string.h>
+#include <vector>
 
 
 namespace Graphics
@@ -11,6 +12,8 @@ namespace Graphics
 	class Image
 	{
 	public:
+		static std::vector<const char*> rgba_formats;
+
 		Image();
 
 		Image(const char* file_name, bool flip);
