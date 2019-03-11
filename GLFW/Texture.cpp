@@ -2,7 +2,7 @@
 
 Graphics::Texture::Texture() : ID(0), target(GL_TEXTURE_2D){}
 
-Graphics::Texture::Texture(Image image, GLint min_filter, GLint mag_filter, GLint mipmap_level, GLint wrap_s, GLint wrap_t)
+Graphics::Texture::Texture(Image* image, GLint min_filter, GLint mag_filter, GLint mipmap_level, GLint wrap_s, GLint wrap_t)
 	: target(GL_TEXTURE_2D)
 {
 	glGenTextures(1, &ID);
@@ -35,33 +35,35 @@ Graphics::Texture::Texture(const char* file_name, bool flip, GLint min_filter, G
 	glTexParameteri(target, GL_TEXTURE_WRAP_S, wrap_s);
 	glTexParameteri(target, GL_TEXTURE_WRAP_T, wrap_t);
 
+	Graphics::Image image;
 	image.Load(file_name, flip);
-	if (mipmap_level >= 0)
+
+	if (mipmap_level > 0)
 	{
-		GenerateMipmap(image, mipmap_level);
+		GenerateMipmap(&image, mipmap_level);
 	}
 	else
 	{
-		GenerateMipmap(image, 0);
+		GenerateMipmap(&image, 0);
 		glGenerateMipmap(target);
 	}
 }
 
-Graphics::Texture::Texture(Texture& texture) : image(texture.image), ID(texture.ID), target(texture.target){}
+Graphics::Texture::Texture(Texture& texture) : ID(texture.ID), target(texture.target){}
 
-void Graphics::Texture::GenerateMipmap(Image image, GLint mipmap_level)
+void Graphics::Texture::GenerateMipmap(Image* image, GLint mipmap_level)
 {
-	glTexImage2D(target, mipmap_level, image.GetFormat(), image.GetWidth(), image.GetHeight(), 0, image.GetFormat(), GL_UNSIGNED_BYTE, image.GetData());
+	glTexImage2D(target, mipmap_level, image->GetFormat(), image->GetWidth(), image->GetHeight(), 0, image->GetFormat(), GL_UNSIGNED_BYTE, image->GetData());
 }
 
 void Graphics::Texture::Use()
 {
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(target, ID);
 }
 
 void Graphics::Texture::Dispose()
 {
-	image.Dispose();
 	if (ID != 0)
 	{
 		glDeleteTextures(1, &ID);

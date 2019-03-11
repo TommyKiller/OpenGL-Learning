@@ -2,11 +2,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-std::vector<const char*> Graphics::Image::rgba_formats =
-{
-	".png"
-};
-
 Graphics::Image::Image()
 	: width(0), height(0),
 	data(nullptr), nrChannels(0),
@@ -60,16 +55,13 @@ void Graphics::Image::Load(const char* file_name, bool flip)
 		throw new std::exception("Cannot load the image!");
 	}
 
-	for (const char* rgba_format : Graphics::Image::rgba_formats)
-	{
-		if (std::strstr(file_name, rgba_format))
-		{
-			format = GL_RGBA;
-		}
-	}
-	if (format != GL_RGBA)
+	if (nrChannels == 3)
 	{
 		format = GL_RGB;
+	}
+	else if (nrChannels == 4)
+	{
+		format = GL_RGBA;
 	}
 }
 

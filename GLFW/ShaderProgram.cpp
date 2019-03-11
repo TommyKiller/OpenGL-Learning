@@ -43,6 +43,12 @@ GLuint Graphics::ShaderProgram::GetAttribLocation(std::string attribute_name)
 	return glGetAttribLocation(ID, attribute_name.c_str());
 }
 
+void Graphics::ShaderProgram::SetUniform(std::string uniform_name, int uniform_value)
+{
+	GLuint uniform_location = glGetUniformLocation(ID, uniform_name.c_str());
+	glUniform1i(uniform_location, uniform_value);
+}
+
 void Graphics::ShaderProgram::SetUniform(std::string uniform_name, float uniform_value)
 {
 	GLuint uniform_location = glGetUniformLocation(ID, uniform_name.c_str());

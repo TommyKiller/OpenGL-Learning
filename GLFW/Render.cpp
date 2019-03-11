@@ -49,6 +49,7 @@ void Graphics::Render::operator()(ShaderProgram* shader_program, Game::Actor* ac
 	shader_program->Use();
 	shader_program->SetUniform("projection", 1, GL_FALSE, projection);
 	shader_program->SetUniform("view", 1, GL_FALSE, Graphics::Camera::GetInstance().CalcViewMat());
+	shader_program->SetUniform("texture1", 0);
 	actor->GetModel()->UseTexture();
 	actor->GetModel()->UseMesh();
 	shader_program->SetUniform("model", 1, GL_FALSE, actor->GetModel()->CalcModelMat());
@@ -61,6 +62,7 @@ void Graphics::Render::operator()(ShaderProgram* shader_program, std::weak_ptr<G
 	shader_program->Use();
 	shader_program->SetUniform("projection", 1, GL_FALSE, scene.lock()->GetProjection());
 	shader_program->SetUniform("view", 1, GL_FALSE, Graphics::Camera::GetInstance().CalcViewMat());
+	shader_program->SetUniform("texture1", 0);
 	std::for_each(scene.lock()->GetActors().begin(), scene.lock()->GetActors().end(), [&shader_program](std::pair<int, std::weak_ptr<Game::Actor>> actor)
 		{
 			actor.second.lock()->GetModel()->UseTexture();

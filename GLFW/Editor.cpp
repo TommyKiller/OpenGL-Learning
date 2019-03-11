@@ -29,29 +29,14 @@ void Engine::Editor::Disable()
 
 void Engine::Editor::CreateActor()
 {
-	std::vector<GLfloat> vertex_coords
+	std::vector<GLfloat> vertex_data
 	{
-		 1.0f, -1.0f, -1.0f, 1.0f,
-		-1.0f, -1.0f, -1.0f, 1.0f,
-		-1.0f, -1.0f,  1.0f, 1.0f,
-		 1.0f, -1.0f,  1.0f, 1.0f,
-		 0.0f,  1.0f,  0.0f, 1.0f,
-	};
-
-
-	std::vector<GLfloat> vertex_colours
-	{
-		1.0f, 0.0f, 0.0f, 1.0f,
-		0.0f, 1.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f, 1.0f,
-		1.0f, 1.0f, 0.0f, 1.0f,
-		0.0f, 1.0f, 1.0f, 1.0f
-	};
-
-	std::vector<std::pair<GLfloat*, unsigned int>> pyramid_vertex_data =
-	{
-		std::pair<GLfloat*, unsigned int>(vertex_coords.data(), vertex_coords.size()),
-		std::pair<GLfloat*, unsigned int>(vertex_colours.data(), vertex_colours.size())
+		// Coordinates					// Colours					// Texture coordinates
+		 1.0f, -1.0f, -1.0f, 1.0f,		1.0f, 0.0f, 0.0f, 1.0f,		0.0f, 0.0f,
+		-1.0f, -1.0f, -1.0f, 1.0f,		0.0f, 1.0f, 0.0f, 1.0f,		1.0f, 0.0f,
+		-1.0f, -1.0f,  1.0f, 1.0f,		0.0f, 0.0f, 1.0f, 1.0f,		0.0f, 0.0f,
+		 1.0f, -1.0f,  1.0f, 1.0f,		1.0f, 0.0f, 1.0f, 1.0f,		1.0f, 0.0f,
+		 0.0f,  1.0f,  0.0f, 1.0f,		1.0f, 1.0f, 0.0f, 1.0f,		0.5f, 1.0f
 	};
 
 	std::vector<GLuint> elements =
@@ -68,8 +53,8 @@ void Engine::Editor::CreateActor()
 
 	active_actor = std::make_shared<Game::Actor>(actor_id++,
 		new Graphics::Model(
-			new Graphics::Mesh(pyramid_vertex_data.data(), pyramid_vertex_data.size(), elements.data(), elements.size(), GL_STATIC_DRAW),
-			new Graphics::Texture()),
+			new Graphics::Mesh(vertex_data.data(), vertex_data.size(), elements.data(), elements.size(), GL_STATIC_DRAW),
+			new Graphics::Texture("Resources/Textures/brick_wall.jpg", true, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR, 0, GL_REPEAT, GL_REPEAT)),
 		3.0f, 0.1f);
 	world.lock()->GetActiveScene().lock()->AddActor(active_actor);
 	Input::InputController::GetInstance().UnsubscribeTo(Input::InputEvents::EVENT_EDITOR_ADD_ACTOR, new Events::Delegate(this, &Engine::Editor::CreateActor));

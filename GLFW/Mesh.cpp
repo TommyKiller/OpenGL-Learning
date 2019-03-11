@@ -4,22 +4,17 @@ Graphics::Mesh::Mesh(Mesh& mesh)
 {
 	VAO = mesh.VAO;
 	EBO = mesh.EBO;
-	VBOs = mesh.VBOs;
-	VBOs_count = mesh.VBOs_count;
+	VBO = mesh.VBO;
 	elements_count = mesh.elements_count;
 }
 
-Graphics::Mesh::Mesh(std::pair<GLfloat*, unsigned int>* vertex_buffers, unsigned int vertex_buffers_count,
+Graphics::Mesh::Mesh(GLfloat* vertex_data, unsigned int vertex_data_count,
 	GLuint* elements, unsigned int elements_count, GLenum usage)
-	: VBOs_count(vertex_buffers_count), elements_count(elements_count)
+	: elements_count(elements_count)
 {
-	VBOs = new GLuint[VBOs_count];
-	for (unsigned int i = 0; i < vertex_buffers_count; ++i)
-	{
-		VBOs[i] = CreateBuffer(GL_ARRAY_BUFFER, vertex_buffers[i].first, vertex_buffers[i].second, usage);
-	}
+	VBO = CreateBuffer(GL_ARRAY_BUFFER, vertex_data, vertex_data_count, usage);
 	EBO = CreateBuffer(GL_ELEMENT_ARRAY_BUFFER, elements, elements_count, usage);
-	VAO = CreateVAO(VBOs, VBOs_count, EBO);
+	VAO = CreateVAO(VBO, EBO);
 }
 
 void Graphics::Mesh::Use()
@@ -32,24 +27,27 @@ unsigned int Graphics::Mesh::GetElementsCount() const
 	return elements_count;
 }
 
-GLuint Graphics::Mesh::CreateVAO(GLuint* VBO, unsigned int VBO_count, GLuint EBO)
+GLuint Graphics::Mesh::CreateVAO(GLuint VBO, GLuint EBO)
 {
 	GLuint VAO;
 	glGenVertexArrays(1, &VAO);
 
 	glBindVertexArray(VAO);
 
-	for (unsigned int i = 0; i < VBO_count; ++i)
-	{
-		glBindBuffer(GL_ARRAY_BUFFER, VBO[i]);
-		glVertexAttribPointer(i, 4, GL_FLOAT, GL_FALSE, 0, 0);
-		glEnableVertexAttribArray(i);
-	}
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	unsigned int stride = 10 * sizeof(GL_FLOAT);
 
-	if (EBO != 0)
-	{
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	}
+	// Coordinates
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, stride, (const void*) 0);
+	glEnableVertexAttribArray(0);
+	// Colours
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, stride, (const void*)(4 * sizeof(GL_FLOAT)));
+	glEnableVertexAttribArray(1);
+	// Texture coordinates
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, stride, (const void*)(8 * sizeof(GL_FLOAT)));
+	glEnableVertexAttribArray(2);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 
 	glBindVertexArray(0);
 
@@ -63,19 +61,18 @@ void Graphics::Mesh::Dispose()
 		glDeleteVertexArrays(1, &VAO);
 		VAO = 0;
 	}
+	if (VBO != 0)
+	{
+		glDeleteBuffers(1, &VBO);
+		VBO = 0;
+	}
 	if (EBO != 0)
 	{
 		glDeleteBuffers(1, &EBO);
 		EBO = 0;
 	}
-	if (VBOs[0] != 0)
-	{
-		glDeleteBuffers(VBOs_count, VBOs);
-		delete[] VBOs;
-	}
 
 	elements_count = 0;
-	VBOs_count = 0;
 }
 
 Graphics::Mesh::~Mesh()

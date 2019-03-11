@@ -12,8 +12,6 @@ namespace Graphics
 	class Image
 	{
 	public:
-		static std::vector<const char*> rgba_formats;
-
 		Image();
 
 		Image(const char* file_name, bool flip);

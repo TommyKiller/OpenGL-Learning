@@ -13,7 +13,7 @@ namespace Graphics
 
 		Mesh(Mesh& mesh);
 
-		Mesh(std::pair<GLfloat*, unsigned int>* vertex_buffers, unsigned int vertex_buffers_count,
+		Mesh(GLfloat* vertex_data, unsigned int vertex_data_count,
 			GLuint* elements, unsigned int elements_count, GLenum usage);
 
 		void Use();
@@ -33,17 +33,15 @@ namespace Graphics
 			return BO;
 		}
 
-		GLuint CreateVAO(GLuint* VBO, unsigned int VBO_count, GLuint EBO);
+		GLuint CreateVAO(GLuint VBO, GLuint EBO);
 
 		void Dispose();
 
 		~Mesh();
 	private:
-		GLuint VAO, EBO;
+		GLuint VAO, VBO, EBO;
 
-		GLuint* VBOs;
-
-		unsigned int elements_count, VBOs_count;
+		unsigned int elements_count;
 	};
 }
 

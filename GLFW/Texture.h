@@ -11,13 +11,13 @@ namespace Graphics
 	public:
 		Texture();
 
-		Texture(Image image, GLint min_filter, GLint mag_filter, GLint mipmap_level, GLint wrap_s, GLint wrap_t);
+		Texture(Image* image, GLint min_filter, GLint mag_filter, GLint mipmap_level, GLint wrap_s, GLint wrap_t);
 
-		Texture(const char* file_name, bool flip, GLint min_filter, GLint mipmap_level, GLint mag_filter, GLint wrap_s, GLint wrap_t);
+		Texture(const char* file_name, bool flip, GLint min_filter, GLint mag_filter, GLint mipmap_level, GLint wrap_s, GLint wrap_t);
 
 		Texture(Texture& texture);
 
-		void GenerateMipmap(Image image, GLint mipmap_level);
+		void GenerateMipmap(Image* image, GLint mipmap_level);
 
 		void Use();
 
@@ -26,7 +26,6 @@ namespace Graphics
 		~Texture();
 
 	private:
-		Image image;
 		GLenum target;
 		GLuint ID;
 	};

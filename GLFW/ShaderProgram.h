@@ -27,6 +27,8 @@ namespace Graphics
 
 		GLuint GetAttribLocation(std::string attribute_name);
 
+		void SetUniform(std::string uniform_name, int uniform_value);
+
 		void SetUniform(std::string uniform_name, float uniform_value);
 
 		void SetUniform(std::string uniform_name, int uniform_value1, int uniform_value2);

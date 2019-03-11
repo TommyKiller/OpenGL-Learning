@@ -1,9 +1,13 @@
 #version 330
 
-smooth in vec4 vertex_color;
-out vec4 outputColor;
+in vec2 TexCoord;
+in vec4 VertColour;
+
+uniform sampler2D texture1;
+
+out vec4 FragColor;
 
 void main()
 {
-    outputColor = vertex_color;
+    FragColor = texture(texture1, TexCoord);
 }
