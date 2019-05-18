@@ -19,7 +19,7 @@ namespace Graphics
 
 		void UseTexture();
 
-		unsigned int GetElementsCount();
+		size_t GetElementsCount();
 
 		glm::mat4 CalcModelMat();
 

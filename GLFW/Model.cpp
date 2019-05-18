@@ -10,7 +10,7 @@ Graphics::Model::Model(Graphics::Mesh* mesh, Graphics::Texture* texture, glm::ve
 	rotation_angle(rotation_angle)
 {}
 
-unsigned int Graphics::Model::GetElementsCount()
+size_t Graphics::Model::GetElementsCount()
 {
 	return mesh->GetElementsCount();
 }

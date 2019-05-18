@@ -13,21 +13,21 @@ namespace Graphics
 
 		Mesh(Mesh& mesh);
 
-		Mesh(GLfloat* vertex_data, unsigned int vertex_data_count,
-			GLuint* elements, unsigned int elements_count, GLenum usage);
+		Mesh(GLfloat* vertex_data, size_t vertex_data_size,
+			GLuint* elements, size_t elements_count, GLenum usage);
 
 		void Use();
 
-		unsigned int GetElementsCount() const;
+		size_t GetElementsCount() const;
 
 		template<class data_t>
-		GLuint CreateBuffer(GLenum target, data_t* data, unsigned int data_count, GLenum usage)
+		GLuint CreateBuffer(GLenum target, data_t* data, size_t data_size, GLenum usage)
 		{
 			GLuint BO;
 			glGenBuffers(1, &BO);
 
 			glBindBuffer(target, BO);
-			glBufferData(target, sizeof(data_t) * data_count, data, usage);
+			glBufferData(target, sizeof(data_t) * data_size, data, usage);
 			glBindBuffer(target, 0);
 
 			return BO;
@@ -41,7 +41,7 @@ namespace Graphics
 	private:
 		GLuint VAO, VBO, EBO;
 
-		unsigned int elements_count;
+		size_t elements_count;
 	};
 }
 

@@ -1,6 +1,6 @@
 #include "System.h"
 
-GLfloat System::deltaTime = 0.0f;
+double System::deltaTime = 0.0f;
 
 void System::InitialiseGLFW(unsigned int maj_version, unsigned int min_version)
 {
@@ -30,13 +30,13 @@ void System::InitialiseGLEW(System::Window* window)
 
 void System::CalcDeltaTime()
 {
-	static GLfloat last = 0.0f;
-	GLfloat now = glfwGetTime();
+	static double last = 0.0f;
+	double now = glfwGetTime();
 	System::deltaTime = now - last;
 	last = now;
 }
 
-GLfloat System::GetDeltaTime()
+double System::GetDeltaTime()
 {
 	return System::deltaTime;
 }

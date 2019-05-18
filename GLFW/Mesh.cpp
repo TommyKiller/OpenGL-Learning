@@ -8,11 +8,11 @@ Graphics::Mesh::Mesh(Mesh& mesh)
 	elements_count = mesh.elements_count;
 }
 
-Graphics::Mesh::Mesh(GLfloat* vertex_data, unsigned int vertex_data_count,
-	GLuint* elements, unsigned int elements_count, GLenum usage)
+Graphics::Mesh::Mesh(GLfloat* vertex_data, size_t vertex_data_size,
+	GLuint* elements, size_t elements_count, GLenum usage)
 	: elements_count(elements_count)
 {
-	VBO = CreateBuffer(GL_ARRAY_BUFFER, vertex_data, vertex_data_count, usage);
+	VBO = CreateBuffer(GL_ARRAY_BUFFER, vertex_data, vertex_data_size, usage);
 	EBO = CreateBuffer(GL_ELEMENT_ARRAY_BUFFER, elements, elements_count, usage);
 	VAO = CreateVAO(VBO, EBO);
 }
@@ -22,7 +22,7 @@ void Graphics::Mesh::Use()
 	glBindVertexArray(VAO);
 }
 
-unsigned int Graphics::Mesh::GetElementsCount() const
+size_t Graphics::Mesh::GetElementsCount() const
 {
 	return elements_count;
 }

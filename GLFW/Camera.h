@@ -29,14 +29,14 @@ namespace Graphics
 		glm::mat4 CalcViewMat();
 
 	private:
-		glm::vec3 position;
-		glm::vec3 up;
-		glm::vec3 front;
-		glm::vec3 right;
-		glm::vec3 worldUp;
-		GLfloat yaw, pitch;
-		GLfloat moveSpeed;
-		GLfloat turnSpeed;
+		glm::vec3 position = glm::vec3(0);
+		glm::vec3 up = glm::vec3(0);
+		glm::vec3 front = glm::vec3(0);
+		glm::vec3 right = glm::vec3(0);
+		glm::vec3 worldUp = glm::vec3(0);
+		GLfloat yaw = 0, pitch = 0;
+		GLfloat moveSpeed = 0;
+		GLfloat turnSpeed = 0;
 
 		void UpdateAxes();
 

@@ -14,9 +14,9 @@ namespace System
 
 	void CalcDeltaTime();
 
-	GLfloat GetDeltaTime();
+	double GetDeltaTime();
 
-	extern GLfloat deltaTime;
+	extern double deltaTime;
 }
 
 
