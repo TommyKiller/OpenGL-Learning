@@ -17,6 +17,8 @@ namespace Engine
 
 		void Disable();
 
+		Graphics::Texture* LoadTexture(GLenum target, const char* filename, bool flip, GLint min_filter, GLint mag_filter, GLint wrap_s, GLint wrap_t);
+
 		void CreateActor();
 
 		void AddActor();

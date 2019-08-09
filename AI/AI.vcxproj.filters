@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Исходные файлы">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Файлы заголовков">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Файлы ресурсов">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Исходные файлы\Events">
+      <UniqueIdentifier>{7f72a1ab-017c-4e7e-b197-88888e2487c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Events">
+      <UniqueIdentifier>{ef7dab3f-e14b-4498-855f-678273c0e2c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Characters">
+      <UniqueIdentifier>{068e31b5-89f9-4af5-9ee9-0591492f7623}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Characters">
+      <UniqueIdentifier>{6fb35580-c57c-468a-af46-4b96271c4507}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Logic">
+      <UniqueIdentifier>{6e439a57-e6ed-4edf-9cdc-927bd0b9e80e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Races">
+      <UniqueIdentifier>{749106b8-2fa9-458c-9708-68347d28edb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Races">
+      <UniqueIdentifier>{baecbe48-5e83-4929-ad96-c7302d390a00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Logic">
+      <UniqueIdentifier>{98b7773d-9547-4664-8245-8e61435ffc33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Mechanics">
+      <UniqueIdentifier>{6d58375b-1698-460b-bd18-4e972764f3f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Mechanics">
+      <UniqueIdentifier>{c38f4435-d747-4ed6-b790-079a20641b4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Mechanics\Classes">
+      <UniqueIdentifier>{408a6440-f116-4cfe-826c-a16826d271e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Mechanics\Abilities">
+      <UniqueIdentifier>{a896b4df-1207-44b3-8ec2-cf19023719b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Mechanics\Abilities">
+      <UniqueIdentifier>{c602059d-0021-4935-aa8d-2decf5d83047}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Mechanics\Classes">
+      <UniqueIdentifier>{1ef4cdc1-dbfb-4068-a637-83b55fc93f34}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Delegate.cpp">
+      <Filter>Исходные файлы\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Исходные файлы\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Class.cpp">
+      <Filter>Исходные файлы\Mechanics\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Warrior.cpp">
+      <Filter>Исходные файлы\Mechanics\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="NPC.cpp">
+      <Filter>Исходные файлы\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Исходные файлы\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Race.cpp">
+      <Filter>Исходные файлы\Races</Filter>
+    </ClCompile>
+    <ClCompile Include="Human.cpp">
+      <Filter>Исходные файлы\Races</Filter>
+    </ClCompile>
+    <ClCompile Include="Orc.cpp">
+      <Filter>Исходные файлы\Races</Filter>
+    </ClCompile>
+    <ClCompile Include="CombatManager.cpp">
+      <Filter>Исходные файлы\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Исходные файлы\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Ability.cpp">
+      <Filter>Исходные файлы\Mechanics\Abilities</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Skill.cpp">
+      <Filter>Исходные файлы\Mechanics\Abilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Spell.cpp">
+      <Filter>Исходные файлы\Mechanics\Abilities</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Delegate.h">
+      <Filter>Файлы заголовков\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Файлы заголовков\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="CombatManager.h">
+      <Filter>Файлы заголовков\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Class.h">
+      <Filter>Файлы заголовков\Mechanics\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Warrior.h">
+      <Filter>Файлы заголовков\Mechanics\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Файлы заголовков\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="NPC.h">
+      <Filter>Файлы заголовков\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Race.h">
+      <Filter>Файлы заголовков\Races</Filter>
+    </ClInclude>
+    <ClInclude Include="Human.h">
+      <Filter>Файлы заголовков\Races</Filter>
+    </ClInclude>
+    <ClInclude Include="Orc.h">
+      <Filter>Файлы заголовков\Races</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Файлы заголовков\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Ability.h">
+      <Filter>Файлы заголовков\Mechanics\Abilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Файлы заголовков\Mechanics</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackType.h">
+      <Filter>Файлы заголовков\Mechanics</Filter>
+    </ClInclude>
+    <ClInclude Include="Hit.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill.h">
+      <Filter>Файлы заголовков\Mechanics\Abilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Spell.h">
+      <Filter>Файлы заголовков\Mechanics\Abilities</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
