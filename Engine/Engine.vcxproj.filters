@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Исходные файлы">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Файлы заголовков">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Исходные файлы\Graphics">
+      <UniqueIdentifier>{34f3599f-b3a3-464f-855f-34c8104e46d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Graphics">
+      <UniqueIdentifier>{2661e237-c386-4191-836e-2a6910c947fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\System">
+      <UniqueIdentifier>{1b618c0d-791a-4195-b6b8-8c700146d04b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\System">
+      <UniqueIdentifier>{ee111fcf-f13e-4bbb-ae52-c13a2904bb97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Tools">
+      <UniqueIdentifier>{064ea9e0-047f-41c6-8222-89404f31bbd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Tools\Events">
+      <UniqueIdentifier>{f3bd1e2e-8a82-4568-9655-141ed988d942}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Tools">
+      <UniqueIdentifier>{c697b4d0-161f-452f-8b40-6f675dc56928}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Tools\Events">
+      <UniqueIdentifier>{b8c8da56-0b28-4e58-9291-2491a208d682}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Graphics\Model">
+      <UniqueIdentifier>{71df24ad-3eec-4789-b978-6f5744d3022c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Graphics\Model">
+      <UniqueIdentifier>{5183a08d-77df-4ed0-a804-1a39417eabf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Graphics\Actors">
+      <UniqueIdentifier>{de2daa23-323a-49ec-9964-967ff09b238d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Graphics\Actors">
+      <UniqueIdentifier>{91cc17bc-48fa-46b8-a474-e49f6310a3af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Graphics\Scene">
+      <UniqueIdentifier>{c6e80fef-0b01-4b80-8fdd-ca9203772eb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Graphics\Scene">
+      <UniqueIdentifier>{0e13f4e9-1d6f-4c71-8411-8949f7c77c6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Graphics\Interfaces">
+      <UniqueIdentifier>{b82cf007-70f9-4b5f-b1a5-727e78649698}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Graphics\Textures">
+      <UniqueIdentifier>{d9f01e6f-fa10-452d-8941-e03cd1616220}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Graphics\Textures">
+      <UniqueIdentifier>{dc058cf4-97d9-40d9-bc2a-9646642749ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Graphics\Actors\ID">
+      <UniqueIdentifier>{436fcdc0-dcbf-4fda-ac56-d99541353d45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Graphics\Actors\ID">
+      <UniqueIdentifier>{d1880bf7-4d7a-4b6d-949c-0eb2a8026f4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Input">
+      <UniqueIdentifier>{f2327d0e-309a-402c-97ee-8bba83bdd2b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Input">
+      <UniqueIdentifier>{484c1914-35e9-4679-8a83-cf76e19c996d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Input\InputHandler">
+      <UniqueIdentifier>{95844d8e-facc-4d04-9497-400d531904d8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Исходные файлы\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Исходные файлы\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Исходные файлы\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor.cpp">
+      <Filter>Исходные файлы\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Исходные файлы\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Исходные файлы\Graphics\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Delegate.cpp">
+      <Filter>Исходные файлы\Tools\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Исходные файлы\Tools\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Исходные файлы\Graphics\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>Исходные файлы\Graphics\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="Transformations.cpp">
+      <Filter>Исходные файлы\Graphics\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="PawnActor.cpp">
+      <Filter>Исходные файлы\Graphics\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraActor.cpp">
+      <Filter>Исходные файлы\Graphics\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Исходные файлы\Graphics\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Position.cpp">
+      <Filter>Исходные файлы\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>Исходные файлы\Graphics\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Исходные файлы\Graphics\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="ActorID.cpp">
+      <Filter>Исходные файлы\Graphics\Actors\ID</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Исходные файлы\Graphics\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="InputController.cpp">
+      <Filter>Исходные файлы\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHandler.cpp">
+      <Filter>Исходные файлы\Input</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Shader.h">
+      <Filter>Файлы заголовков\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Файлы заголовков\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Файлы заголовков\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor.h">
+      <Filter>Файлы заголовков\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Файлы заголовков\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Файлы заголовков\Graphics\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Файлы заголовков\Graphics\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Файлы заголовков\Graphics\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Delegate.h">
+      <Filter>Файлы заголовков\Tools\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Файлы заголовков\Tools\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Файлы заголовков\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Файлы заголовков\Graphics\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>Файлы заголовков\Graphics\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Transformations.h">
+      <Filter>Файлы заголовков\Graphics\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="PawnActor.h">
+      <Filter>Файлы заголовков\Graphics\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraActor.h">
+      <Filter>Файлы заголовков\Graphics\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorEvents.h">
+      <Filter>Файлы заголовков\Graphics\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneEvents.h">
+      <Filter>Файлы заголовков\Graphics\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Position.h">
+      <Filter>Файлы заголовков\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>Файлы заголовков\Graphics\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Файлы заголовков\Graphics\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorID.h">
+      <Filter>Файлы заголовков\Graphics\Actors\ID</Filter>
+    </ClInclude>
+    <ClInclude Include="IRenderable.h">
+      <Filter>Файлы заголовков\Graphics\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Файлы заголовков\Graphics\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Actors.h">
+      <Filter>Файлы заголовков\Graphics\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="InputController.h">
+      <Filter>Файлы заголовков\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="InputControllerEvents.h">
+      <Filter>Файлы заголовков\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="InputEvent.h">
+      <Filter>Файлы заголовков\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="InputEvents.h">
+      <Filter>Файлы заголовков\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Key.h">
+      <Filter>Файлы заголовков\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.h">
+      <Filter>Файлы заголовков\Input\InputHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="FPSInput.h">
+      <Filter>Файлы заголовков\Input\InputHandler</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
