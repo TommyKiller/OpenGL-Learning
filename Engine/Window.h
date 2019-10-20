@@ -71,7 +71,7 @@ namespace System
 			int height;
 		};
 
-		std::map<System::WindowEvents, std::shared_ptr<Events::Event>> events
+		std::unordered_map<System::WindowEvents, std::shared_ptr<Events::Event>> events
 		{
 			{ WindowEvents::WINDOW_FRAMEBUFFER_SIZE_CHANGED, std::make_shared<Events::Event>() },
 			{ WindowEvents::WINDOW_POSITION_CHANGED, std::make_shared<Events::Event>() }

@@ -1,5 +1,5 @@
-#ifndef INPUTHANDLER_H
-#define INPUTHANDLER_H
+#ifndef INPUTCONTROLLER_H
+#define INPUTCONTROLLER_H
 #include <GLFW/glfw3.h>
 #include <memory>
 #include <unordered_set>
@@ -8,12 +8,105 @@
 #include <algorithm>
 #include "Event.h"
 #include "InputControllerEvents.h"
-#include "InputEvent.h"
 #include "InputEvents.h"
-#include "Key.h"
 
 namespace Input
 {
+
+	struct Key
+	{
+		Key(int key, int mod)
+			: modifier(mod)
+		{
+			scancode = glfwGetKeyScancode(key);
+		}
+
+		bool operator==(const Key& key) const
+		{
+			return (scancode == key.scancode && modifier == key.modifier);
+		}
+
+		struct hash
+		{
+			size_t operator()(const Key& key) const
+			{
+				return (std::hash<int>{}(key.scancode) ^ std::hash<int>{}(key.modifier));
+			}
+		};
+
+		int scancode;
+		int modifier;
+	};
+
+	class InputEvent
+	{
+	public:
+		enum class Trigger
+		{
+			ON_PRESS,
+			ON_HOLD,
+			ON_RELEASE,
+			ON_MOVE
+		};
+
+		InputEvent(InputEvents id, Trigger trigger)
+			: id(id), trigger(trigger)
+		{}
+
+		struct hash
+		{
+			size_t operator()(const InputEvent& event) const
+			{
+				return std::hash<std::underlying_type<InputEvents>::type>()(event.id);
+			}
+		};
+
+		bool operator==(const InputEvent& event) const
+		{
+			return (this->id == event.id);
+		}
+
+		InputEvents GetID() const
+		{
+			return id;
+		}
+
+		Trigger GetTrigger() const
+		{
+			return trigger;
+		}
+
+	protected:
+		InputEvents id;
+		Trigger trigger;
+
+	};
+
+	class KeyEvent : public InputEvent
+	{
+	public:
+		KeyEvent(InputEvents id, Trigger trigger, Key key)
+			: InputEvent(id, trigger), key(key)
+		{}
+
+		Key GetKey() const
+		{
+			return key;
+		}
+
+	private:
+		Key key;
+
+	};
+
+	class MouseEvent : public InputEvent
+	{
+	public:
+		MouseEvent(InputEvents id)
+			: InputEvent(id, Trigger::ON_MOVE)
+		{}
+	};
+
 	class InputController
 	{
 	public:

@@ -72,8 +72,8 @@
     <Filter Include="Файлы заголовков\Input">
       <UniqueIdentifier>{484c1914-35e9-4679-8a83-cf76e19c996d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы заголовков\Input\InputHandler">
-      <UniqueIdentifier>{95844d8e-facc-4d04-9497-400d531904d8}</UniqueIdentifier>
+    <Filter Include="Файлы заголовков\Input\InputHandlers">
+      <UniqueIdentifier>{eb8ccaac-7b31-4768-b595-0afe97b1df47}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -140,8 +140,8 @@
     <ClCompile Include="InputController.cpp">
       <Filter>Исходные файлы\Input</Filter>
     </ClCompile>
-    <ClCompile Include="InputHandler.cpp">
-      <Filter>Исходные файлы\Input</Filter>
+    <ClCompile Include="InputHandler.h">
+      <Filter>Файлы заголовков\Input\InputHandlers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -220,26 +220,20 @@
     <ClInclude Include="Actors.h">
       <Filter>Файлы заголовков\Graphics\Actors</Filter>
     </ClInclude>
+    <ClInclude Include="InputEvents.h">
+      <Filter>Файлы заголовков\Input</Filter>
+    </ClInclude>
     <ClInclude Include="InputController.h">
       <Filter>Файлы заголовков\Input</Filter>
     </ClInclude>
     <ClInclude Include="InputControllerEvents.h">
       <Filter>Файлы заголовков\Input</Filter>
     </ClInclude>
-    <ClInclude Include="InputEvent.h">
+    <ClInclude Include="FPSHandler.h">
+      <Filter>Файлы заголовков\Input\InputHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
       <Filter>Файлы заголовков\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="InputEvents.h">
-      <Filter>Файлы заголовков\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Key.h">
-      <Filter>Файлы заголовков\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="InputHandler.h">
-      <Filter>Файлы заголовков\Input\InputHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="FPSInput.h">
-      <Filter>Файлы заголовков\Input\InputHandler</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

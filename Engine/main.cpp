@@ -4,6 +4,8 @@
 int main()
 {
 	System::Engine::Initialize(4, 6, 0, 0, 1360, 768, "Test", true);
+	Input::Initialize<Input::FPSInputActions>(Input::FPSLayout);
+
 	System::CreateTest();
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 

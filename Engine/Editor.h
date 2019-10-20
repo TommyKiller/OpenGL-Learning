@@ -1,6 +1,8 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 #include "Scene.h"
+#include "FPSHandler.h"
+#include "InputHandler.h"
 
 namespace System
 {
@@ -10,7 +12,12 @@ namespace System
 		Dummy()
 			: move_speed(5.0f), turn_speed(1.0f)
 		{
-			SUBSCRIBE TO INPUT EVENTS
+			Input::InputHandler<Input::FPSInputActions>::GetInstance().SubscribeTo(Input::FPSInputActions::ACTION_MOVE_FORWARD, Events::Delegate(this, &Dummy::AdjustForward));
+			Input::InputHandler<Input::FPSInputActions>::GetInstance().SubscribeTo(Input::FPSInputActions::ACTION_MOVE_BACKWARD, Events::Delegate(this, &Dummy::AdjustBackward));
+			Input::InputHandler<Input::FPSInputActions>::GetInstance().SubscribeTo(Input::FPSInputActions::ACTION_MOVE_RIGHT, Events::Delegate(this, &Dummy::AdjustRight));
+			Input::InputHandler<Input::FPSInputActions>::GetInstance().SubscribeTo(Input::FPSInputActions::ACTION_MOVE_LEFT, Events::Delegate(this, &Dummy::AdjustLeft));
+			Input::InputHandler<Input::FPSInputActions>::GetInstance().SubscribeTo(Input::FPSInputActions::ACTION_MOVE_UP, Events::Delegate(this, &Dummy::AdjustUp));
+			Input::InputHandler<Input::FPSInputActions>::GetInstance().SubscribeTo(Input::FPSInputActions::ACTION_MOVE_DOWN, Events::Delegate(this, &Dummy::AdjustDown));
 		}
 
 		void AttachActor(std::shared_ptr<Graphics::Actor> actor)

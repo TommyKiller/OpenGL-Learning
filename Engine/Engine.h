@@ -2,8 +2,7 @@
 #define ENGINE_H
 #include <memory>
 #include "Window.h"
-#include "InputHandler.h"
-#include "FPSInput.h"
+#include "Input.h"
 
 namespace System
 {
@@ -22,7 +21,6 @@ namespace System
 
 		static void InitializeGLFW(unsigned int maj_version, unsigned int min_version);
 		static void InitializeGLEW(Window& window);
-		static void InitializeInput();
 		static void InitializeScene();
 	};
 

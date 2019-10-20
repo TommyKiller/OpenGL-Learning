@@ -2,29 +2,31 @@
 #define INPUTHANDLER_H
 #include <unordered_map>
 #include <memory>
-#include "InputController.h"
 #include "InputEvents.h"
-#include "InputControllerEvents.h"
+#include "InputController.h"
 #include "Event.h"
 
 namespace Input
 {
-	template<class Type>
+	template<class EnumType>
 	class InputHandler
 	{
 	public:
-		static InputHandler& GetInstance()
+		static InputHandler<EnumType>& GetInstance()
 		{
-			static InputHandler instance;
+			static InputHandler<EnumType> instance;
 
 			return instance;
 		}
 
-		void Initialize(std::unordered_map<Type, std::unique_ptr<Events::Event>> events_list,
-			std::unordered_map<InputEvents, Type> layout)
+		void Initialize(std::unordered_map<InputEvents, EnumType> layout)
 		{
-			this->events(events_list);
-			this->layout(layout);
+			this->layout = layout;
+
+			for (const std::pair<InputEvents, EnumType>& pair : layout)
+			{
+				events.emplace(std::make_pair(pair.second, std::make_unique<Events::Event>()));
+			}
 		}
 
 		// Events
@@ -32,11 +34,11 @@ namespace Input
 		{
 			(*events[layout[event]])();
 		}
-		void SubscribeTo(Type event, Events::Delegate delegate)
+		void SubscribeTo(EnumType event, Events::Delegate delegate)
 		{
 			(*events[event]) += delegate;
 		}
-		void UnsubscribeTo(Type event, Events::Delegate delegate)
+		void UnsubscribeTo(EnumType event, Events::Delegate delegate)
 		{
 			(*events[event]) -= delegate;
 		}
@@ -44,12 +46,11 @@ namespace Input
 	private:
 		InputHandler()
 		{
-			InputController::GetInstance().SubscribeTo(InputControllerEvents::INPUT_EVENT_POLLED, Events::Delegate(this, &InputHandler::PollEvent));
-		}
+			InputController::GetInstance().SubscribeTo(InputControllerEvents::INPUT_EVENT_POLLED, Events::Delegate(this, &InputHandler<EnumType>::PollEvent));
+		};
 
-		std::unordered_map<Type, std::unique_ptr<Events::Event>> events;
-		std::unordered_map<InputEvents, Type> layout;
-
+		std::unordered_map<EnumType, std::unique_ptr<Events::Event>> events;
+		std::unordered_map<InputEvents, EnumType> layout;
 	};
 }
 
