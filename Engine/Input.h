@@ -2,7 +2,7 @@
 #define INPUT_H
 #include <memory>
 #include <unordered_map>
-#include "Event.h"
+#include "utilities/Event.h"
 #include "InputHandler.h"
 #include "FPSHandler.h"
 

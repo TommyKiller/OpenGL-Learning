@@ -59,17 +59,17 @@ void System::Window::WindowPositionCallback(GLFWwindow* window, int xpos, int yp
 	}
 }
 
-std::shared_ptr<Events::Event>& System::Window::PollEvent(System::WindowEvents event)
+std::unique_ptr<Events::Event<void, int, int>>& System::Window::PollEvent(System::WindowEvents event)
 {
 	return events[event];
 }
 
-void System::Window::SubscribeTo(WindowEvents event, Events::Delegate delegate)
+void System::Window::SubscribeTo(WindowEvents event, Events::Delegate<void, int, int> delegate)
 {
 	(*this->events[event]) += delegate;
 }
 
-void System::Window::UnsubscribeTo(WindowEvents event, Events::Delegate delegate)
+void System::Window::UnsubscribeTo(WindowEvents event, Events::Delegate<void, int, int> delegate)
 {
 	(*this->events[event]) -= delegate;
 }

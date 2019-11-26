@@ -6,7 +6,8 @@
 #include <unordered_map>
 #include <queue>
 #include <algorithm>
-#include "Event.h"
+#include "utilities/make_unordered_map.h"
+#include "utilities/Event.h"
 #include "InputControllerEvents.h"
 #include "InputEvents.h"
 
@@ -118,8 +119,10 @@ namespace Input
 
 		// Events
 		void PollEvents();
-		void SubscribeTo(InputControllerEvents event, Events::Delegate delegate);
-		void UnsubscribeTo(InputControllerEvents event, Events::Delegate delegate);
+		void SubscribeTo(InputControllerEvents event, Events::Delegate<void> delegate);
+		void SubscribeTo(InputControllerEvents event, Events::Delegate<void, InputEvents> delegate);
+		void UnsubscribeTo(InputControllerEvents event, Events::Delegate<void> delegate);
+		void UnsubscribeTo(InputControllerEvents event, Events::Delegate<void, InputEvents> delegate);
 		// Input events
 		InputEvent::Trigger GetEventTrigger(InputEvents id);
 		Key GetEventKey(InputEvents id);
@@ -151,10 +154,9 @@ namespace Input
 			double yChange = 0;
 		};
 
-		std::unordered_map<InputControllerEvents, std::shared_ptr<Events::Event>> ic_events 
-		{
-			{ InputControllerEvents::INPUT_PROCESSED, std::make_shared<Events::Event>() }
-		};
+		// Input Cotroller Events //
+		std::unique_ptr<Events::Event<void>> EVENT_INPUT_PROCESSED = std::make_unique<Events::Event<void>>();
+		std::unique_ptr<Events::Event<void, InputEvents>> EVENT_INPUT_EVENT_POLLED = std::make_unique<Events::Event<void, InputEvents>>();
 
 		std::unordered_set<KeyEvent, InputEvent::hash> key_events
 		{

@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <exception>
+#include "utilities/make_unordered_map.h"
 #include "InputController.h"
 
 
@@ -27,9 +28,9 @@ namespace System
 		static void WindowPositionCallback(GLFWwindow* window, int xpos, int ypos);
 
 		// Events
-		std::shared_ptr<Events::Event>& PollEvent(System::WindowEvents event);
-		void SubscribeTo(WindowEvents event, Events::Delegate delegate);
-		void UnsubscribeTo(WindowEvents event, Events::Delegate delegate);
+		std::unique_ptr<Events::Event<void, int, int>>& PollEvent(System::WindowEvents event);
+		void SubscribeTo(WindowEvents event, Events::Delegate<void, int, int> delegate);
+		void UnsubscribeTo(WindowEvents event, Events::Delegate<void, int, int> delegate);
 
 		// Cursor
 		void DisableCursor();
@@ -71,11 +72,11 @@ namespace System
 			int height;
 		};
 
-		std::unordered_map<System::WindowEvents, std::shared_ptr<Events::Event>> events
-		{
-			{ WindowEvents::WINDOW_FRAMEBUFFER_SIZE_CHANGED, std::make_shared<Events::Event>() },
-			{ WindowEvents::WINDOW_POSITION_CHANGED, std::make_shared<Events::Event>() }
-		};
+		std::unordered_map<System::WindowEvents, std::unique_ptr<Events::Event<void, int, int>>> events = make_unordered_map
+		(
+			std::make_pair(WindowEvents::WINDOW_FRAMEBUFFER_SIZE_CHANGED,	std::make_unique<Events::Event<void, int, int>>()),
+			std::make_pair(WindowEvents::WINDOW_POSITION_CHANGED,			std::make_unique<Events::Event<void, int, int>>())
+		);
 
 		GLFWwindow* window;
 		WindowProperties window_properties;

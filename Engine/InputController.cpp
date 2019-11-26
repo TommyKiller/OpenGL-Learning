@@ -56,7 +56,7 @@ void Input::InputController::PollEvents()
 	{
 		InputEvents event_id = events_queue.front();
 
-		(*ic_events[InputControllerEvents::INPUT_EVENT_POLLED])(event_id);
+		(*EVENT_INPUT_EVENT_POLLED)(event_id);
 		if (GetEventTrigger(event_id) == InputEvent::Trigger::ON_HOLD && key_pressed[GetEventKey(event_id)])
 		{
 			repeat_events.push_back(event_id);
@@ -65,7 +65,7 @@ void Input::InputController::PollEvents()
 		events_queue.pop();
 	}
 
-	(*ic_events[InputControllerEvents::INPUT_PROCESSED])();
+	(*EVENT_INPUT_PROCESSED)();
 
 	for (const auto& event_id : repeat_events)
 	{
@@ -73,15 +73,25 @@ void Input::InputController::PollEvents()
 	}
 }
 
-void Input::InputController::SubscribeTo(InputControllerEvents event, Events::Delegate delegate)
+// Subscription to events //
+void Input::InputController::SubscribeTo(InputControllerEvents event, Events::Delegate<void> delegate)
 {
-	(*ic_events[event]) += delegate;
+	(*EVENT_INPUT_PROCESSED) += delegate;
 }
-
-void Input::InputController::UnsubscribeTo(InputControllerEvents event, Events::Delegate delegate)
+void Input::InputController::SubscribeTo(InputControllerEvents event, Events::Delegate<void, InputEvents> delegate)
 {
-	(*ic_events[event]) -= delegate;
+	(*EVENT_INPUT_EVENT_POLLED) += delegate;
 }
+//------------------------//
+void Input::InputController::UnsubscribeTo(InputControllerEvents event, Events::Delegate<void>delegate)
+{
+	(*EVENT_INPUT_PROCESSED) -= delegate;
+}
+void Input::InputController::UnsubscribeTo(InputControllerEvents event, Events::Delegate<void, InputEvents>delegate)
+{
+	(*EVENT_INPUT_EVENT_POLLED) -= delegate;
+}
+// END Subscription to events //
 
 double Input::InputController::GetMouseXChange()
 {

@@ -22,18 +22,19 @@ void Graphics::Scene::SetUserCamera(ActorID actor_id)
 
 void Graphics::Scene::AddShader(std::shared_ptr<Shader> shader)
 {
-	shaders.push_back(std::make_shared<Shader>(shader));
+	shaders.push_back(shader);
 }
 
 void Graphics::Scene::AddActor(std::shared_ptr<PawnActor> actor)
 {
-	pawn_actors.push_back(std::make_shared<PawnActor>(actor));
-	SubscribeTo(SceneEvents::EVENT_SCENE_RENDER, Events::Delegate(actor.get(), &PawnActor::Render));
+	pawn_actors.push_back(actor);
+	std::function<void(glm::mat4, glm::mat4)> member_func = [actor](glm::mat4 projection_mat, glm::mat4 view_mat) {return actor.get()->Render(projection_mat, view_mat); };
+	SubscribeTo(SceneEvents::EVENT_SCENE_RENDER, Events::Delegate(member_func, &PawnActor::Render, actor.get()));
 }
 
 void Graphics::Scene::AddActor(std::shared_ptr<CameraActor> actor)
 {
-	camera_actors.push_back(std::make_shared<CameraActor>(actor));
+	camera_actors.push_back(actor);
 }
 
 std::shared_ptr<Graphics::PawnActor>& Graphics::Scene::GetPawnActor(ActorID id)
@@ -53,13 +54,14 @@ std::shared_ptr<Graphics::Shader>& Graphics::Scene::GetShader(GLuint id)
 	auto result = std::find_if(shaders.begin(), shaders.end(), [&](const std::shared_ptr<Shader>& shader) { return (shader->GetID() == id); });
 	return shaders[std::distance(shaders.begin(), result)];
 }
-
-void Graphics::Scene::SubscribeTo(SceneEvents event, Events::Delegate delegate)
+// Subscribe on events //
+void Graphics::Scene::SubscribeTo(SceneEvents event, Events::Delegate<void, glm::mat4, glm::mat4> delegate)
 {
 	(*events[event]) += delegate;
 }
-
-void Graphics::Scene::UnsubscribeTo(SceneEvents event, Events::Delegate delegate)
+//---------------------//
+void Graphics::Scene::UnsubscribeTo(SceneEvents event, Events::Delegate<void, glm::mat4, glm::mat4> delegate)
 {
 	(*events[event]) += delegate;
 }
+// END Subscribe on events //

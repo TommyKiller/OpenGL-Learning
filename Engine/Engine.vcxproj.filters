@@ -21,18 +21,6 @@
     <Filter Include="Файлы заголовков\System">
       <UniqueIdentifier>{ee111fcf-f13e-4bbb-ae52-c13a2904bb97}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Исходные файлы\Tools">
-      <UniqueIdentifier>{064ea9e0-047f-41c6-8222-89404f31bbd1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Исходные файлы\Tools\Events">
-      <UniqueIdentifier>{f3bd1e2e-8a82-4568-9655-141ed988d942}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Файлы заголовков\Tools">
-      <UniqueIdentifier>{c697b4d0-161f-452f-8b40-6f675dc56928}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Файлы заголовков\Tools\Events">
-      <UniqueIdentifier>{b8c8da56-0b28-4e58-9291-2491a208d682}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Файлы заголовков\Graphics\Model">
       <UniqueIdentifier>{71df24ad-3eec-4789-b978-6f5744d3022c}</UniqueIdentifier>
     </Filter>
@@ -89,20 +77,11 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Исходные файлы\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Editor.cpp">
-      <Filter>Исходные файлы\System</Filter>
-    </ClCompile>
     <ClCompile Include="Engine.cpp">
       <Filter>Исходные файлы\System</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>Исходные файлы\Graphics\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Delegate.cpp">
-      <Filter>Исходные файлы\Tools\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="Event.cpp">
-      <Filter>Исходные файлы\Tools\Events</Filter>
     </ClCompile>
     <ClCompile Include="Model.cpp">
       <Filter>Исходные файлы\Graphics\Model</Filter>
@@ -168,15 +147,6 @@
     </ClInclude>
     <ClInclude Include="Vertex.h">
       <Filter>Файлы заголовков\Graphics\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Delegate.h">
-      <Filter>Файлы заголовков\Tools\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Event.h">
-      <Filter>Файлы заголовков\Tools\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="stb_image.h">
-      <Filter>Файлы заголовков\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Model.h">
       <Filter>Файлы заголовков\Graphics\Model</Filter>

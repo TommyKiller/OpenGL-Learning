@@ -2,8 +2,7 @@
 #define TEXTURE_H
 #include <GL/glew.h>
 #include <string>
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include "stb/stb_image.h"
 
 namespace Graphics
 {
