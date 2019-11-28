@@ -1,0 +1,6 @@
+[submodule "Dependencies/Include/utilities"]
+	path = Dependencies/Include/utilities
+	url = https://github.com/TommyKiller/utilities.git
+[submodule "Dependencies/Include/stb"]
+	path = Dependencies/Include/stb
+	url = https://github.com/nothings/stb.git
