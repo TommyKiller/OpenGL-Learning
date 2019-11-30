@@ -13,7 +13,7 @@ namespace Graphics
 
 		virtual void AssignShader(std::shared_ptr<Shader>& shader) = 0;
 
-		virtual ~IRenderable() = 0;
+		virtual ~IRenderable() = default;
 
 		std::weak_ptr<Shader> assigned_shader;
 	};

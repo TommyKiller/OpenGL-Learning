@@ -90,18 +90,18 @@ namespace System
 
 	void AttachActors(Graphics::Actor* actor, Graphics::Actor* target)
 	{
-		std::function<void(float)> member_func = [target](float speed) { return target->AdjustForward(speed); };
-		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_FORWARD, Events::Delegate(member_func, &Graphics::Actor::AdjustForward, target));
-		member_func = [target](float speed) { return target->AdjustBackward(speed); };
-		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_BACKWARD, Events::Delegate(member_func, &Graphics::Actor::AdjustBackward, target));
-		member_func = [target](float speed) { return target->AdjustRight(speed); };
-		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_RIGHT, Events::Delegate(member_func, &Graphics::Actor::AdjustRight, target));
-		member_func = [target](float speed) { return target->AdjustLeft(speed); };
-		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_LEFT, Events::Delegate(member_func, &Graphics::Actor::AdjustLeft, target));
-		member_func = [target](float speed) { return target->AdjustUp(speed); };
-		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_UP, Events::Delegate(member_func, &Graphics::Actor::AdjustUp, target));
-		member_func = [target](float speed) { return target->AdjustDown(speed); };
-		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_DOWN, Events::Delegate(member_func, &Graphics::Actor::AdjustDown, target));
+		std::function<void(float)> member_func = [actor](float speed) { return actor->AdjustForward(speed); };
+		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_FORWARD, Events::Delegate(member_func, &Graphics::Actor::AdjustForward, actor));
+		member_func = [actor](float speed) { return actor->AdjustBackward(speed); };
+		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_BACKWARD, Events::Delegate(member_func, &Graphics::Actor::AdjustBackward, actor));
+		member_func = [actor](float speed) { return actor->AdjustRight(speed); };
+		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_RIGHT, Events::Delegate(member_func, &Graphics::Actor::AdjustRight, actor));
+		member_func = [actor](float speed) { return actor->AdjustLeft(speed); };
+		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_LEFT, Events::Delegate(member_func, &Graphics::Actor::AdjustLeft, actor));
+		member_func = [actor](float speed) { return actor->AdjustUp(speed); };
+		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_UP, Events::Delegate(member_func, &Graphics::Actor::AdjustUp, actor));
+		member_func = [actor](float speed) { return actor->AdjustDown(speed); };
+		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_DOWN, Events::Delegate(member_func, &Graphics::Actor::AdjustDown, actor));
 	}
 
 	void CreateTest()

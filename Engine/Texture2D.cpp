@@ -1,6 +1,7 @@
 #include "Texture2D.h"
 #include <stdexcept>
 #include <string>
+#include "stb/stb_image.h"
 
 Graphics::Texture2D::Texture2D(std::string file_path, std::string name)
 	: Texture(GL_TEXTURE_2D, file_path, "2D" + name)
