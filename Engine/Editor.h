@@ -12,18 +12,12 @@ namespace System
 		Dummy()
 			: move_speed(5.0f), turn_speed(1.0f)
 		{
-			std::function<void(void)> member_func = [this]() { this->AdjustForward(); };
-			Input::InputHandler<Input::FPSInputActions>::GetInstance().SubscribeTo(Input::FPSInputActions::ACTION_MOVE_FORWARD, Events::Delegate(member_func, &Dummy::AdjustForward, this));
-			member_func = [this]() { this->AdjustBackward(); };
-			Input::InputHandler<Input::FPSInputActions>::GetInstance().SubscribeTo(Input::FPSInputActions::ACTION_MOVE_BACKWARD, Events::Delegate(member_func, &Dummy::AdjustBackward, this));
-			member_func = [this]() { this->AdjustRight(); };
-			Input::InputHandler<Input::FPSInputActions>::GetInstance().SubscribeTo(Input::FPSInputActions::ACTION_MOVE_RIGHT, Events::Delegate(member_func, &Dummy::AdjustRight, this));
-			member_func = [this]() { this->AdjustLeft(); };
-			Input::InputHandler<Input::FPSInputActions>::GetInstance().SubscribeTo(Input::FPSInputActions::ACTION_MOVE_LEFT, Events::Delegate(member_func, &Dummy::AdjustLeft, this));
-			member_func = [this]() { this->AdjustUp(); };
-			Input::InputHandler<Input::FPSInputActions>::GetInstance().SubscribeTo(Input::FPSInputActions::ACTION_MOVE_UP, Events::Delegate(member_func, &Dummy::AdjustUp, this));
-			member_func = [this]() { this->AdjustDown(); };
-			Input::InputHandler<Input::FPSInputActions>::GetInstance().SubscribeTo(Input::FPSInputActions::ACTION_MOVE_DOWN, Events::Delegate(member_func, &Dummy::AdjustDown, this));
+			Input::InputHandler<Input::FPSInputActions>::GetInstance().SubscribeTo(Input::FPSInputActions::ACTION_MOVE_FORWARD, Events::Delegate(&Dummy::AdjustForward, this));
+			Input::InputHandler<Input::FPSInputActions>::GetInstance().SubscribeTo(Input::FPSInputActions::ACTION_MOVE_BACKWARD, Events::Delegate(&Dummy::AdjustBackward, this));
+			Input::InputHandler<Input::FPSInputActions>::GetInstance().SubscribeTo(Input::FPSInputActions::ACTION_MOVE_RIGHT, Events::Delegate(&Dummy::AdjustRight, this));
+			Input::InputHandler<Input::FPSInputActions>::GetInstance().SubscribeTo(Input::FPSInputActions::ACTION_MOVE_LEFT, Events::Delegate(&Dummy::AdjustLeft, this));
+			Input::InputHandler<Input::FPSInputActions>::GetInstance().SubscribeTo(Input::FPSInputActions::ACTION_MOVE_UP, Events::Delegate(&Dummy::AdjustUp, this));
+			Input::InputHandler<Input::FPSInputActions>::GetInstance().SubscribeTo(Input::FPSInputActions::ACTION_MOVE_DOWN, Events::Delegate(&Dummy::AdjustDown, this));
 		}
 
 		void AttachActor(std::shared_ptr<Graphics::Actor> actor)
@@ -90,18 +84,12 @@ namespace System
 
 	void AttachActors(Graphics::Actor* actor, Graphics::Actor* target)
 	{
-		std::function<void(float)> member_func = [actor](float speed) { return actor->AdjustForward(speed); };
-		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_FORWARD, Events::Delegate(member_func, &Graphics::Actor::AdjustForward, actor));
-		member_func = [actor](float speed) { return actor->AdjustBackward(speed); };
-		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_BACKWARD, Events::Delegate(member_func, &Graphics::Actor::AdjustBackward, actor));
-		member_func = [actor](float speed) { return actor->AdjustRight(speed); };
-		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_RIGHT, Events::Delegate(member_func, &Graphics::Actor::AdjustRight, actor));
-		member_func = [actor](float speed) { return actor->AdjustLeft(speed); };
-		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_LEFT, Events::Delegate(member_func, &Graphics::Actor::AdjustLeft, actor));
-		member_func = [actor](float speed) { return actor->AdjustUp(speed); };
-		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_UP, Events::Delegate(member_func, &Graphics::Actor::AdjustUp, actor));
-		member_func = [actor](float speed) { return actor->AdjustDown(speed); };
-		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_DOWN, Events::Delegate(member_func, &Graphics::Actor::AdjustDown, actor));
+		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_FORWARD, Events::Delegate(&Graphics::Actor::AdjustForward, actor));
+		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_BACKWARD, Events::Delegate(&Graphics::Actor::AdjustBackward, actor));
+		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_RIGHT, Events::Delegate(&Graphics::Actor::AdjustRight, actor));
+		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_LEFT, Events::Delegate(&Graphics::Actor::AdjustLeft, actor));
+		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_UP, Events::Delegate(&Graphics::Actor::AdjustUp, actor));
+		target->SubscribeTo(Graphics::ActorMovements::ACTOR_ADJUSTED_DOWN, Events::Delegate(&Graphics::Actor::AdjustDown, actor));
 	}
 
 	void CreateTest()

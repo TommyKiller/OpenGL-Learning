@@ -161,11 +161,11 @@ namespace Input
 		std::unordered_set<KeyEvent, InputEvent::hash> key_events
 		{
 			KeyEvent(InputEvents::ON_HOLD_KEY_W, InputEvent::Trigger::ON_HOLD, Key(GLFW_KEY_W, NULL)),
-			KeyEvent(InputEvents::ON_HOLD_KEY_S, InputEvent::Trigger::ON_HOLD, Key(GLFW_KEY_W, NULL)),
-			KeyEvent(InputEvents::ON_HOLD_KEY_A, InputEvent::Trigger::ON_HOLD, Key(GLFW_KEY_W, NULL)),
-			KeyEvent(InputEvents::ON_HOLD_KEY_D, InputEvent::Trigger::ON_HOLD, Key(GLFW_KEY_W, NULL)),
-			KeyEvent(InputEvents::ON_HOLD_KEY_SPACE, InputEvent::Trigger::ON_HOLD, Key(GLFW_KEY_W, NULL)),
-			KeyEvent(InputEvents::ON_HOLD_KEY_LCTRL, InputEvent::Trigger::ON_HOLD, Key(GLFW_KEY_W, NULL))
+			KeyEvent(InputEvents::ON_HOLD_KEY_S, InputEvent::Trigger::ON_HOLD, Key(GLFW_KEY_S, NULL)),
+			KeyEvent(InputEvents::ON_HOLD_KEY_A, InputEvent::Trigger::ON_HOLD, Key(GLFW_KEY_A, NULL)),
+			KeyEvent(InputEvents::ON_HOLD_KEY_D, InputEvent::Trigger::ON_HOLD, Key(GLFW_KEY_D, NULL)),
+			KeyEvent(InputEvents::ON_HOLD_KEY_SPACE, InputEvent::Trigger::ON_HOLD, Key(GLFW_KEY_SPACE, NULL)),
+			KeyEvent(InputEvents::ON_HOLD_KEY_LCTRL, InputEvent::Trigger::ON_HOLD, Key(GLFW_KEY_LEFT_CONTROL, NULL))
 		};
 
 		std::unordered_set<MouseEvent, InputEvent::hash> mouse_events
